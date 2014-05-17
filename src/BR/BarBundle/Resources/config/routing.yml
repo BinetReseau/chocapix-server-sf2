@@ -1,0 +1,3 @@
+br_bar_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: BRBarBundle:Default:index }

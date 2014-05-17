@@ -1,0 +1,7 @@
+parameters:
+#    br_bar.example.class: BR\BarBundle\Example
+
+services:
+#    br_bar.example:
+#        class: %br_bar.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
