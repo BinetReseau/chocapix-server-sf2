@@ -1,0 +1,4 @@
+br_bar:
+    resource: "@BRBarBundle/Resources/config/routing.yml"
+    prefix:   /
+
