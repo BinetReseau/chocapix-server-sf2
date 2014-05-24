@@ -1,1 +1,9 @@
-Hello {{ name }}!
+Bar {{bar}}.
+
+<ul>
+{% for hist in histories %}
+    <li>{{hist.user}} bought {{hist.quantity}} {{hist.food}}</li>
+{% endfor %}
+</ul>
+
+{{form(form)}}
