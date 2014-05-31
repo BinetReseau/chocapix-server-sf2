@@ -1,9 +1,11 @@
-Bar {{bar}}.
+{% extends "BRBarBundle::base.html.twig" %}
 
-<ul>
-{% for hist in histories %}
-    <li>{{hist.user}} bought {{hist.quantity}} {{hist.food}}</li>
-{% endfor %}
-</ul>
+{% block content %}
+	<ul>
+	{% for hist in histories %}
+	    <li>{{hist.user}} bought {{hist.quantity}} {{hist.food}}</li>
+	{% endfor %}
+	</ul>
 
-{{form(form)}}
+	{{form(form)}}
+{% endblock %}

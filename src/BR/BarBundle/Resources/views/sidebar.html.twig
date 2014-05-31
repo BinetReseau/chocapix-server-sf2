@@ -1,0 +1,76 @@
+{% import _self as menu %}
+{% macro menulink(text, route, params) %}
+	<li><a href="{{path(route, params)}}">{{text}}</a></li>
+{% endmacro %}
+
+{% if user and user.siteAdmin() %}
+	<div class="menu-title">Ma&icirc;tre du site</div>
+	<ul>
+		{{ menu.menulink("Erreurs", "{$globals.baseurl}/site_errors") }}
+		{{ menu.menulink("Log des sessions", "{$globals.baseurl}/admin/logs/sessions") }}
+		{{ menu.menulink("Mails", "{$globals.baseurl}/admin/mails") }}
+		{{ menu.menulink("Les admins", "{$globals.baseurl}/admin/list") }}
+	</ul>
+{% endif %}
+{% if not bar %}
+	{# List all the bars #}
+	<div class="menu-title">Liste des bars</div>
+	<ul>
+		{# {foreach from=$g_barslist item=bar} #}
+			{{ menu.menulink(b.name, "br_bar_barhome", {"bar":b}) }}
+		{# {/foreach} #}
+	</ul>
+{% else %}
+	{# User menu #}
+	{% if user %}
+		<div class="menu-title">{{user}}</div>
+		{% if user.money < 0 %}
+			<div class="menu-subtitle user-red">Solde : {{user.money|price}}</div>
+			<div class="menu-subtitle user-red" style="font-weight:bold;">N&Eacute;GATIF !</div>
+		{% else %}
+			<div class="menu-subtitle">Solde : {{user.money|price}}</div>
+		{% endif %}
+		<ul>
+			{{ menu.menulink("D&eacute;connexion", "{$barbaseurl}/logout") }}
+			{{ menu.menulink("Historique", "{$barbaseurl}/user-home#history") }}
+			{{ menu.menulink("Taxe ext&eacute;rieurs", "{$barbaseurl}/taxext") }}
+			{{ menu.menulink("Don &agrave; tes amis", "{$barbaseurl}/donate") }}
+			{{ menu.menulink("Configuration", "{$barbaseurl}/user-edit/{user.uid}") }}
+			{{ menu.menulink("Adresse IP", "{$barbaseurl}/ip") }}
+		</ul>
+		{% if user.isAdmin() %}
+			<div class="menu-title">Administration</div>
+			<ul>
+				{{ menu.menulink("Rentre une appro", "{$barbaseurl}/new-provision") }}
+				{{ menu.menulink("Inventaire", "{$barbaseurl}/inventory") }}
+				{{ menu.menulink("Comptabilit&eacute;", "{$barbaseurl}/how-much") }}
+				{{ menu.menulink("Nouvel utilisateur", "{$barbaseurl}/user-add") }}
+				{{ menu.menulink("Nouvel aliment", "{$barbaseurl}/alim-add") }}
+				{{ menu.menulink("Param&egrave;tres du bar", "{$barbaseurl}/settings") }}
+				{{ menu.menulink("Aliments invisibles", "{$barbaseurl}/aliments-invisible") }}
+			</ul>
+		{% endif %}
+	{% endif %}
+
+	<div class="menu-title">Bar</div>
+	<ul>
+		{{ menu.menulink("Page d'accueil", "{$barbaseurl}") }}
+		{{ menu.menulink("Historique", "{$barbaseurl}/history") }}
+	</ul>
+
+	<div class="menu-title">Aliments</div>
+	<ul>
+		{{ menu.menulink("Liste", "{$barbaseurl}/aliments") }}
+		{{ menu.menulink("Aliments open", "{$barbaseurl}/aliments-open") }}
+		{{ menu.menulink("Appros", "{$barbaseurl}/provision") }}
+		{{ menu.menulink("Vols r&eacute;cents", "{$barbaseurl}/stolen-products") }}
+		{{ menu.menulink("Meilleurs aliments", "{$barbaseurl}/aliments-top") }}
+	</ul>
+
+	<div class="menu-title">Utilisateurs</div>
+	<ul>
+		{{ menu.menulink("Liste", "{$barbaseurl}/users") }}
+		{{ menu.menulink("Mauvais payeurs", "{$barbaseurl}/the-bad-guys") }}
+		{{ menu.menulink("Meilleurs consommateurs", "{$barbaseurl}/users-top") }}
+	</ul>
+{% endif %}

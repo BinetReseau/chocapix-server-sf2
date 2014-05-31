@@ -1,0 +1,9 @@
+{% extends "BRBarBundle::base.html.twig" %}
+
+{% block content %}
+	<ul>
+	{% for food in foods %}
+	    <li>{{food.name}} costs {{food.price}}</li>
+	{% endfor %}
+	</ul>
+{% endblock %}
