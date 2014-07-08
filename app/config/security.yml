@@ -9,7 +9,9 @@ security:
 
     providers:
         administrators:
-            entity: { class: BRBarBundle:User, property: username }
+            entity:
+                class: BR\BarBundle\Entity\User\User
+                property: username
 
 
     firewalls:
