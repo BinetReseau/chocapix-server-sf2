@@ -1,8 +1,10 @@
 <?php
 namespace BR\BarBundle\Entity\Auth\OAuth;
 
-use FOS\OAuthServerBundle\Entity\RefreshToken as BaseRefreshToken;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\OAuthServerBundle\Entity\RefreshToken as BaseRefreshToken;
+use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\OAuthServerBundle\Model\ClientInterface;
 
 /**
  * @ORM\Entity
@@ -28,25 +30,14 @@ class RefreshToken extends BaseRefreshToken
      */
     protected $user;
 
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
+    public function setUser(UserInterface $user = null)
     {
-        return $this->id;
+        $this->user = $user;
+
+        return $this;
     }
 
-    /**
-     * Set client
-     *
-     * @param \BR\BarBundle\Entity\Auth\OAuth\Client $client
-     * @return RefreshToken
-     */
-    public function setClient(\BR\BarBundle\Entity\Auth\OAuth\Client $client)
+    public function setClient(ClientInterface $client)
     {
         $this->client = $client;
 
@@ -54,9 +45,19 @@ class RefreshToken extends BaseRefreshToken
     }
 
     /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Get client
      *
-     * @return \BR\BarBundle\Entity\Auth\OAuth\Client 
+     * @return \BR\BarBundle\Entity\Auth\OAuth\Client
      */
     public function getClient()
     {
@@ -64,22 +65,9 @@ class RefreshToken extends BaseRefreshToken
     }
 
     /**
-     * Set user
-     *
-     * @param \BR\BarBundle\Entity\Auth\User $user
-     * @return RefreshToken
-     */
-    public function setUser(\BR\BarBundle\Entity\Auth\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
      * Get user
      *
-     * @return \BR\BarBundle\Entity\Auth\User 
+     * @return \BR\BarBundle\Entity\Auth\User
      */
     public function getUser()
     {

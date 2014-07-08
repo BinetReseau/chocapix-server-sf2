@@ -1,8 +1,10 @@
 <?php
 namespace BR\BarBundle\Entity\Auth\OAuth;
 
-use FOS\OAuthServerBundle\Entity\AuthCode as BaseAuthCode;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\OAuthServerBundle\Entity\AuthCode as BaseAuthCode;
+use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\OAuthServerBundle\Model\ClientInterface;
 
 /**
  * @ORM\Entity
@@ -28,6 +30,19 @@ class AuthCode extends BaseAuthCode
      */
     protected $user;
 
+    public function setUser(UserInterface $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    public function setClient(ClientInterface $client)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
 
     /**
      * Get id
@@ -40,19 +55,6 @@ class AuthCode extends BaseAuthCode
     }
 
     /**
-     * Set client
-     *
-     * @param \BR\BarBundle\Entity\Auth\OAuth\Client $client
-     * @return AuthCode
-     */
-    public function setClient(\BR\BarBundle\Entity\Auth\OAuth\Client $client)
-    {
-        $this->client = $client;
-
-        return $this;
-    }
-
-    /**
      * Get client
      *
      * @return \BR\BarBundle\Entity\Auth\OAuth\Client 
@@ -60,19 +62,6 @@ class AuthCode extends BaseAuthCode
     public function getClient()
     {
         return $this->client;
-    }
-
-    /**
-     * Set user
-     *
-     * @param \BR\BarBundle\Entity\Auth\User $user
-     * @return AuthCode
-     */
-    public function setUser(\BR\BarBundle\Entity\Auth\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
     }
 
     /**

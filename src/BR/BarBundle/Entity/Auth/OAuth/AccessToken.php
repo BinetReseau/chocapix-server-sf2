@@ -1,8 +1,10 @@
 <?php
 namespace BR\BarBundle\Entity\Auth\OAuth;
 
-use FOS\OAuthServerBundle\Entity\AccessToken as BaseAccessToken;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\OAuthServerBundle\Entity\AccessToken as BaseAccessToken;
+use Symfony\Component\Security\Core\User\UserInterface;
+use FOS\OAuthServerBundle\Model\ClientInterface;
 
 /**
  * @ORM\Entity
@@ -28,24 +30,14 @@ class AccessToken extends BaseAccessToken
      */
     protected $user;
 
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
+    public function setUser(UserInterface $user = null)
     {
-        return $this->id;
+        $this->user = $user;
+
+        return $this;
     }
 
-    /**
-     * Set client
-     *
-     * @param \BR\BarBundle\Entity\Auth\OAuth\Client $client
-     * @return AccessToken
-     */
-    public function setClient(\BR\BarBundle\Entity\Auth\OAuth\Client $client)
+    public function setClient(ClientInterface $client)
     {
         $this->client = $client;
 
@@ -53,9 +45,19 @@ class AccessToken extends BaseAccessToken
     }
 
     /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Get client
      *
-     * @return \BR\BarBundle\Entity\Auth\OAuth\Client 
+     * @return \BR\BarBundle\Entity\Auth\OAuth\Client
      */
     public function getClient()
     {
@@ -63,22 +65,9 @@ class AccessToken extends BaseAccessToken
     }
 
     /**
-     * Set user
-     *
-     * @param \BR\BarBundle\Entity\Auth\User $user
-     * @return AccessToken
-     */
-    public function setUser(\BR\BarBundle\Entity\Auth\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
      * Get user
      *
-     * @return \BR\BarBundle\Entity\Auth\User 
+     * @return \BR\BarBundle\Entity\Auth\User
      */
     public function getUser()
     {
