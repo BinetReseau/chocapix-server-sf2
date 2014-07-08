@@ -1,11 +1,12 @@
 <?php
 namespace BR\BarBundle\Entity\Auth\OAuth;
 
-use FOS\OAuthServerBundle\Entity\Client as BaseClient;
 use Doctrine\ORM\Mapping as ORM;
+use FOS\OAuthServerBundle\Entity\Client as BaseClient;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="OAuth_Client")
  */
 class Client extends BaseClient
 {
@@ -19,5 +20,16 @@ class Client extends BaseClient
     public function __construct()
     {
         parent::__construct();
+    }
+
+
+    /**
+     * Get id
+     *
+     * @return integer
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }
