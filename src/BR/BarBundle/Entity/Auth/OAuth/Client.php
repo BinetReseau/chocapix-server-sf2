@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
+ * @ORM\Table(name="OAuth_Client")
  */
 class Client extends BaseClient
 {
@@ -19,5 +20,17 @@ class Client extends BaseClient
     public function __construct()
     {
         parent::__construct();
+    }
+
+
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }
