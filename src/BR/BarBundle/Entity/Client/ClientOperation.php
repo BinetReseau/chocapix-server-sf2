@@ -1,11 +1,11 @@
 <?php
-namespace BR\BarBundle\Entity\User;
+namespace BR\BarBundle\Entity\Client;
 
 use Doctrine\ORM\Mapping as ORM;
 use BR\BarBundle\Entity\Transaction as Transaction;
 
 /** @ORM\Entity */
-class UserOperation
+class ClientOperation
 {
     /** @ORM\Id @ORM\Column(type="integer") */
     private $id;
@@ -13,7 +13,7 @@ class UserOperation
     /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Transaction") */
     private $transaction;
 
-    /** @ORM\ManyToOne(targetEntity="User") */
+    /** @ORM\ManyToOne(targetEntity="Client") */
     private $user;
 
     /** @ORM\Column(type="decimal") */
@@ -21,11 +21,12 @@ class UserOperation
     /** @ORM\Column(type="decimal") */
     private $newmoney;
 
+
     /**
      * Set id
      *
      * @param integer $id
-     * @return UserOperation
+     * @return ClientOperation
      */
     public function setId($id)
     {
@@ -37,7 +38,7 @@ class UserOperation
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -48,7 +49,7 @@ class UserOperation
      * Set deltamoney
      *
      * @param string $deltamoney
-     * @return UserOperation
+     * @return ClientOperation
      */
     public function setDeltamoney($deltamoney)
     {
@@ -60,7 +61,7 @@ class UserOperation
     /**
      * Get deltamoney
      *
-     * @return string
+     * @return string 
      */
     public function getDeltamoney()
     {
@@ -71,7 +72,7 @@ class UserOperation
      * Set newmoney
      *
      * @param string $newmoney
-     * @return UserOperation
+     * @return ClientOperation
      */
     public function setNewmoney($newmoney)
     {
@@ -83,7 +84,7 @@ class UserOperation
     /**
      * Get newmoney
      *
-     * @return string
+     * @return string 
      */
     public function getNewmoney()
     {
@@ -93,10 +94,10 @@ class UserOperation
     /**
      * Set transaction
      *
-     * @param \BR\BarBundle\Entity\User\Transaction $transaction
-     * @return UserOperation
+     * @param \BR\BarBundle\Entity\Transaction $transaction
+     * @return ClientOperation
      */
-    public function setTransaction(\BR\BarBundle\Entity\User\Transaction $transaction = null)
+    public function setTransaction(\BR\BarBundle\Entity\Transaction $transaction = null)
     {
         $this->transaction = $transaction;
 
@@ -106,7 +107,7 @@ class UserOperation
     /**
      * Get transaction
      *
-     * @return \BR\BarBundle\Entity\User\Transaction
+     * @return \BR\BarBundle\Entity\Transaction 
      */
     public function getTransaction()
     {
@@ -116,10 +117,10 @@ class UserOperation
     /**
      * Set user
      *
-     * @param \BR\BarBundle\Entity\User\User $user
-     * @return UserOperation
+     * @param \BR\BarBundle\Entity\Client\Client $user
+     * @return ClientOperation
      */
-    public function setUser(\BR\BarBundle\Entity\User\User $user = null)
+    public function setUser(\BR\BarBundle\Entity\Client\Client $user = null)
     {
         $this->user = $user;
 
@@ -129,7 +130,7 @@ class UserOperation
     /**
      * Get user
      *
-     * @return \BR\BarBundle\Entity\User\User
+     * @return \BR\BarBundle\Entity\Client\Client 
      */
     public function getUser()
     {

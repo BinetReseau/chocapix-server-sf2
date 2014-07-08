@@ -1,11 +1,11 @@
 <?php
-namespace BR\BarBundle\Entity\Food;
+namespace BR\BarBundle\Entity\Stock;
 
 use Doctrine\ORM\Mapping as ORM;
 use BR\BarBundle\Entity\Transaction as Transaction;
 
 /** @ORM\Entity */
-class FoodOperation
+class StockOperation
 {
     /** @ORM\Id @ORM\Column(type="integer") */
     private $id;
@@ -13,19 +13,21 @@ class FoodOperation
     /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Transaction") */
     private $transaction;
 
-    /** @ORM\ManyToOne(targetEntity="Food") */
-    private $food;
+    /** @ORM\ManyToOne(targetEntity="StockItem") */
+    private $item;
 
     /** @ORM\Column(type="decimal") */
     private $deltaqty;
+
     /** @ORM\Column(type="decimal") */
     private $newqty;
+
 
     /**
      * Set id
      *
      * @param integer $id
-     * @return FoodOperation
+     * @return StockOperation
      */
     public function setId($id)
     {
@@ -37,7 +39,7 @@ class FoodOperation
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -48,7 +50,7 @@ class FoodOperation
      * Set deltaqty
      *
      * @param string $deltaqty
-     * @return FoodOperation
+     * @return StockOperation
      */
     public function setDeltaqty($deltaqty)
     {
@@ -60,7 +62,7 @@ class FoodOperation
     /**
      * Get deltaqty
      *
-     * @return string
+     * @return string 
      */
     public function getDeltaqty()
     {
@@ -71,7 +73,7 @@ class FoodOperation
      * Set newqty
      *
      * @param string $newqty
-     * @return FoodOperation
+     * @return StockOperation
      */
     public function setNewqty($newqty)
     {
@@ -83,7 +85,7 @@ class FoodOperation
     /**
      * Get newqty
      *
-     * @return string
+     * @return string 
      */
     public function getNewqty()
     {
@@ -93,10 +95,10 @@ class FoodOperation
     /**
      * Set transaction
      *
-     * @param \BR\BarBundle\Entity\Food\Transaction $transaction
-     * @return FoodOperation
+     * @param \BR\BarBundle\Entity\Transaction $transaction
+     * @return StockOperation
      */
-    public function setTransaction(\BR\BarBundle\Entity\Food\Transaction $transaction = null)
+    public function setTransaction(\BR\BarBundle\Entity\Transaction $transaction = null)
     {
         $this->transaction = $transaction;
 
@@ -106,7 +108,7 @@ class FoodOperation
     /**
      * Get transaction
      *
-     * @return \BR\BarBundle\Entity\Food\Transaction
+     * @return \BR\BarBundle\Entity\Transaction 
      */
     public function getTransaction()
     {
@@ -114,25 +116,25 @@ class FoodOperation
     }
 
     /**
-     * Set food
+     * Set item
      *
-     * @param \BR\BarBundle\Entity\Food\Food $food
-     * @return FoodOperation
+     * @param \BR\BarBundle\Entity\Stock\StockItem $item
+     * @return StockOperation
      */
-    public function setFood(\BR\BarBundle\Entity\Food\Food $food = null)
+    public function setItem(\BR\BarBundle\Entity\Stock\StockItem $item = null)
     {
-        $this->food = $food;
+        $this->item = $item;
 
         return $this;
     }
 
     /**
-     * Get food
+     * Get item
      *
-     * @return \BR\BarBundle\Entity\Food\Food
+     * @return \BR\BarBundle\Entity\Stock\StockItem 
      */
-    public function getFood()
+    public function getItem()
     {
-        return $this->food;
+        return $this->item;
     }
 }

@@ -1,5 +1,5 @@
 <?php
-namespace BR\BarBundle\Entity\User;
+namespace BR\BarBundle\Entity\Client;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -9,13 +9,14 @@ class Friend
     /** @ORM\Id @ORM\Column(type="integer") */
     private $id;
 
-    /** @ORM\ManyToOne(targetEntity="User") */
-    private $user1;
-    /** @ORM\ManyToOne(targetEntity="User") */
-    private $user2;
+    /** @ORM\ManyToOne(targetEntity="Client") */
+    private $client1;
+    /** @ORM\ManyToOne(targetEntity="Client") */
+    private $client2;
 
     /** @ORM\Column(type="integer") */
     private $relationcount;
+
 
     /**
      * Set id
@@ -64,48 +65,48 @@ class Friend
     }
 
     /**
-     * Set user1
+     * Set client1
      *
-     * @param \BR\BarBundle\Entity\User\User $user1
+     * @param \BR\BarBundle\Entity\Client\Client $client1
      * @return Friend
      */
-    public function setUser1(\BR\BarBundle\Entity\User\User $user1 = null)
+    public function setClient1(\BR\BarBundle\Entity\Client\Client $client1 = null)
     {
-        $this->user1 = $user1;
+        $this->client1 = $client1;
 
         return $this;
     }
 
     /**
-     * Get user1
+     * Get client1
      *
-     * @return \BR\BarBundle\Entity\User\User 
+     * @return \BR\BarBundle\Entity\Client\Client 
      */
-    public function getUser1()
+    public function getClient1()
     {
-        return $this->user1;
+        return $this->client1;
     }
 
     /**
-     * Set user2
+     * Set client2
      *
-     * @param \BR\BarBundle\Entity\User\User $user2
+     * @param \BR\BarBundle\Entity\Client\Client $client2
      * @return Friend
      */
-    public function setUser2(\BR\BarBundle\Entity\User\User $user2 = null)
+    public function setClient2(\BR\BarBundle\Entity\Client\Client $client2 = null)
     {
-        $this->user2 = $user2;
+        $this->client2 = $client2;
 
         return $this;
     }
 
     /**
-     * Get user2
+     * Get client2
      *
-     * @return \BR\BarBundle\Entity\User\User 
+     * @return \BR\BarBundle\Entity\Client\Client 
      */
-    public function getUser2()
+    public function getClient2()
     {
-        return $this->user2;
+        return $this->client2;
     }
 }

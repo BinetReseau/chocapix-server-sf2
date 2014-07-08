@@ -2,27 +2,62 @@
 namespace BR\BarBundle\Entity\User;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /** @ORM\Entity */
-/* @ORM\Entity(repositoryClass="BR\BarBundle\Entity\User\UserRepository") */
-class User
+class User implements UserInterface
 {
     /** @ORM\Id @ORM\Column(type="integer") */
     private $id;
 
 
-    /** @ORM\Column(type="string", length=255) */
+    /** @ORM\Column(type="string", length=50) */
     private $name;
 
-    /** @ORM\Column(type="string", length=255) */
+    /** @ORM\Column(type="simple_array") */
+    private $roles;
+
+
+    /** @ORM\Column(type="string", length=64) */
     private $pwd;
 
-    /** @ORM\Column(type="string", length=255) */
+    /** @ORM\Column(type="string", length=50, unique=true) */
     private $login;
 
 
-    /** @ORM\Column(type="decimal") */
-    private $money;
+    /** @ORM\OneToOne(targetEntity="\BR\BarBundle\Entity\Client\Client") */
+    private $client;
+
+
+    public function __construct()
+    {
+        $this->roles = array('ROLE_USER');
+    }
+
+
+    public function getUsername()
+    {
+        return $this->login;
+    }
+
+    public function getSalt()
+    {
+        return null;
+    }
+
+    public function getPassword()
+    {
+        return $this->password;
+    }
+
+    public function getRoles()
+    {
+        return $this->roles;
+    }
+
+    public function eraseCredentials()
+    {
+    }
 
     /**
      * Set id
@@ -40,7 +75,7 @@ class User
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -63,11 +98,24 @@ class User
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set roles
+     *
+     * @param array $roles
+     * @return User
+     */
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
     /**
@@ -86,7 +134,7 @@ class User
     /**
      * Get pwd
      *
-     * @return string 
+     * @return string
      */
     public function getPwd()
     {
@@ -109,7 +157,7 @@ class User
     /**
      * Get login
      *
-     * @return string 
+     * @return string
      */
     public function getLogin()
     {
@@ -117,25 +165,25 @@ class User
     }
 
     /**
-     * Set money
+     * Set client
      *
-     * @param string $money
+     * @param \BR\BarBundle\Entity\Client\Client $client
      * @return User
      */
-    public function setMoney($money)
+    public function setClient(\BR\BarBundle\Entity\Client\Client $client = null)
     {
-        $this->money = $money;
+        $this->client = $client;
 
         return $this;
     }
 
     /**
-     * Get money
+     * Get client
      *
-     * @return string 
+     * @return \BR\BarBundle\Entity\Client\Client
      */
-    public function getMoney()
+    public function getClient()
     {
-        return $this->money;
+        return $this->client;
     }
 }

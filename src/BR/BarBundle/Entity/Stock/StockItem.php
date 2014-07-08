@@ -1,11 +1,11 @@
 <?php
-namespace BR\BarBundle\Entity\Food;
+namespace BR\BarBundle\Entity\Stock;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /** @ORM\Entity */
-/* @ORM\Entity(repositoryClass="BR\BarBundle\Entity\Food\FoodRepository") */
-class Food
+/* @ORM\Entity(repositoryClass="BR\BarBundle\Entity\Stock\StockRepository") */
+class StockItem
 {
     /** @ORM\Id @ORM\Column(type="integer") */
     private $id;
@@ -27,11 +27,12 @@ class Food
     /** @ORM\Column(type="decimal") */
     private $tax;
 
+
     /**
      * Set id
      *
      * @param integer $id
-     * @return Food
+     * @return StockItem
      */
     public function setId($id)
     {
@@ -54,7 +55,7 @@ class Food
      * Set name
      *
      * @param string $name
-     * @return Food
+     * @return StockItem
      */
     public function setName($name)
     {
@@ -77,7 +78,7 @@ class Food
      * Set qty
      *
      * @param string $qty
-     * @return Food
+     * @return StockItem
      */
     public function setQty($qty)
     {
@@ -100,7 +101,7 @@ class Food
      * Set unit
      *
      * @param string $unit
-     * @return Food
+     * @return StockItem
      */
     public function setUnit($unit)
     {
@@ -123,7 +124,7 @@ class Food
      * Set price
      *
      * @param string $price
-     * @return Food
+     * @return StockItem
      */
     public function setPrice($price)
     {
@@ -146,7 +147,7 @@ class Food
      * Set tax
      *
      * @param string $tax
-     * @return Food
+     * @return StockItem
      */
     public function setTax($tax)
     {
