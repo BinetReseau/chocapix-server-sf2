@@ -12,7 +12,7 @@ class FoodController extends FOSRestController {
 	/** @Get("/{bar}/food") */
 	public function getFoodsAction(Request $request, $bar) {
 		$repository = $this->getDoctrine()
-				->getRepository('BRBarBundle:Food\Food');
+				->getRepository('BRBarBundle:Stock\StockItem');
 
 		$foods = $repository->createQueryBuilder('f')
 				->orderBy('f.name', 'ASC')
@@ -24,7 +24,7 @@ class FoodController extends FOSRestController {
 	/** @Get("/{bar}/food/{id}") */
 	public function getFoodAction(Request $request, $bar, $id) {
 		$repository = $this->getDoctrine()
-				->getRepository('BRBarBundle:Food\Food');
+				->getRepository('BRBarBundle:Stock\StockItem');
 
 		$food = $repository->find($id);
 
@@ -34,7 +34,7 @@ class FoodController extends FOSRestController {
 	/** @Get("/{bar}/food/search/{q}") */
 	public function searchFoodsAction(Request $request, $bar, $q) {
 		$repository = $this->getDoctrine()
-				->getRepository('BRBarBundle:Food\Food');
+				->getRepository('BRBarBundle:Stock\StockItem');
 
 		$foods = $repository->createQueryBuilder('f')
 				->where('f.name LIKE :q')

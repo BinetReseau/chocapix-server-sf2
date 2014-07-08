@@ -1,6 +1,6 @@
 security:
     encoders:
-        Acme\UserBundle\Entity\User:
+        BR\BarBundle\Entity\Auth\User:
             algorithm: bcrypt
 
     role_hierarchy:
@@ -9,13 +9,14 @@ security:
 
     providers:
         administrators:
-            entity: { class: AcmeUserBundle:User, property: username }
+            entity: { class: BRBarBundle:User, property: username }
+
 
     firewalls:
-        static:
-            pattern:  ^/[^/]+/admin/
-            security: false
-
+        main:
+            pattern: ^/
+            stateless:  true
+            http_basic: ~
 
 #         dev:
 #             pattern:  ^/(_(profiler|wdt)|css|images|js)/
