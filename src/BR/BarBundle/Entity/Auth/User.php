@@ -1,7 +1,8 @@
 <?php
-namespace BR\BarBundle\Entity\User;
+namespace BR\BarBundle\Entity\Auth;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /** @ORM\Entity */
@@ -14,7 +15,7 @@ class User implements UserInterface
     /** @ORM\Column(type="string", length=50) */
     private $name;
 
-    /** @ORM\Column(type="simple_array") */
+    /** @ORM\ManyToMany(targetEntity="Role", fetch="EAGER") */
     private $roles;
 
 
@@ -31,7 +32,7 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->roles = array('ROLE_USER');
+        $this->roles = new ArrayCollection();
     }
 
 
@@ -47,12 +48,12 @@ class User implements UserInterface
 
     public function getPassword()
     {
-        return $this->password;
+        return $this->pwd;
     }
 
     public function getRoles()
     {
-        return $this->roles;
+        return $this->roles->toArray();
     }
 
     public function eraseCredentials()
@@ -185,5 +186,28 @@ class User implements UserInterface
     public function getClient()
     {
         return $this->client;
+    }
+
+    /**
+     * Add roles
+     *
+     * @param \BR\BarBundle\Entity\Auth\Role $roles
+     * @return User
+     */
+    public function addRole(\BR\BarBundle\Entity\Auth\Role $roles)
+    {
+        $this->roles[] = $roles;
+
+        return $this;
+    }
+
+    /**
+     * Remove roles
+     *
+     * @param \BR\BarBundle\Entity\Auth\Role $roles
+     */
+    public function removeRole(\BR\BarBundle\Entity\Auth\Role $roles)
+    {
+        $this->roles->removeElement($roles);
     }
 }

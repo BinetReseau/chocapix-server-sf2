@@ -11,12 +11,20 @@ security:
         administrators:
             entity: { class: BRBarBundle:User, property: username }
 
-
     firewalls:
+        oauth_token:
+            pattern:    ^/oauth/v2/token
+            security:   false
+
+        oauth_authorize:
+            pattern:    ^/oauth/v2/auth
+            http_basic: ~ # Add your favorite authentication process here
+
         main:
-            pattern: ^/
+            pattern:    ^/
+            fos_oauth:  true
             stateless:  true
-            http_basic: ~
+            anonymous:  true
 
 #         dev:
 #             pattern:  ^/(_(profiler|wdt)|css|images|js)/
