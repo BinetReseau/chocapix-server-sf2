@@ -70,6 +70,7 @@ swiftmailer:
     password:  "%mailer_password%"
     spool:     { type: memory }
 
+# FOS REST API Configuration
 fos_rest:
     view:
         force_redirects:
@@ -82,3 +83,11 @@ fos_rest:
         jsonp_handler: ~
     routing_loader:
         default_format: json
+
+# FOS OAuth Server Configuration
+fos_oauth_server:
+    db_driver:           orm
+    client_class:        BR/BarBundle\Entity\Auth\OAuth\Client
+    access_token_class:  BR/BarBundle\Entity\Auth\OAuth\AccessToken
+    refresh_token_class: BR/BarBundle\Entity\Auth\OAuth\RefreshToken
+    auth_code_class:     BR/BarBundle\Entity\Auth\OAuth\AuthCode
