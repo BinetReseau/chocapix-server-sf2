@@ -21,7 +21,7 @@ class StockItem
     /** @ORM\Column(type="string", length=255) */
     private $unit;
 
-    /** @ORM\Column(type="decimal") */
+    /** @ORM\Column(type="decimal", scale=3) */
     private $price;
 
     /** @ORM\Column(type="decimal") */
@@ -31,6 +31,9 @@ class StockItem
      *  @ORM\JoinColumn(name="bar", referencedColumnName="name")
      */
     private $bar;
+    
+    /** @ORM\Column(type="text") */
+    private $keywords;
 
 
     /**
@@ -192,5 +195,28 @@ class StockItem
     public function getBar()
     {
         return $this->bar;
+    }
+
+    /**
+     * Set keywords
+     *
+     * @param string $keywords
+     * @return StockItem
+     */
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
+
+        return $this;
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return string 
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
     }
 }

@@ -14,4 +14,17 @@ class Bar
     {
         return $this->name;
     }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return Bar
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
 }
