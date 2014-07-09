@@ -28,7 +28,7 @@ class StockItem
     private $tax;
     
     /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar")
-     *  @ORM\JoinColumn(name="bar", referencedColumnName="name")
+     *  @ORM\JoinColumn(name="bar", referencedColumnName="id")
      */
     private $bar;
     

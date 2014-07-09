@@ -28,6 +28,11 @@ class User implements UserInterface
 
     /** @ORM\OneToOne(targetEntity="\BR\BarBundle\Entity\Client\Client") */
     private $client;
+    
+    /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar")
+     *  @ORM\JoinColumn(name="bar", referencedColumnName="id")
+     */
+    private $bar;
 
 
     public function __construct()
@@ -209,5 +214,28 @@ class User implements UserInterface
     public function removeRole(\BR\BarBundle\Entity\Auth\Role $roles)
     {
         $this->roles->removeElement($roles);
+    }
+
+    /**
+     * Set bar
+     *
+     * @param \BR\BarBundle\Entity\Bar $bar
+     * @return User
+     */
+    public function setBar(\BR\BarBundle\Entity\Bar $bar = null)
+    {
+        $this->bar = $bar;
+
+        return $this;
+    }
+
+    /**
+     * Get bar
+     *
+     * @return \BR\BarBundle\Entity\Bar 
+     */
+    public function getBar()
+    {
+        return $this->bar;
     }
 }

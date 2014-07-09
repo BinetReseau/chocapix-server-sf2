@@ -8,6 +8,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Bar
 {
     /** @ORM\Id @ORM\Column(type="string") */
+    private $id;
+    
+    /** @ORM\Column(type="string") */
     private $name;
 
     public function getName()
@@ -26,5 +29,28 @@ class Bar
         $this->name = $name;
 
         return $this;
+    }
+
+    /**
+     * Set id
+     *
+     * @param string $id
+     * @return Bar
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+
+    /**
+     * Get id
+     *
+     * @return string 
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }
