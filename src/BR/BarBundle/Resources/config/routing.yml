@@ -2,9 +2,9 @@ br_bar_food:
     type:     rest
     resource: BR\BarBundle\Controller\FoodController
 
-# br_bar_user:
-#     type:     rest
-#     resource: BR\BarBundle\Controller\UserController
+br_bar_user:
+    type:     rest
+    resource: BR\BarBundle\Controller\UserController
 
 br_bar_auth:
     type:     rest
