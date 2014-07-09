@@ -10,7 +10,7 @@ security:
     providers:
         administrators:
             entity:
-                class: BR\BarBundle\Entity\User\User
+                class: BR\BarBundle\Entity\Auth\User
                 property: username
 
     firewalls:
