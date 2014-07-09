@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /* @ORM\Entity(repositoryClass="BR\BarBundle\Entity\BarRepository") */
 class Bar
 {
-    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
+    /** @ORM\Id @ORM\Column(type="string") */
     private $id;
 
     /** @ORM\Column(type="string") */
