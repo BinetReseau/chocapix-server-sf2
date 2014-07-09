@@ -4,7 +4,6 @@ namespace BR\BarBundle\Entity\Client;
 use Doctrine\ORM\Mapping as ORM;
 
 /** @ORM\Entity */
-/* @ORM\Entity(repositoryClass="BR\BarBundle\Entity\Client\ClientRepository") */
 class Client
 {
     /** @ORM\Id @ORM\Column(type="integer") */
@@ -30,7 +29,7 @@ class Client
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -53,7 +52,7 @@ class Client
     /**
      * Get money
      *
-     * @return string 
+     * @return string
      */
     public function getMoney()
     {
