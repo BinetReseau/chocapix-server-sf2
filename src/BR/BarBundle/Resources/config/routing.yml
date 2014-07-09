@@ -1,3 +1,7 @@
+br_bar_bar:
+    type:     rest
+    resource: BR\BarBundle\Controller\BarController
+
 br_bar_food:
     type:     rest
     resource: BR\BarBundle\Controller\FoodController
@@ -9,36 +13,3 @@ br_bar_user:
 br_bar_auth:
     type:     rest
     resource: BR\BarBundle\Controller\AuthController
-
-
-# br_bar_index:
-#     path:  /
-#     defaults:
-#         _controller: BRBarBundle:Default:index
-#         bar: ""
-# br_bar_barhome:
-#     path:  /{bar}
-#     defaults:
-#         _controller: BRBarBundle:Default:barHome
-#         bar: ""
-
-# br_bar_users:
-#     path:  /{bar}/user
-#     defaults:
-#         _controller: BRBarBundle:User:getUsers
-# br_bar_user:
-#     path:  /{bar}/user/{id}
-#     defaults:
-#         _controller: BRBarBundle:User:getUser
-# br_bar_foods:
-#     path:  /{bar}/food
-#     defaults:
-#         _controller: BRBarBundle:Food:getFoods
-# br_bar_foodsearch:
-#     path:  /{bar}/food/search/{query}
-#     defaults:
-#         _controller: BRBarBundle:Food:searchFoods
-# br_bar_food:
-#     path:  /{bar}/food/{id}
-#     defaults:
-#         _controller: BRBarBundle:Food:getFood
