@@ -15,7 +15,9 @@ class FoodController extends FOSRestController {
 				->getRepository('BRBarBundle:Stock\StockItem');
 
 		$foods = $repository->createQueryBuilder('f')
+		        ->where('f.bar = :bar')
 				->orderBy('f.name', 'ASC')
+				->setParameter('bar', $bar)
 				->getQuery()->getResult();
 
 		return $this->handleView($this->view($foods, 200));

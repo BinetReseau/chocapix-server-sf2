@@ -26,6 +26,11 @@ class StockItem
 
     /** @ORM\Column(type="decimal") */
     private $tax;
+    
+    /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar")
+     *  @ORM\JoinColumn(name="bar", referencedColumnName="name")
+     */
+    private $bar;
 
 
     /**
@@ -164,5 +169,28 @@ class StockItem
     public function getTax()
     {
         return $this->tax;
+    }
+    
+    /**
+     * Set bar
+     *
+     * @param \BR\BarBundle\Entity\Bar $bar
+     * @return StockItem
+     */
+    public function setBar(\BR\BarBundle\Entity\Bar $bar = null)
+    {
+        $this->bar = $bar;
+
+        return $this;
+    }
+
+    /**
+     * Get bar
+     *
+     * @return \BR\BarBundle\Entity\Bar 
+     */
+    public function getBar()
+    {
+        return $this->bar;
     }
 }
