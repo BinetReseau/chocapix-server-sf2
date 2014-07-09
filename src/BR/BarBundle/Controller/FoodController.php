@@ -40,8 +40,10 @@ class FoodController extends FOSRestController {
 
 		$foods = $repository->createQueryBuilder('f')
 				->where('f.name LIKE :q')
+				->orWhere('f.keywords LIKE :q2')
 				->orderBy('f.name', 'ASC')
 				->setParameter('q', '%'.$q.'%')
+				->setParameter('q2', '%'.$q.'%')
 				->getQuery()->getResult();
 
 		return $this->handleView($this->view($foods, 200));
