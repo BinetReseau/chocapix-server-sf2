@@ -9,9 +9,7 @@ security:
 
     providers:
         administrators:
-            entity:
-                class: BR\BarBundle\Entity\Auth\User
-                property: username
+            entity: { class: BRBarBundle:Auth\User, property: username }
 
     firewalls:
         oauth_token:
