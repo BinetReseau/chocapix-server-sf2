@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /* @ORM\Entity(repositoryClass="BR\BarBundle\Entity\Stock\StockRepository") */
 class StockItem
 {
-    /** @ORM\Id @ORM\Column(type="integer") */
+    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
     private $id;
 
 
@@ -26,12 +26,12 @@ class StockItem
 
     /** @ORM\Column(type="decimal") */
     private $tax;
-    
+
     /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar")
      *  @ORM\JoinColumn(name="bar", referencedColumnName="id")
      */
     private $bar;
-    
+
     /** @ORM\Column(type="text") */
     private $keywords;
 
@@ -52,7 +52,7 @@ class StockItem
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -75,7 +75,7 @@ class StockItem
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -98,7 +98,7 @@ class StockItem
     /**
      * Get qty
      *
-     * @return string 
+     * @return string
      */
     public function getQty()
     {
@@ -121,7 +121,7 @@ class StockItem
     /**
      * Get unit
      *
-     * @return string 
+     * @return string
      */
     public function getUnit()
     {
@@ -144,7 +144,7 @@ class StockItem
     /**
      * Get price
      *
-     * @return string 
+     * @return string
      */
     public function getPrice()
     {
@@ -167,13 +167,13 @@ class StockItem
     /**
      * Get tax
      *
-     * @return string 
+     * @return string
      */
     public function getTax()
     {
         return $this->tax;
     }
-    
+
     /**
      * Set bar
      *
@@ -190,7 +190,7 @@ class StockItem
     /**
      * Get bar
      *
-     * @return \BR\BarBundle\Entity\Bar 
+     * @return \BR\BarBundle\Entity\Bar
      */
     public function getBar()
     {
@@ -213,7 +213,7 @@ class StockItem
     /**
      * Get keywords
      *
-     * @return string 
+     * @return string
      */
     public function getKeywords()
     {

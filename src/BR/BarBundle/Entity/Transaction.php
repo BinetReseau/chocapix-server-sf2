@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /* @ORM\Entity(repositoryClass="BR\BarBundle\Entity\TransactionRepository") */
 class Transaction
 {
-    /** @ORM\Id @ORM\Column(type="integer") */
+    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
     private $id;
 
     /** @ORM\Column(type="datetime") */
@@ -32,7 +32,7 @@ class Transaction
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -55,7 +55,7 @@ class Transaction
     /**
      * Get timestamp
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getTimestamp()
     {
@@ -78,7 +78,7 @@ class Transaction
     /**
      * Get type
      *
-     * @return string 
+     * @return string
      */
     public function getType()
     {

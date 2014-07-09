@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /** @ORM\Entity */
 class User implements UserInterface
 {
-    /** @ORM\Id @ORM\Column(type="integer") */
+    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
     private $id;
 
 
@@ -28,7 +28,7 @@ class User implements UserInterface
 
     /** @ORM\OneToOne(targetEntity="\BR\BarBundle\Entity\Client\Client") */
     private $client;
-    
+
     /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar")
      *  @ORM\JoinColumn(name="bar", referencedColumnName="id")
      */
@@ -232,7 +232,7 @@ class User implements UserInterface
     /**
      * Get bar
      *
-     * @return \BR\BarBundle\Entity\Bar 
+     * @return \BR\BarBundle\Entity\Bar
      */
     public function getBar()
     {

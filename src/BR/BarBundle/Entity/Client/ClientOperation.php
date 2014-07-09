@@ -7,7 +7,7 @@ use BR\BarBundle\Entity\Transaction as Transaction;
 /** @ORM\Entity */
 class ClientOperation
 {
-    /** @ORM\Id @ORM\Column(type="integer") */
+    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
     private $id;
 
     /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Transaction") */
@@ -38,7 +38,7 @@ class ClientOperation
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -61,7 +61,7 @@ class ClientOperation
     /**
      * Get deltamoney
      *
-     * @return string 
+     * @return string
      */
     public function getDeltamoney()
     {
@@ -84,7 +84,7 @@ class ClientOperation
     /**
      * Get newmoney
      *
-     * @return string 
+     * @return string
      */
     public function getNewmoney()
     {
@@ -107,7 +107,7 @@ class ClientOperation
     /**
      * Get transaction
      *
-     * @return \BR\BarBundle\Entity\Transaction 
+     * @return \BR\BarBundle\Entity\Transaction
      */
     public function getTransaction()
     {
@@ -130,7 +130,7 @@ class ClientOperation
     /**
      * Get user
      *
-     * @return \BR\BarBundle\Entity\Client\Client 
+     * @return \BR\BarBundle\Entity\Client\Client
      */
     public function getUser()
     {

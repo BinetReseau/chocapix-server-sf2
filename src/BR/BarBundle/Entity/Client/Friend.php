@@ -6,7 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 /** @ORM\Entity */
 class Friend
 {
-    /** @ORM\Id @ORM\Column(type="integer") */
+    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
     private $id;
 
     /** @ORM\ManyToOne(targetEntity="Client") */
@@ -34,7 +34,7 @@ class Friend
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -57,7 +57,7 @@ class Friend
     /**
      * Get relationcount
      *
-     * @return integer 
+     * @return integer
      */
     public function getRelationcount()
     {
@@ -80,7 +80,7 @@ class Friend
     /**
      * Get client1
      *
-     * @return \BR\BarBundle\Entity\Client\Client 
+     * @return \BR\BarBundle\Entity\Client\Client
      */
     public function getClient1()
     {
@@ -103,7 +103,7 @@ class Friend
     /**
      * Get client2
      *
-     * @return \BR\BarBundle\Entity\Client\Client 
+     * @return \BR\BarBundle\Entity\Client\Client
      */
     public function getClient2()
     {

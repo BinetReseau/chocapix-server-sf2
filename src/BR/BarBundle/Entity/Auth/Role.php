@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 /** @ORM\Entity */
 class Role implements RoleInterface
 {
-    /** @ORM\Id @ORM\Column(type="integer") */
+    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
     private $id;
 
     /** @ORM\Column(type="string", length=50) */

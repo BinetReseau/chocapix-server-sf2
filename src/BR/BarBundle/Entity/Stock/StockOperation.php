@@ -7,7 +7,7 @@ use BR\BarBundle\Entity\Transaction as Transaction;
 /** @ORM\Entity */
 class StockOperation
 {
-    /** @ORM\Id @ORM\Column(type="integer") */
+    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
     private $id;
 
     /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Transaction") */
@@ -39,7 +39,7 @@ class StockOperation
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -62,7 +62,7 @@ class StockOperation
     /**
      * Get deltaqty
      *
-     * @return string 
+     * @return string
      */
     public function getDeltaqty()
     {
@@ -85,7 +85,7 @@ class StockOperation
     /**
      * Get newqty
      *
-     * @return string 
+     * @return string
      */
     public function getNewqty()
     {
@@ -108,7 +108,7 @@ class StockOperation
     /**
      * Get transaction
      *
-     * @return \BR\BarBundle\Entity\Transaction 
+     * @return \BR\BarBundle\Entity\Transaction
      */
     public function getTransaction()
     {
@@ -131,7 +131,7 @@ class StockOperation
     /**
      * Get item
      *
-     * @return \BR\BarBundle\Entity\Stock\StockItem 
+     * @return \BR\BarBundle\Entity\Stock\StockItem
      */
     public function getItem()
     {
