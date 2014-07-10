@@ -57,6 +57,7 @@ VALUES
 ('avironjone', 'Steak', 20, '', 0.87, 0);
 
 
-INSERT INTO OAuth_Client
-VALUES
-(1, '66itn4322bggs8wgg0o04wskskc8c4kscwckwos400g4s4ksog', 'a:0:{}', '93t2nvz00k08ks44c88oss8kss8wsc4g4o44kgogso04kg48s', 'a:1:{i:0;s:8:"password";}', 'Bars');
+-- INSERT INTO OAuth_Client
+-- (`id`, `random_id`, `redirect_uris`, `allowed_grant_types`, `name`)
+-- VALUES
+-- (1, '66itn4322bggs8wgg0o04wskskc8c4kscwckwos400g4s4ksog', 'a:0:{}', 'a:1:{i:0;s:8:"password";}', 'Bars');

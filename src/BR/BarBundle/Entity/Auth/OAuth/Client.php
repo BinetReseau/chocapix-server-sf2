@@ -26,11 +26,18 @@ class Client extends BaseClient
         parent::__construct();
     }
 
+    public function checkSecret($secret)
+    {
+        return true;
+        // Use only OAuth password mode, no need of secret. Default behaviour does not work
+    }
+
+
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -53,7 +60,7 @@ class Client extends BaseClient
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
