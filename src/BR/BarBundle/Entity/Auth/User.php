@@ -6,10 +6,15 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /** @ORM\Entity */
-class User implements UserInterface
+class User implements UserInterface, \Serializable
 {
     /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
     private $id;
+
+    /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar")
+     *  @ORM\JoinColumn(name="bar", referencedColumnName="id")
+     */
+    private $bar;
 
 
     /** @ORM\Column(type="string", length=50) */
@@ -19,24 +24,20 @@ class User implements UserInterface
     private $roles;
 
 
-    /** @ORM\Column(type="string", length=64) */
-    private $pwd;
-
     /** @ORM\Column(type="string", length=50, unique=true) */
     private $login;
+
+    /** @ORM\Column(type="string", length=64) */
+    private $pwd;
 
 
     /** @ORM\OneToOne(targetEntity="\BR\BarBundle\Entity\Client\Client") */
     private $client;
 
-    /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar")
-     *  @ORM\JoinColumn(name="bar", referencedColumnName="id")
-     */
-    private $bar;
-
 
     public function __construct()
     {
+        parent::__construct();
         $this->roles = new ArrayCollection();
     }
 
@@ -64,6 +65,29 @@ class User implements UserInterface
     public function eraseCredentials()
     {
     }
+
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->bar,
+            $this->login,
+            $this->pwd
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+            $this->bar,
+            $this->login,
+            $this->pwd
+        ) = unserialize($serialized);
+    }
+
+
 
     /**
      * Set id
