@@ -35,4 +35,8 @@ class DefaultController extends Controller {
 		return $this->render('BRBarBundle:Default:index.html.twig', array('bar' => $bar, 'form' => $form->createView(), 'histories' => $histories));
 	}
 
+	public function defaultAction(Request $request) {
+		return $this->render('BRBarBundle:Default:default.html.twig');
+	}
+
 }
