@@ -1,7 +1,7 @@
 parameters:
-#    br_bar.example.class: BR\BarBundle\Example
+   br_bar.user_provider.class: BR\BarBundle\Security\UserProvider
 
 services:
-#    br_bar.example:
-#        class: %br_bar.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+   br_bar.user_provider:
+       class: %br_bar.user_provider.class%
+       arguments: ['@doctrine.orm.entity_manager']

@@ -1,6 +1,7 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
+    - { resource: "@BRBarBundle/Resources/config/services.yml" }
 
 framework:
     #esi:             ~
@@ -91,3 +92,6 @@ fos_oauth_server:
     access_token_class:  BR\BarBundle\Entity\Auth\OAuth\AccessToken
     refresh_token_class: BR\BarBundle\Entity\Auth\OAuth\RefreshToken
     auth_code_class:     BR\BarBundle\Entity\Auth\OAuth\AuthCode
+
+    service:
+        user_provider: br_bar.user_provider
