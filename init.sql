@@ -1,14 +1,14 @@
 INSERT INTO Bar
 (`id`, `name`)
 VALUES
-('natationjone', 'Natation jone'),
+('natationjone', 'Natation Jône'),
 ('avironjone', 'Aviron Jône');
 
 
 INSERT INTO Role
 (`id`, `name`, `role`)
 VALUES
-(0, 'Admin', 'ROLE_ADMIN');
+(1, 'Admin', 'ROLE_ADMIN');
 
 
 INSERT INTO Client
@@ -20,29 +20,26 @@ VALUES
 (5, 10.34),
 (6, 90.23),
 (7, 1.2),
-(8, 9.1);
-
-
-INSERT INTO User
-(`id`, `bar`, `name`, `pwd`, `login`)
-VALUES
-(0, 'natationjone', 'Admin', 'admin', 'admin');
+(8, 9.1),
+(9, 0.0);
 
 INSERT INTO User
+(`id`, `bar`, `client_id`, `name`,           `login`,   `pwd`)
 VALUES
-(1, 1, 'avironjone', 'Basile Bruneau', 'kjhiuy', 'bb'),
-(2, 2, 'avironjone', 'Thomas Dupond', 'kjhiuy', 'fgdfg'),
-(3, 3, 'avironjone', 'Arthur Content', 'kjhiuy', 'bdfgb'),
-(4, 4, 'avironjone', 'Benjamin Fleuri', 'kjhiuy', 'bsfdsb'),
-(5, 5, 'avironjone', 'Amandine Rosier', 'kjhiuy', 'df.fgh'),
-(6, 6, 'avironjone', 'Edouard Twilight', 'kjhiuy', 'sdfsdfsdgery.fhgfh'),
-(7, 7, 'avironjone', 'Eric LeGrand', 'kjhiuy', 'dfdfdfd'),
-(8, 8, 'avironjone', 'Etienne Marrant', 'kjhiuy', '12345');
+(1, 'avironjone',   1,  'Basile Bruneau',    'bb',                  'kjhiuy'),
+(2, 'avironjone',   2,  'Thomas Dupond',     'fgdfg',               'kjhiuy'),
+(3, 'avironjone',   3,  'Arthur Content',    'bdfgb',               'kjhiuy'),
+(4, 'avironjone',   4,  'Benjamin Fleuri',   'bsfdsb',              'kjhiuy'),
+(5, 'avironjone',   5,  'Amandine Rosier',   'df.fgh',              'kjhiuy'),
+(6, 'avironjone',   6,  'Edouard Twilight',  'sdfsdfsdgery.fhgfh',  'kjhiuy'),
+(7, 'avironjone',   7,  'Eric LeGrand',      'dfdfdfd',             'kjhiuy'),
+(8, 'avironjone',   8,  'Etienne Marrant',   '12345',               'kjhiuy'),
+(9, 'natationjone', 9,  'Admin',             'admin',               'admin' );
 
 INSERT INTO user_role
 (`user_id`, `role_id`)
 VALUES
-(0, 0);
+(9, 1);
 
 
 
