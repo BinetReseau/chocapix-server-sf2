@@ -2,10 +2,3 @@ br_bar:
     resource: "@BRBarBundle/Resources/config/routing.yml"
     prefix:   /
 
-fos_oauth_server_token:
-    resource: "@FOSOAuthServerBundle/Resources/config/routing/token.xml"
-    prefix:   /
-
-# fos_oauth_server_authorize:
-#     resource: "@FOSOAuthServerBundle/Resources/config/routing/authorize.xml"
-#     prefix:   /

@@ -9,7 +9,6 @@ class AppKernel extends Kernel
     {
         $bundles = array(
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
-            new FOS\OAuthServerBundle\FOSOAuthServerBundle(),
             new FOS\RestBundle\FOSRestBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),

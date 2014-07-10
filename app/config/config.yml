@@ -84,14 +84,3 @@ fos_rest:
         jsonp_handler: ~
     routing_loader:
         default_format: json
-
-# FOS OAuth Server Configuration
-fos_oauth_server:
-    db_driver:           orm
-    client_class:        BR\BarBundle\Entity\Auth\OAuth\Client
-    access_token_class:  BR\BarBundle\Entity\Auth\OAuth\AccessToken
-    refresh_token_class: BR\BarBundle\Entity\Auth\OAuth\RefreshToken
-    auth_code_class:     BR\BarBundle\Entity\Auth\OAuth\AuthCode
-
-    service:
-        user_provider: br_bar.user_provider
