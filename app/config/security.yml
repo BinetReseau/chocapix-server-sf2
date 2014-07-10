@@ -10,7 +10,7 @@ security:
 
     providers:
         users:
-            id: br_bar.user_provider
+            entity: { class: BRBarBundle:Auth\User, property: login }
 
 
     firewalls:

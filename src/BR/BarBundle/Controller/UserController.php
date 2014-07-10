@@ -10,7 +10,7 @@ use FOS\RestBundle\Controller\Annotations\Get;
 class UserController extends FOSRestController {
 
 	/** @Get("/{bar}/user") */
-	public function getUserssAction(Request $request, $bar) {
+	public function getUsersAction(Request $request, $bar) {
 		$repository = $this->getDoctrine()
 				->getRepository('BRBarBundle:Auth\User');
 
