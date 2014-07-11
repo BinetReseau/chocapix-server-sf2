@@ -35,14 +35,14 @@ class UserController extends FOSRestController {
 		$repository = $this->getDoctrine()
 				->getRepository('BRBarBundle:Auth\User');
 
-		$users = $repository->createQueryBuilder('u')
+		$user = $repository->createQueryBuilder('u')
 		        ->where('u.id = :id')
 		        ->andWhere('u.bar = :bar')
 				->orderBy('u.name', 'ASC')
 				->setParameter('id', $id)
 				->setParameter('bar', $bar)
-				->getQuery()->getResult();
+				->getQuery()->getSingleResult();
 
-		return $users;
+		return $user;
 	}
 }
