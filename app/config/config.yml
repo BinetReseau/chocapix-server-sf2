@@ -73,6 +73,7 @@ swiftmailer:
 
 # FOS REST API Configuration
 fos_rest:
+    param_fetcher_listener: force
     view:
         view_response_listener: force
         force_redirects:

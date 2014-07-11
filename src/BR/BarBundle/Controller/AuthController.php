@@ -6,21 +6,24 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
+
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class AuthController extends FOSRestController {
 	/**
 	 * @Post("/{bar}/auth/login")
+	 * @RequestParam(name="login", strict=true)
+	 * @RequestParam(name="password", strict=true)
+	 *
      * @View(serializerGroups={"Default", "auth", "account"})
 	 */
-	public function loginAction(Request $request, $bar) {
-		$login = $request->request->get('login');
-		$password = $request->request->get('password');
-
+	public function loginAction(Request $request, $bar, $login, $password) {
 		if($login == null || $password == null)
 			throw new UnauthorizedHttpException('Bad credentials');
 
@@ -61,6 +64,7 @@ class AuthController extends FOSRestController {
 
 	/**
      * @Security("has_role('ROLE_USER')")
+     *
 	 * @Get("/{bar}/auth/me")
      * @View(serializerGroups={"Default", "auth", "account"})
      */
