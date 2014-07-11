@@ -14,55 +14,8 @@ security:
 
 
     firewalls:
-        oauth_token:
-            pattern:    ^/oauth/v2/token
-            security:   false
-
-        oauth_authorize:
-            pattern:    ^/oauth/v2/auth
-            http_basic: ~ # Add your favorite authentication process here
-
         main:
             pattern:    ^/
-            fos_oauth:  true
+            http_basic: ~
             stateless:  true
             anonymous:  true
-
-    #     main:
-    #         pattern:    ^/
-    #         # stateless:  true
-    #         http_basic: ~
-    #         # security: true
-    #         # anonymous:  true
-
-    # access_control:
-    #     - { path: ^/, roles: ROLE_USER}
-    #     #, requires_channel: https }
-
-
-#         login:
-#             pattern:  ^/demo/secured/login$
-#             security: false
-
-#         secured_area:
-#             pattern:    ^/demo/secured/
-#             form_login:
-#                 check_path: _security_check
-#                 login_path: _demo_login
-#             logout:
-#                 path:   _demo_logout
-#                 target: _demo
-#             #anonymous: ~
-#             #http_basic:
-#             #    realm: "Secured Demo Area"
-
-#     providers:
-#         in_memory:
-#             memory:
-#                 users:
-#                     user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-#                     admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
-
-
-#     access_control:
-#         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
