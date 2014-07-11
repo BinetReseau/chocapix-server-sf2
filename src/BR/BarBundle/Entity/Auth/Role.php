@@ -8,26 +8,22 @@ use Doctrine\Common\Collections\ArrayCollection;
 /** @ORM\Entity */
 class Role implements RoleInterface
 {
-    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
+    /** @ORM\Id @ORM\Column(type="string", length=50) */
     private $id;
 
     /** @ORM\Column(type="string", length=50) */
     private $name;
 
-    /** @ORM\Column(type="string", length=50, unique=true) */
-    private $role;
-
 
     public function getRole()
     {
-        return $this->role;
+        return $this->id;
     }
-
 
     /**
      * Set id
      *
-     * @param integer $id
+     * @param string $id
      * @return Role
      */
     public function setId($id)
@@ -40,7 +36,7 @@ class Role implements RoleInterface
     /**
      * Get id
      *
-     * @return integer
+     * @return string 
      */
     public function getId()
     {
@@ -63,23 +59,10 @@ class Role implements RoleInterface
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
         return $this->name;
-    }
-
-    /**
-     * Set role
-     *
-     * @param string $role
-     * @return Role
-     */
-    public function setRole($role)
-    {
-        $this->role = $role;
-
-        return $this;
     }
 }

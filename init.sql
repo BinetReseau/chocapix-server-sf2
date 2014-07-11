@@ -6,9 +6,9 @@ VALUES
 
 
 INSERT INTO Role
-(`id`, `name`, `role`)
+(`id`, `name`)
 VALUES
-(1, 'Admin', 'ROLE_ADMIN');
+('ROLE_ADMIN', 'Admin');
 
 
 INSERT INTO Account
@@ -39,7 +39,7 @@ VALUES
 INSERT INTO user_role
 (`user_id`, `role_id`)
 VALUES
-(9, 1);
+(9, 'ROLE_ADMIN');
 
 
 
