@@ -3,36 +3,54 @@
 namespace BR\BarBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\Post;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class AuthController extends FOSRestController {
-
-	/** @Post("/{bar}/auth/login") */
+	/**
+	 * @Post("/{bar}/auth/login")
+	 */
 	public function loginAction(Request $request, $bar) {
-		// $repository = $this->getDoctrine()
-		// 		->getRepository('BRBarBundle:Food\Food');
+		$login = $request->request->get('login');
+		$password = $request->request->get('password');
 
-		// $foods = $repository->createQueryBuilder('f')
-		// 		->orderBy('f.name', 'ASC')
-		// 		->getQuery()->getResult();
+		if($login == null || $password == null)
+			throw new UnauthorizedHttpException('Bad credentials');
 
-		// return $this->handleView($this->view($foods, 200));
+		$repository = $this->getDoctrine()
+				->getRepository('BRBarBundle:Auth\User');
+
+		$users = $repository->createQueryBuilder('u')
+				->where('u.bar = :bar')
+				->andWhere('u.login = :login')
+				->setParameter('bar', $bar)
+				->setParameter('login', $login)
+				->getQuery()->getResult();
+
+		if(sizeof($users) != 1)
+			throw new UnauthorizedHttpException('Bad credentials');
+
+		$user = $users[0];
+
+		$pwdEncoder = $this->get('security.encoder_factory')->getEncoder($user);
+		$valid = $pwdEncoder->isPasswordValid(
+				$user->getPassword(), // the encoded password
+				$password,            // the submitted password
+				$user->getSalt()
+			);
+		if(!$valid)
+			throw new UnauthorizedHttpException('Bad credentials');
+
+		$payload = array(
+				'exp' => time() + $this->container->getParameter('lexik_jwt_authentication.token_ttl'),
+				'username' => $user->getUsername()
+			);
+
+		$jwt = $this->get('lexik_jwt_authentication.jwt_encoder')->encode($payload)->getTokenString();
+
+		return $this->handleView($this->view(array('token' => $jwt, 'url_safe_token' => urlencode($jwt), 'user' => $user), 200));
 	}
-
-	/** @Post("/{bar}/auth/logout") */
-	public function logoutAction(Request $request, $bar) {
-		// $repository = $this->getDoctrine()
-		// 		->getRepository('BRBarBundle:Food\Food');
-
-		// $foods = $repository->createQueryBuilder('f')
-		// 		->where('f.name LIKE :q')
-		// 		->orderBy('f.name', 'ASC')
-		// 		->setParameter('q', '%'.$q.'%')
-		// 		->getQuery()->getResult();
-
-		// return $this->handleView($this->view($foods, 200));
-	}
-
 }
