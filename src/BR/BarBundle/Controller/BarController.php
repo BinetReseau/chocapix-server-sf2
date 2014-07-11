@@ -16,7 +16,7 @@ class BarController extends FOSRestController {
      */
 	public function getBarAction(Request $request, $bar) {
 		$repository = $this->getDoctrine()
-				->getRepository('BRBarBundle:Bar');
+				->getRepository('BRBarBundle:Bar\Bar');
 
 		return $repository->find($bar);
 	}

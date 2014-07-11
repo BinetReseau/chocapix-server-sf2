@@ -43,6 +43,12 @@ class StockItem
     private $keywords;
 
 
+    public function changeQty($deltaqty)
+    {
+        $this->qty += $deltaqty;
+    }
+
+
     /**
      * @JMS\SerializedName("bar")
      * @JMS\VirtualProperty

@@ -16,8 +16,14 @@ class Operation
      */
     private $id;
 
-    /** @ORM\ManyToOne(targetEntity="BR\BarBundle\Entity\Operation\Transaction") */
+    /** @ORM\ManyToOne(targetEntity="BR\BarBundle\Entity\Operation\Transaction", inversedBy="operations") */
     private $transaction;
+
+
+    public function __construct($transaction)
+    {
+        $this->transaction = $transaction;
+    }
 
 
     /**

@@ -19,7 +19,7 @@ class User implements UserInterface, \Serializable
 	 */
     private $id;
 
-    /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar") */
+    /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar\Bar") */
     private $bar;
 
 
@@ -63,7 +63,7 @@ class User implements UserInterface, \Serializable
 
 
     /**
-     * @JMS\Groups({"user"})
+     * @JMS\Groups({"account"})
      * @JMS\SerializedName("money")
      * @JMS\VirtualProperty
      */
@@ -138,10 +138,11 @@ class User implements UserInterface, \Serializable
 
 
 
+
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -164,7 +165,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
@@ -187,7 +188,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get login
      *
-     * @return string
+     * @return string 
      */
     public function getLogin()
     {
@@ -210,10 +211,10 @@ class User implements UserInterface, \Serializable
     /**
      * Set bar
      *
-     * @param \BR\BarBundle\Entity\Bar $bar
+     * @param \BR\BarBundle\Entity\Bar\Bar $bar
      * @return User
      */
-    public function setBar(\BR\BarBundle\Entity\Bar $bar = null)
+    public function setBar(\BR\BarBundle\Entity\Bar\Bar $bar = null)
     {
         $this->bar = $bar;
 
@@ -223,7 +224,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get bar
      *
-     * @return \BR\BarBundle\Entity\Bar
+     * @return \BR\BarBundle\Entity\Bar\Bar 
      */
     public function getBar()
     {
@@ -269,7 +270,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get account
      *
-     * @return \BR\BarBundle\Entity\Account\Account
+     * @return \BR\BarBundle\Entity\Account\Account 
      */
     public function getAccount()
     {

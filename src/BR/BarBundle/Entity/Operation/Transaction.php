@@ -2,10 +2,12 @@
 namespace BR\BarBundle\Entity\Operation;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
-// @ORM\Entity(repositoryClass="BR\BarBundle\Entity\TransactionRepository") */
-
-/** @ORM\Entity */
+ // * @ORM\Entity(repositoryClass="BR\BarBundle\Entity\Operation\TransactionRepository")
+/**
+ * @ORM\Entity
+ */
 class Transaction
 {
     /**
@@ -19,6 +21,19 @@ class Transaction
 
     /** @ORM\Column(type="string") */
     private $type;
+
+
+    /** @ORM\OneToMany(targetEntity="Operation", mappedBy="transaction") */
+    private $operations;
+
+
+    public function __construct($type)
+    {
+        $this->type = $type;
+        $this->timestamp = new \DateTime("now");
+        $this->operations = new ArrayCollection();
+    }
+
 
     /**
      * Set id
@@ -87,5 +102,38 @@ class Transaction
     public function getType()
     {
         return $this->type;
+    }
+
+    /**
+     * Add operations
+     *
+     * @param \BR\BarBundle\Entity\Operation\Operation $operations
+     * @return Transaction
+     */
+    public function addOperation(\BR\BarBundle\Entity\Operation\Operation $operations)
+    {
+        $this->operations[] = $operations;
+
+        return $this;
+    }
+
+    /**
+     * Remove operations
+     *
+     * @param \BR\BarBundle\Entity\Operation\Operation $operations
+     */
+    public function removeOperation(\BR\BarBundle\Entity\Operation\Operation $operations)
+    {
+        $this->operations->removeElement($operations);
+    }
+
+    /**
+     * Get operations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOperations()
+    {
+        return $this->operations;
     }
 }

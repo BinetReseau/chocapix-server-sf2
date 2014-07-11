@@ -12,8 +12,19 @@ class AccountOperation extends Operation
 
     /** @ORM\Column(type="decimal") */
     private $deltamoney;
+
     /** @ORM\Column(type="decimal") */
     private $newmoney;
+
+
+    public function __construct($transaction, $account, $deltamoney)
+    {
+        parent::__construct($transaction);
+        $this->account = $account;
+        $this->deltamoney = $deltamoney;
+        $account->changeMoney($deltamoney);
+        $this->newmoney = $account->getMoney();
+    }
 
 
     /**
@@ -32,7 +43,7 @@ class AccountOperation extends Operation
     /**
      * Get deltamoney
      *
-     * @return string 
+     * @return string
      */
     public function getDeltamoney()
     {
@@ -55,7 +66,7 @@ class AccountOperation extends Operation
     /**
      * Get newmoney
      *
-     * @return string 
+     * @return string
      */
     public function getNewmoney()
     {
@@ -78,7 +89,7 @@ class AccountOperation extends Operation
     /**
      * Get account
      *
-     * @return \BR\BarBundle\Entity\Account\Account 
+     * @return \BR\BarBundle\Entity\Account\Account
      */
     public function getAccount()
     {

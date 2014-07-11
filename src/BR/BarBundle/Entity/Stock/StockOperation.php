@@ -17,6 +17,16 @@ class StockOperation extends Operation
     private $newqty;
 
 
+    public function __construct($transaction, $item, $deltaqty)
+    {
+        parent::__construct($transaction);
+        $this->item = $item;
+        $this->deltaqty = $deltaqty;
+        $item->changeQty($deltaqty);
+        $this->newqty = $item->getQty();
+    }
+
+
 
     /**
      * Set deltaqty
@@ -34,7 +44,7 @@ class StockOperation extends Operation
     /**
      * Get deltaqty
      *
-     * @return string 
+     * @return string
      */
     public function getDeltaqty()
     {
@@ -57,7 +67,7 @@ class StockOperation extends Operation
     /**
      * Get newqty
      *
-     * @return string 
+     * @return string
      */
     public function getNewqty()
     {
@@ -80,7 +90,7 @@ class StockOperation extends Operation
     /**
      * Get item
      *
-     * @return \BR\BarBundle\Entity\Stock\StockItem 
+     * @return \BR\BarBundle\Entity\Stock\StockItem
      */
     public function getItem()
     {

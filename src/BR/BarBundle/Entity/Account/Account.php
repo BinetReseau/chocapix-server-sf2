@@ -16,6 +16,11 @@ class Account
     private $money;
 
 
+    public function changeMoney($deltamoney)
+    {
+        $this->money += $deltamoney;
+    }
+
 
     /**
      * Get id
