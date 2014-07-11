@@ -5,11 +5,15 @@ namespace BR\BarBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\Get;
 
 class FoodController extends FOSRestController {
 
-	/** @Get("/{bar}/food") */
+	/**
+	 * @Get("/{bar}/food")
+     * @View()
+     */
 	public function getFoodsAction(Request $request, $bar) {
 		$repository = $this->getDoctrine()
 				->getRepository('BRBarBundle:Stock\StockItem');
@@ -20,20 +24,26 @@ class FoodController extends FOSRestController {
 				->setParameter('bar', $bar)
 				->getQuery()->getResult();
 
-		return $this->handleView($this->view($foods, 200));
+		return $foods;
 	}
 
-	/** @Get("/{bar}/food/{id}") */
+	/**
+	 * @Get("/{bar}/food/{id}")
+     * @View()
+     */
 	public function getFoodAction(Request $request, $bar, $id) {
 		$repository = $this->getDoctrine()
 				->getRepository('BRBarBundle:Stock\StockItem');
 
 		$food = $repository->find($id);
 
-		return $this->handleView($this->view($food, 200));
+		return $food;
 	}
 
-	/** @Get("/{bar}/food/search/{q}") */
+	/**
+	 * @Get("/{bar}/food/search/{q}")
+     * @View()
+     */
 	public function searchFoodsAction(Request $request, $bar, $q) {
 		$repository = $this->getDoctrine()
 				->getRepository('BRBarBundle:Stock\StockItem');
@@ -46,7 +56,7 @@ class FoodController extends FOSRestController {
 				->setParameter('q2', '%'.$q.'%')
 				->getQuery()->getResult();
 
-		return $this->handleView($this->view($foods, 200));
+		return $foods;
 	}
 
 }

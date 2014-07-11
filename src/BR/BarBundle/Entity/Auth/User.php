@@ -69,6 +69,9 @@ class User implements UserInterface, \Serializable
 
     public function serialize()
     {
+        // $serializer = $container->get('jms_serializer');
+        // $serializer->serialize($data, $format);
+        // $data = $serializer->deserialize($inputStr, $typeName, $format);
         return serialize(array(
             $this->id,
             $this->bar,

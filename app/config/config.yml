@@ -74,8 +74,9 @@ swiftmailer:
 # FOS REST API Configuration
 fos_rest:
     view:
+        view_response_listener: force
         force_redirects:
-          html: true
+            html: true
         formats:
             jsonp: true
             json: true
@@ -84,3 +85,7 @@ fos_rest:
         jsonp_handler: ~
     routing_loader:
         default_format: json
+
+sensio_framework_extra:
+    view:    { annotations: false }
+    # router:  { annotations: true }

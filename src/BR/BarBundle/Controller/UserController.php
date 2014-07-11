@@ -5,11 +5,15 @@ namespace BR\BarBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\Get;
 
 class UserController extends FOSRestController {
 
-	/** @Get("/{bar}/user") */
+	/**
+	 * @Get("/{bar}/user")
+     * @View()
+     */
 	public function getUsersAction(Request $request, $bar) {
 		$repository = $this->getDoctrine()
 				->getRepository('BRBarBundle:Auth\User');
@@ -20,17 +24,26 @@ class UserController extends FOSRestController {
 				->setParameter('bar', $bar)
 				->getQuery()->getResult();
 
-		return $this->handleView($this->view($users, 200));
+		return $users;
 	}
 
-	/** @Get("/{bar}/user/{id}") */
+	/**
+	 * @Get("/{bar}/user/{id}")
+     * @View()
+     */
 	public function getUserAction(Request $request, $bar, $id) {
 		$repository = $this->getDoctrine()
 				->getRepository('BRBarBundle:Auth\User');
 
-		$user = $repository->find($id);
+		$users = $repository->createQueryBuilder('u')
+		        ->where('u.id = :id')
+		        ->andWhere('u.bar = :bar')
+				->orderBy('u.name', 'ASC')
+				->setParameter('id', $id)
+				->setParameter('bar', $bar)
+				->getQuery()->getResult();
 
-		return $this->handleView($this->view($food, 200));
+		return $users;
 	}
 
 }
