@@ -41,6 +41,7 @@ VALUES
 INSERT INTO user_role
 (`user_id`, `role_id`)
 VALUES
+(1, 'ROLE_ADMIN'),
 (9, 'ROLE_ADMIN'),
 (10, 'ROLE_ADMIN');
 
