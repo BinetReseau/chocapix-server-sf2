@@ -1,10 +1,11 @@
 <?php
-namespace BR\BarBundle\Entity;
+namespace BR\BarBundle\Entity\Operation;
 
 use Doctrine\ORM\Mapping as ORM;
 
+// @ORM\Entity(repositoryClass="BR\BarBundle\Entity\TransactionRepository") */
+
 /** @ORM\Entity */
-/* @ORM\Entity(repositoryClass="BR\BarBundle\Entity\TransactionRepository") */
 class Transaction
 {
     /**

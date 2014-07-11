@@ -2,16 +2,11 @@
 namespace BR\BarBundle\Entity\Account;
 
 use Doctrine\ORM\Mapping as ORM;
+use BR\BarBundle\Entity\Operation\Operation;
 
 /** @ORM\Entity */
-class AccountOperation
+class AccountOperation extends Operation
 {
-    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
-    private $id;
-
-    /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Transaction") */
-    private $transaction;
-
     /** @ORM\ManyToOne(targetEntity="Account") */
     private $account;
 
@@ -20,16 +15,6 @@ class AccountOperation
     /** @ORM\Column(type="decimal") */
     private $newmoney;
 
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set deltamoney
@@ -75,29 +60,6 @@ class AccountOperation
     public function getNewmoney()
     {
         return $this->newmoney;
-    }
-
-    /**
-     * Set transaction
-     *
-     * @param \BR\BarBundle\Entity\Transaction $transaction
-     * @return AccountOperation
-     */
-    public function setTransaction(\BR\BarBundle\Entity\Transaction $transaction = null)
-    {
-        $this->transaction = $transaction;
-
-        return $this;
-    }
-
-    /**
-     * Get transaction
-     *
-     * @return \BR\BarBundle\Entity\Transaction 
-     */
-    public function getTransaction()
-    {
-        return $this->transaction;
     }
 
     /**

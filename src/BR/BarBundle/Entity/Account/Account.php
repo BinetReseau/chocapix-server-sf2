@@ -6,7 +6,10 @@ use Doctrine\ORM\Mapping as ORM;
 /** @ORM\Entity */
 class Account
 {
-    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
+    /**
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
     private $id;
 
     /** @ORM\Column(type="decimal") */
@@ -17,7 +20,7 @@ class Account
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -40,7 +43,7 @@ class Account
     /**
      * Get money
      *
-     * @return string 
+     * @return string
      */
     public function getMoney()
     {
