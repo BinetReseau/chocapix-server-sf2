@@ -24,7 +24,7 @@ VALUES
 (9, 0.0);
 
 INSERT INTO User
-(`id`, `bar`, `account_id`, `name`,           `login`,   `password`)
+(`id`, `bar`, `account_id`, `name`,          `login`,   `password`)
 VALUES
 (1, 'avironjone',   1,  'Basile Bruneau',    'bb',                  'kjhiuy'),
 (2, 'avironjone',   2,  'Thomas Dupond',     'fgdfg',               'kjhiuy'),

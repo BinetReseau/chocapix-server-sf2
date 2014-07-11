@@ -7,7 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /* @ORM\Entity(repositoryClass="BR\BarBundle\Entity\TransactionRepository") */
 class Transaction
 {
-    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
+    /**
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
     private $id;
 
     /** @ORM\Column(type="datetime") */

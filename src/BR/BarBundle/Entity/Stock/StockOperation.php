@@ -7,7 +7,10 @@ use BR\BarBundle\Entity\Transaction as Transaction;
 /** @ORM\Entity */
 class StockOperation
 {
-    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
+    /**
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
     private $id;
 
     /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Transaction") */
