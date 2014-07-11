@@ -43,9 +43,12 @@ class StockItem
     private $keywords;
 
 
-    public function changeQty($deltaqty)
+    public function operation($transaction, $deltaqty)
     {
         $this->qty += $deltaqty;
+        $op = new StockOperation($transaction, $this, $deltaqty);
+        $transaction->addOperation($op);
+        return $op;
     }
 
 
@@ -63,7 +66,7 @@ class StockItem
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -86,7 +89,7 @@ class StockItem
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -109,7 +112,7 @@ class StockItem
     /**
      * Get qty
      *
-     * @return string 
+     * @return string
      */
     public function getQty()
     {
@@ -132,7 +135,7 @@ class StockItem
     /**
      * Get unit
      *
-     * @return string 
+     * @return string
      */
     public function getUnit()
     {
@@ -155,7 +158,7 @@ class StockItem
     /**
      * Get price
      *
-     * @return string 
+     * @return string
      */
     public function getPrice()
     {
@@ -178,7 +181,7 @@ class StockItem
     /**
      * Get tax
      *
-     * @return string 
+     * @return string
      */
     public function getTax()
     {
@@ -201,7 +204,7 @@ class StockItem
     /**
      * Get keywords
      *
-     * @return string 
+     * @return string
      */
     public function getKeywords()
     {
@@ -224,7 +227,7 @@ class StockItem
     /**
      * Get bar
      *
-     * @return \BR\BarBundle\Entity\Bar\Bar 
+     * @return \BR\BarBundle\Entity\Bar\Bar
      */
     public function getBar()
     {

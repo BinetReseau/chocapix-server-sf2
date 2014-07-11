@@ -5,8 +5,12 @@ namespace BR\BarBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
 
 use BR\BarBundle\Entity\Operation\Transaction;
 use BR\BarBundle\Entity\Stock\StockOperation;
@@ -52,23 +56,24 @@ class TransactionController extends FOSRestController {
 
 
 	/**
-	 * @Get("/{bar}/buy/{iid}/{aid}/{qty}")
+     * @Security("has_role('ROLE_USER')")
+     *
+	 * @Post("/{bar}/buy")
+	 * @RequestParam(name="item", requirements="\d+", strict=true)
+	 * @RequestParam(name="qty", requirements="[0-9.]+", strict=true)
+	 *
      * @View(serializerGroups={"Default"})
      */
-	public function buyAction(Request $request, $bar, $iid, $aid, $qty) {
+	public function buyAction(Request $request, $bar, $item, $qty) {
 		$em = $this->getDoctrine()->getManager();
 
 		$transaction = new Transaction("buy");
 
-		$item = $em->getRepository('BRBarBundle:Stock\StockItem')
-					->find($iid);
-		$operation1 = new StockOperation($transaction, $item, -$qty);
-		$transaction->addOperation($operation1);
+		$item = $em->getRepository('BRBarBundle:Stock\StockItem')->find($item);
+		$operation1 = $item->operation($transaction, -$qty);
 
-		$account = $em->getRepository('BRBarBundle:Account\Account')
-					->find($aid);
-		$operation2 = new AccountOperation($transaction, $account, -$qty * $item->getPrice());
-		$transaction->addOperation($operation2);
+		$account = $this->getUser()->getAccount();
+		$operation2 = $account->operation($transaction, -$qty * $item->getPrice());
 
 		$em->persist($operation1);
 		$em->persist($operation2);

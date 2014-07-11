@@ -16,9 +16,12 @@ class Account
     private $money;
 
 
-    public function changeMoney($deltamoney)
+    public function operation($transaction, $deltamoney)
     {
         $this->money += $deltamoney;
+        $op = new AccountOperation($transaction, $this, $deltamoney);
+        $transaction->addOperation($op);
+        return $op;
     }
 
 

@@ -22,7 +22,6 @@ class AccountOperation extends Operation
         parent::__construct($transaction);
         $this->account = $account;
         $this->deltamoney = $deltamoney;
-        $account->changeMoney($deltamoney);
         $this->newmoney = $account->getMoney();
     }
 

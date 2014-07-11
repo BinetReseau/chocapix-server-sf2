@@ -22,7 +22,6 @@ class StockOperation extends Operation
         parent::__construct($transaction);
         $this->item = $item;
         $this->deltaqty = $deltaqty;
-        $item->changeQty($deltaqty);
         $this->newqty = $item->getQty();
     }
 
