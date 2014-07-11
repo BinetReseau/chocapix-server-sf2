@@ -1,27 +1,31 @@
 <?php
-
 namespace BR\BarBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
+
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\Get;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
+use BR\BarBundle\Entity\Bar\Bar;
+use BR\BarBundle\Entity\Stock\StockItem;
 
 class FoodController extends FOSRestController {
 
 	/**
 	 * @Get("/{bar}/food")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
      * @View()
      */
-	public function getFoodsAction(Request $request, $bar) {
+	public function getFoodsAction(Bar $bar) {
 		$repository = $this->getDoctrine()
 				->getRepository('BRBarBundle:Stock\StockItem');
 
 		$foods = $repository->createQueryBuilder('f')
 		        ->where('f.bar = :bar')
 				->orderBy('f.name', 'ASC')
-				->setParameter('bar', $bar)
+				->setParameter('bar', $bar->getId())
 				->getQuery()->getResult();
 
 		return $foods;
@@ -29,22 +33,20 @@ class FoodController extends FOSRestController {
 
 	/**
 	 * @Get("/{bar}/food/{id}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
      * @View()
      */
-	public function getFoodAction(Request $request, $bar, $id) {
-		$repository = $this->getDoctrine()
-				->getRepository('BRBarBundle:Stock\StockItem');
-
-		$food = $repository->find($id);
-
-		return $food;
+	public function getFoodAction(Bar $bar, StockItem $item) {
+		return $item;
 	}
 
 	/**
 	 * @Get("/{bar}/food/search/{q}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
      * @View()
      */
-	public function searchFoodsAction(Request $request, $bar, $q) {
+	public function searchFoodsAction(Bar $bar, $q) {
 		$repository = $this->getDoctrine()
 				->getRepository('BRBarBundle:Stock\StockItem');
 
