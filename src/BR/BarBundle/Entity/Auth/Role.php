@@ -20,6 +20,7 @@ class Role implements RoleInterface
         return $this->id;
     }
 
+
     /**
      * Set id
      *
@@ -36,7 +37,7 @@ class Role implements RoleInterface
     /**
      * Get id
      *
-     * @return string 
+     * @return string
      */
     public function getId()
     {
@@ -59,7 +60,7 @@ class Role implements RoleInterface
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {

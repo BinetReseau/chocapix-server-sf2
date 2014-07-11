@@ -21,10 +21,11 @@ VALUES
 (6, 90.23),
 (7, 1.2),
 (8, 9.1),
-(9, 0.0);
+(9, 0.0),
+(10, 0.0);
 
 INSERT INTO User
-(`id`, `bar`, `account_id`, `name`,          `login`,   `password`)
+(`id`, `bar_id`, `account_id`, `name`,          `login`,   `password`)
 VALUES
 (1, 'avironjone',   1,  'Basile Bruneau',    'bb',                  'kjhiuy'),
 (2, 'avironjone',   2,  'Thomas Dupond',     'fgdfg',               'kjhiuy'),
@@ -34,12 +35,14 @@ VALUES
 (6, 'avironjone',   6,  'Edouard Twilight',  'sdfsdfsdgery.fhgfh',  'kjhiuy'),
 (7, 'avironjone',   7,  'Eric LeGrand',      'dfdfdfd',             'kjhiuy'),
 (8, 'avironjone',   8,  'Etienne Marrant',   '12345',               'kjhiuy'),
-(9, 'natationjone', 9,  'Admin',             'admin',               'admin' );
+(9, 'natationjone', 9,  'Admin',             'admin',               'admin' ),
+(10,'avironjone',   10, 'Admin',             'admin',               'admin' );
 
 INSERT INTO user_role
 (`user_id`, `role_id`)
 VALUES
-(9, 'ROLE_ADMIN');
+(9, 'ROLE_ADMIN'),
+(10, 'ROLE_ADMIN');
 
 
 

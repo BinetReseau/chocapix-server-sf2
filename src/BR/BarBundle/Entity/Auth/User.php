@@ -19,10 +19,7 @@ class User implements UserInterface, \Serializable
 	 */
     private $id;
 
-    /**
-	 * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar")
-     * @ORM\JoinColumn(name="bar", referencedColumnName="id")
-     */
+    /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar") */
     private $bar;
 
 
@@ -32,16 +29,12 @@ class User implements UserInterface, \Serializable
 	 */
     private $name;
 
-    /**
-	 * @ORM\ManyToMany(targetEntity="Role", fetch="EAGER")
-     * @JMS\Groups({"auth"})
-     * @JMS\Expose
-	 */
+    /** @ORM\ManyToMany(targetEntity="Role", fetch="EAGER") */
     private $roles;
 
 
     /**
-	 * @ORM\Column(type="string", length=50, unique=true)
+     * @ORM\Column(type="string", length=50)
      * @JMS\Groups({"auth"})
      * @JMS\Expose
 	 */
@@ -80,6 +73,21 @@ class User implements UserInterface, \Serializable
     }
 
 
+    /**
+     * @JMS\Type("array<string>")
+     * @JMS\Groups({"auth"})
+     * @JMS\SerializedName("roles")
+     * @JMS\VirtualProperty
+     */
+    public function getRoles()
+    {
+        return array_merge(
+            array('ROLE_USER'),
+            array_map(function($role) {return $role->getRole();},
+                $this->roles->toArray())
+        );
+    }
+
     public function __construct()
     {
         parent::__construct();
@@ -102,11 +110,6 @@ class User implements UserInterface, \Serializable
         return $this->password;
     }
 
-    public function getRoles()
-    {
-        return $this->roles->toArray();
-    }
-
     public function eraseCredentials()
     {
     }
@@ -114,9 +117,6 @@ class User implements UserInterface, \Serializable
 
     public function serialize()
     {
-        // $serializer = $container->get('jms_serializer');
-        // $serializer->serialize($data, $format);
-        // $data = $serializer->deserialize($inputStr, $typeName, $format);
         return serialize(array(
             $this->id,
             $this->bar,

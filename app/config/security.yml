@@ -18,6 +18,7 @@ security:
             stateless:  true
             anonymous:  true
             lexik_jwt:
+                create_entry_point: true
                 authorization_header:
                     enabled: true
                     prefix:  Bearer
