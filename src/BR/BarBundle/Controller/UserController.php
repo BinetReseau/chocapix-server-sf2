@@ -12,7 +12,7 @@ class UserController extends FOSRestController {
 
 	/**
 	 * @Get("/{bar}/user")
-     * @View()
+     * @View(serializerGroups={"Default", "user"})
      */
 	public function getUsersAction(Request $request, $bar) {
 		$repository = $this->getDoctrine()
