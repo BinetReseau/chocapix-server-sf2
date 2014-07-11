@@ -27,7 +27,7 @@ VALUES
 INSERT INTO User
 (`id`, `bar_id`, `account_id`, `name`,          `login`,   `password`)
 VALUES
-(1, 'avironjone',   1,  'Basile Bruneau',    'bb',                  'kjhiuy'),
+(1, 'avironjone',   1,  'Basile Bruneau',    'bb',                  'bb'),
 (2, 'avironjone',   2,  'Thomas Dupond',     'fgdfg',               'kjhiuy'),
 (3, 'avironjone',   3,  'Arthur Content',    'bdfgb',               'kjhiuy'),
 (4, 'avironjone',   4,  'Benjamin Fleuri',   'bsfdsb',              'kjhiuy'),
