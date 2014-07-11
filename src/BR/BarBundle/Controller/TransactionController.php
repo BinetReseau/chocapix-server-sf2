@@ -27,9 +27,9 @@ class TransactionController extends FOSRestController {
 				->getRepository('BRBarBundle:Operation\Transaction');
 
 		$transactions = $repository->createQueryBuilder('t')
-		  //       ->where('t.bar = :bar')
-				// ->setParameter('bar', $bar)
+				->where('t.bar = :bar')
 				->orderBy('t.timestamp', 'DESC')
+				->setParameter('bar', $bar)
 				->getQuery()->getResult();
 
 		return $transactions;
@@ -67,7 +67,8 @@ class TransactionController extends FOSRestController {
 	public function buyAction(Request $request, $bar, $item, $qty) {
 		$em = $this->getDoctrine()->getManager();
 
-		$transaction = new Transaction("buy");
+		$bar = $em->getRepository('BRBarBundle:Bar\Bar')->find($bar);
+		$transaction = new Transaction($bar, "buy");
 
 		$item = $em->getRepository('BRBarBundle:Stock\StockItem')->find($item);
 		$operation1 = $item->operation($transaction, -$qty);
@@ -82,5 +83,4 @@ class TransactionController extends FOSRestController {
 
 		return $transaction;
 	}
-
 }

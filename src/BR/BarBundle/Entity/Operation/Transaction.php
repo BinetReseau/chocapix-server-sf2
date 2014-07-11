@@ -2,11 +2,14 @@
 namespace BR\BarBundle\Entity\Operation;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use Doctrine\Common\Collections\ArrayCollection;
 
  // * @ORM\Entity(repositoryClass="BR\BarBundle\Entity\Operation\TransactionRepository")
+
 /**
  * @ORM\Entity
+ * @JMS\ExclusionPolicy("none")
  */
 class Transaction
 {
@@ -15,6 +18,13 @@ class Transaction
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar\Bar")
+     * @JMS\Exclude
+     */
+    private $bar;
+
 
     /** @ORM\Column(type="datetime") */
     private $timestamp;
@@ -27,12 +37,23 @@ class Transaction
     private $operations;
 
 
-    public function __construct($type)
+    public function __construct($bar, $type)
     {
+        $this->bar = $bar;
         $this->type = $type;
         $this->timestamp = new \DateTime("now");
         $this->operations = new ArrayCollection();
     }
+
+    /**
+     * @JMS\SerializedName("bar")
+     * @JMS\VirtualProperty
+     */
+    public function getBarId()
+    {
+        return $this->bar->getId();
+    }
+
 
 
     /**
@@ -135,5 +156,28 @@ class Transaction
     public function getOperations()
     {
         return $this->operations;
+    }
+
+    /**
+     * Set bar
+     *
+     * @param \BR\BarBundle\Entity\Bar\Bar $bar
+     * @return Transaction
+     */
+    public function setBar(\BR\BarBundle\Entity\Bar\Bar $bar = null)
+    {
+        $this->bar = $bar;
+
+        return $this;
+    }
+
+    /**
+     * Get bar
+     *
+     * @return \BR\BarBundle\Entity\Bar\Bar 
+     */
+    public function getBar()
+    {
+        return $this->bar;
     }
 }
