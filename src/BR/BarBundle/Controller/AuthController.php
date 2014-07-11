@@ -15,6 +15,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 class AuthController extends FOSRestController {
 	/**
 	 * @Post("/{bar}/auth/login")
+     * @View(serializerGroups={"Default", "auth", "account"})
 	 */
 	public function loginAction(Request $request, $bar) {
 		$login = $request->request->get('login');
@@ -54,14 +55,14 @@ class AuthController extends FOSRestController {
 
 		$jwt = $this->get('lexik_jwt_authentication.jwt_encoder')->encode($payload)->getTokenString();
 
-		return $this->handleView($this->view(array('token' => $jwt, 'url_safe_token' => urlencode($jwt), 'user' => $user), 200));
+		return array('token' => $jwt, 'url_safe_token' => urlencode($jwt), 'user' => $user);
 	}
 
 
 	/**
      * @Security("has_role('ROLE_USER')")
 	 * @Get("/{bar}/auth/me")
-     * @View()
+     * @View(serializerGroups={"Default", "auth", "account"})
      */
 	public function getMeAction(Request $request, $bar) {
 		return $this->getUser();

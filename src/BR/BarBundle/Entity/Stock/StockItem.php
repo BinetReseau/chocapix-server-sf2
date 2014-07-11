@@ -2,9 +2,12 @@
 namespace BR\BarBundle\Entity\Stock;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
-/** @ORM\Entity */
-/* @ORM\Entity(repositoryClass="BR\BarBundle\Entity\Stock\StockRepository") */
+/**
+ * @ORM\Entity
+ * @JMS\ExclusionPolicy("none")
+ */
 class StockItem
 {
     /**
@@ -12,6 +15,12 @@ class StockItem
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar\Bar")
+     * @JMS\Exclude
+     */
+    private $bar;
 
 
     /** @ORM\Column(type="string", length=255) */
@@ -30,32 +39,25 @@ class StockItem
     /** @ORM\Column(type="decimal") */
     private $tax;
 
-    /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar")
-     *  @ORM\JoinColumn(name="bar", referencedColumnName="id")
-     */
-    private $bar;
-
     /** @ORM\Column(type="text") */
     private $keywords;
 
 
     /**
-     * Set id
-     *
-     * @param integer $id
-     * @return StockItem
+     * @JMS\SerializedName("bar")
+     * @JMS\VirtualProperty
      */
-    public function setId($id)
+    public function getBarId()
     {
-        $this->id = $id;
-
-        return $this;
+        return $this->bar->getId();
     }
+
+
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -78,7 +80,7 @@ class StockItem
     /**
      * Get name
      *
-     * @return string
+     * @return string 
      */
     public function getName()
     {
@@ -101,7 +103,7 @@ class StockItem
     /**
      * Get qty
      *
-     * @return string
+     * @return string 
      */
     public function getQty()
     {
@@ -124,7 +126,7 @@ class StockItem
     /**
      * Get unit
      *
-     * @return string
+     * @return string 
      */
     public function getUnit()
     {
@@ -147,7 +149,7 @@ class StockItem
     /**
      * Get price
      *
-     * @return string
+     * @return string 
      */
     public function getPrice()
     {
@@ -170,34 +172,11 @@ class StockItem
     /**
      * Get tax
      *
-     * @return string
+     * @return string 
      */
     public function getTax()
     {
         return $this->tax;
-    }
-
-    /**
-     * Set bar
-     *
-     * @param \BR\BarBundle\Entity\Bar $bar
-     * @return StockItem
-     */
-    public function setBar(\BR\BarBundle\Entity\Bar $bar = null)
-    {
-        $this->bar = $bar;
-
-        return $this;
-    }
-
-    /**
-     * Get bar
-     *
-     * @return \BR\BarBundle\Entity\Bar
-     */
-    public function getBar()
-    {
-        return $this->bar;
     }
 
     /**
@@ -216,10 +195,33 @@ class StockItem
     /**
      * Get keywords
      *
-     * @return string
+     * @return string 
      */
     public function getKeywords()
     {
         return $this->keywords;
+    }
+
+    /**
+     * Set bar
+     *
+     * @param \BR\BarBundle\Entity\Bar\Bar $bar
+     * @return StockItem
+     */
+    public function setBar(\BR\BarBundle\Entity\Bar\Bar $bar = null)
+    {
+        $this->bar = $bar;
+
+        return $this;
+    }
+
+    /**
+     * Get bar
+     *
+     * @return \BR\BarBundle\Entity\Bar\Bar 
+     */
+    public function getBar()
+    {
+        return $this->bar;
     }
 }

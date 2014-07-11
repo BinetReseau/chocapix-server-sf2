@@ -12,7 +12,7 @@ class UserController extends FOSRestController {
 
 	/**
 	 * @Get("/{bar}/user")
-     * @View(serializerGroups={"Default", "user"})
+     * @View(serializerGroups={"Default", "account"})
      */
 	public function getUsersAction(Request $request, $bar) {
 		$repository = $this->getDoctrine()
@@ -29,7 +29,7 @@ class UserController extends FOSRestController {
 
 	/**
 	 * @Get("/{bar}/user/{id}")
-     * @View()
+     * @View(serializerGroups={"Default", "account"})
      */
 	public function getUserAction(Request $request, $bar, $id) {
 		$repository = $this->getDoctrine()
