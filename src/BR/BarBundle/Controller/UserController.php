@@ -45,5 +45,4 @@ class UserController extends FOSRestController {
 
 		return $users;
 	}
-
 }

@@ -7,7 +7,10 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations\View;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 class AuthController extends FOSRestController {
 	/**
@@ -52,5 +55,15 @@ class AuthController extends FOSRestController {
 		$jwt = $this->get('lexik_jwt_authentication.jwt_encoder')->encode($payload)->getTokenString();
 
 		return $this->handleView($this->view(array('token' => $jwt, 'url_safe_token' => urlencode($jwt), 'user' => $user), 200));
+	}
+
+
+	/**
+     * @Security("has_role('ROLE_USER')")
+	 * @Get("/{bar}/auth/me")
+     * @View()
+     */
+	public function getMeAction(Request $request, $bar) {
+		return $this->getUser();
 	}
 }
