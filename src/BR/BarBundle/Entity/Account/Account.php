@@ -1,10 +1,10 @@
 <?php
-namespace BR\BarBundle\Entity\Client;
+namespace BR\BarBundle\Entity\Account;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /** @ORM\Entity */
-class Client
+class Account
 {
     /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
     private $id;
@@ -13,23 +13,11 @@ class Client
     private $money;
 
 
-    /**
-     * Set id
-     *
-     * @param integer $id
-     * @return Client
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
 
     /**
      * Get id
      *
-     * @return integer
+     * @return integer 
      */
     public function getId()
     {
@@ -40,7 +28,7 @@ class Client
      * Set money
      *
      * @param string $money
-     * @return Client
+     * @return Account
      */
     public function setMoney($money)
     {
@@ -52,7 +40,7 @@ class Client
     /**
      * Get money
      *
-     * @return string
+     * @return string 
      */
     public function getMoney()
     {

@@ -28,11 +28,11 @@ class User implements UserInterface, \Serializable
     private $login;
 
     /** @ORM\Column(type="string", length=64) */
-    private $pwd;
+    private $password;
 
 
-    /** @ORM\OneToOne(targetEntity="\BR\BarBundle\Entity\Client\Client") */
-    private $client;
+    /** @ORM\OneToOne(targetEntity="\BR\BarBundle\Entity\Account\Account") */
+    private $account;
 
 
     public function __construct()
@@ -54,7 +54,7 @@ class User implements UserInterface, \Serializable
 
     public function getPassword()
     {
-        return $this->pwd;
+        return $this->password;
     }
 
     public function getRoles()
@@ -73,7 +73,7 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->bar,
             $this->login,
-            $this->pwd
+            $this->password
         ));
     }
 
@@ -83,24 +83,11 @@ class User implements UserInterface, \Serializable
             $this->id,
             $this->bar,
             $this->login,
-            $this->pwd
+            $this->password
         ) = unserialize($serialized);
     }
 
 
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     * @return User
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-
-        return $this;
-    }
 
     /**
      * Get id
@@ -136,42 +123,6 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set roles
-     *
-     * @param array $roles
-     * @return User
-     */
-    public function setRoles($roles)
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
-
-    /**
-     * Set pwd
-     *
-     * @param string $pwd
-     * @return User
-     */
-    public function setPwd($pwd)
-    {
-        $this->pwd = $pwd;
-
-        return $this;
-    }
-
-    /**
-     * Get pwd
-     *
-     * @return string
-     */
-    public function getPwd()
-    {
-        return $this->pwd;
-    }
-
-    /**
      * Set login
      *
      * @param string $login
@@ -195,26 +146,39 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set client
+     * Set password
      *
-     * @param \BR\BarBundle\Entity\Client\Client $client
+     * @param string $password
      * @return User
      */
-    public function setClient(\BR\BarBundle\Entity\Client\Client $client = null)
+    public function setPassword($password)
     {
-        $this->client = $client;
+        $this->password = $password;
 
         return $this;
     }
 
     /**
-     * Get client
+     * Set bar
      *
-     * @return \BR\BarBundle\Entity\Client\Client
+     * @param \BR\BarBundle\Entity\Bar $bar
+     * @return User
      */
-    public function getClient()
+    public function setBar(\BR\BarBundle\Entity\Bar $bar = null)
     {
-        return $this->client;
+        $this->bar = $bar;
+
+        return $this;
+    }
+
+    /**
+     * Get bar
+     *
+     * @return \BR\BarBundle\Entity\Bar
+     */
+    public function getBar()
+    {
+        return $this->bar;
     }
 
     /**
@@ -241,25 +205,25 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * Set bar
+     * Set account
      *
-     * @param \BR\BarBundle\Entity\Bar $bar
+     * @param \BR\BarBundle\Entity\Account\Account $account
      * @return User
      */
-    public function setBar(\BR\BarBundle\Entity\Bar $bar = null)
+    public function setAccount(\BR\BarBundle\Entity\Account\Account $account = null)
     {
-        $this->bar = $bar;
+        $this->account = $account;
 
         return $this;
     }
 
     /**
-     * Get bar
+     * Get account
      *
-     * @return \BR\BarBundle\Entity\Bar
+     * @return \BR\BarBundle\Entity\Account\Account
      */
-    public function getBar()
+    public function getAccount()
     {
-        return $this->bar;
+        return $this->account;
     }
 }

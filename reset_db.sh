@@ -6,3 +6,6 @@ app/console doctrine:database:create
 app/console doctrine:schema:update --force
 app/console doctrine:query:sql "$(cat init.sql)"
 
+# sudo rm -R app/cache
+# mkdir app/cache
+# sudo chmod -R 777 app/cache/

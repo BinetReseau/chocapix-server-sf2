@@ -11,7 +11,7 @@ VALUES
 (1, 'Admin', 'ROLE_ADMIN');
 
 
-INSERT INTO Client
+INSERT INTO Account
 VALUES
 (1, 23.3),
 (2, -10.2),
@@ -24,7 +24,7 @@ VALUES
 (9, 0.0);
 
 INSERT INTO User
-(`id`, `bar`, `client_id`, `name`,           `login`,   `pwd`)
+(`id`, `bar`, `account_id`, `name`,           `login`,   `password`)
 VALUES
 (1, 'avironjone',   1,  'Basile Bruneau',    'bb',                  'kjhiuy'),
 (2, 'avironjone',   2,  'Thomas Dupond',     'fgdfg',               'kjhiuy'),
