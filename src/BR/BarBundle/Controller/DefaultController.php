@@ -39,8 +39,4 @@ class DefaultController extends Controller {
 		return $this->render('BRBarBundle:Default:default.html.twig');
 	}
 
-	public function defaultAction(Request $request) {
-		return $this->render('BRBarBundle:Default:default.html.twig');
-	}
-
 }
