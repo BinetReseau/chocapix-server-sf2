@@ -69,7 +69,7 @@ class AuthController extends FOSRestController {
      *
      * @Security("has_role('ROLE_USER')")
      */
-	public function getMeAction(Bar $bar) {
+	public function getMyUserAction(Bar $bar) {
 		return $this->getUser();
 	}
 }

@@ -23,7 +23,7 @@ class AccountController extends FOSRestController {
      *
      * @Security("is_granted('ACCOUNT', bar)")
      */
-	public function getMeAction(Bar $bar) {
+	public function getMyAccountAction(Bar $bar) {
 		return $this->getDoctrine()->getRepository('BR\BarBundle\Entity\Account\Account')
                 ->findFromUserAndBar($this->getUser(), $bar);
 	}
