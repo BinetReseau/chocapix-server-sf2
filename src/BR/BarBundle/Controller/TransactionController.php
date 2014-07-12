@@ -51,7 +51,7 @@ class TransactionController extends FOSRestController {
 		        ->andWhere('t.bar = :bar')
 				->orderBy('t.timestamp', 'DESC')
 				->setParameter('id', $id)
-				->setParameter('bar', $bar)
+				->setParameter('bar', $bar);
 
 		return $qb->getQuery()->getResult();
 	}
