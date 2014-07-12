@@ -27,16 +27,16 @@ class StockItem
     private $name;
 
 
-    /** @ORM\Column(type="decimal") */
+    /** @ORM\Column(type="decimal", precision=8, scale=3) */
     private $qty;
 
     /** @ORM\Column(type="string", length=255) */
     private $unit;
 
-    /** @ORM\Column(type="decimal", scale=3) */
+    /** @ORM\Column(type="decimal", precision=8, scale=3) */
     private $price;
 
-    /** @ORM\Column(type="decimal") */
+    /** @ORM\Column(type="decimal", precision=8, scale=3) */
     private $tax;
 
     /** @ORM\Column(type="text") */

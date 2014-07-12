@@ -12,7 +12,7 @@ class Account
      */
     private $id;
 
-    /** @ORM\Column(type="decimal") */
+    /** @ORM\Column(type="decimal", precision=9, scale=3) */
     private $money;
 
     /**
@@ -61,28 +61,5 @@ class Account
     public function getMoney()
     {
         return $this->money;
-    }
-
-    /**
-     * Set user
-     *
-     * @param \BR\BarBundle\Entity\Auth\User $user
-     * @return Account
-     */
-    public function setUser(\BR\BarBundle\Entity\Auth\User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \BR\BarBundle\Entity\Auth\User 
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 }

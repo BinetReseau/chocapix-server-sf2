@@ -10,10 +10,10 @@ class AccountOperation extends Operation
     /** @ORM\ManyToOne(targetEntity="Account") */
     private $account;
 
-    /** @ORM\Column(type="decimal") */
+    /** @ORM\Column(type="decimal", precision=7, scale=3) */
     private $deltamoney;
 
-    /** @ORM\Column(type="decimal") */
+    /** @ORM\Column(type="decimal", precision=8, scale=3) */
     private $newmoney;
 
 
