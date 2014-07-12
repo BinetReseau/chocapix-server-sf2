@@ -25,7 +25,7 @@ class FoodController extends FOSRestController {
 		$foods = $repository->createQueryBuilder('f')
 		        ->where('f.bar = :bar')
 				->orderBy('f.name', 'ASC')
-				->setParameter('bar', $bar->getId())
+				->setParameter('bar', $bar)
 				->getQuery()->getResult();
 
 		return $foods;

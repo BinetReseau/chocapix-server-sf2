@@ -24,7 +24,7 @@ class UserController extends FOSRestController {
 		$users = $repository->createQueryBuilder('u')
 		        ->where('u.bar = :bar')
 				->orderBy('u.name', 'ASC')
-				->setParameter('bar', $bar->getId())
+				->setParameter('bar', $bar)
 				->getQuery()->getResult();
 
 		return $users;
@@ -44,7 +44,7 @@ class UserController extends FOSRestController {
 		        ->andWhere('u.bar = :bar')
 				->orderBy('u.name', 'ASC')
 				->setParameter('id', $id)
-				->setParameter('bar', $bar->getId())
+				->setParameter('bar', $bar)
 				->getQuery()->getSingleResult();
 
 		return $user;

@@ -24,21 +24,19 @@ class TransactionController extends FOSRestController {
 	/**
 	 * @Get("/{bar}/transaction")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
-	 * @QueryParam(name="limit", requirements="\d+", default="30")
+	 * @QueryParam(name="limit", requirements="\d+", default="0")
      * @View(serializerGroups={"Default"})
      */
 	public function getTransactionsAction(Bar $bar, $limit) {
-		$repository = $this->getDoctrine()
-				->getRepository('BRBarBundle:Operation\Transaction');
-
-		$transactions = $repository->createQueryBuilder('t')
+		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\Transaction')
+				->createQueryBuilder('t')
 				->where('t.bar = :bar')
 				->orderBy('t.timestamp', 'DESC')
-				->setParameter('bar', $bar->getId())
-				->setMaxResults($limit)
-				->getQuery()->getResult();
+				->setParameter('bar', $bar);
+		if($limit!=0)
+			$qb->setMaxResults($limit);
 
-		return $transactions;
+		return $qb->getQuery()->getResult();
 	}
 
 	/**
@@ -47,70 +45,69 @@ class TransactionController extends FOSRestController {
      * @View(serializerGroups={"Default"})
      */
 	public function getTransactionAction(Bar $bar, $id) {
-		$repository = $this->getDoctrine()
-				->getRepository('BRBarBundle:Operation\Transaction');
-
-		$transactions = $repository->createQueryBuilder('t')
+		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\Transaction')
+				->createQueryBuilder('t')
 		        ->where('t.id = :id')
 		        ->andWhere('t.bar = :bar')
 				->orderBy('t.timestamp', 'DESC')
 				->setParameter('id', $id)
-				->setParameter('bar', $bar->getId())
-				->getQuery()->getResult();
+				->setParameter('bar', $bar)
 
-		return $transactions;
+		return $qb->getQuery()->getResult();
 	}
 
 	/**
 	 * @Get("/{bar}/transaction/by-item/{item}")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
+	 * @QueryParam(name="limit", requirements="\d+", default="0")
 	 *
      * @View(serializerGroups={"Default"})
      */
-	public function getTransactionByItemAction(Bar $bar, StockItem $item) {
-		$repository = $this->getDoctrine()
-				->getRepository('BRBarBundle:Stock\StockOperation');
+	public function getTransactionByItemAction(Bar $bar, StockItem $item, $limit) {
+		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Stock\StockOperation')
+				->createQueryBuilder('o')
+				->select('IDENTITY(o.transaction)')
+				->where('o.item = :item');
 
-		$transactions = $repository->createQueryBuilder('so')
-				->select('IDENTITY(so.transaction) as id')
-				->where('so.item = :item')
-				->setParameter('item', $item->getId())
-				->getQuery()->getResult();
+		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\Transaction')
+				->createQueryBuilder('t')
+				->where('t.bar = :bar')
+				->andWhere('t.id IN ('.$qb->getDQL().')')
+				->orderBy('t.timestamp', 'DESC')
+				->setParameter('bar', $bar)
+				->setParameter('item', $item);
+		if($limit!=0)
+			$qb->setMaxResults($limit);
 
-		$repository = $this->getDoctrine()
-				->getRepository('BRBarBundle:Operation\Transaction');
-
-		$transactions = array_map(function($d){return $d['id'];}, $transactions);
-		$transactions = $repository->findById($transactions);
-
-		return $transactions;
+		return $qb->getQuery()->getResult();
 	}
 
 	/**
 	 * @Get("/{bar}/transaction/by-account/{account}")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 * @ParamConverter("account", class="BRBarBundle:Account\Account", options={"id" = "account"})
+	 * @QueryParam(name="limit", requirements="\d+", default="0")
 	 *
      * @View(serializerGroups={"Default"})
      */
-	public function getTransactionByAccountAction(Bar $bar, Account $account) {
-		$repository = $this->getDoctrine()
-				->getRepository('BRBarBundle:Account\AccountOperation');
+	public function getTransactionByAccountAction(Bar $bar, Account $account, $limit) {
+		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Account\AccountOperation')
+				->createQueryBuilder('o')
+				->select('IDENTITY(o.transaction)')
+				->where('o.account = :account');
 
-		$transactions = $repository->createQueryBuilder('ao')
-				->select('IDENTITY(ao.transaction) as id')
-				->where('ao.account = :account')
-				->setParameter('account', $account->getId())
-				->getQuery()->getResult();
+		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\Transaction')
+				->createQueryBuilder('t')
+				->where('t.bar = :bar')
+				->andWhere('t.id IN ('.$qb->getDQL().')')
+				->orderBy('t.timestamp', 'DESC')
+				->setParameter('bar', $bar)
+				->setParameter('account', $account);
+		if($limit!=0)
+			$qb->setMaxResults($limit);
 
-		$repository = $this->getDoctrine()
-				->getRepository('BRBarBundle:Operation\Transaction');
-
-		$transactions = array_map(function($d){return $d['id'];}, $transactions);
-		$transactions = $repository->findById($transactions);
-
-		return $transactions;
+		return $qb->getQuery()->getResult();
 	}
 
 

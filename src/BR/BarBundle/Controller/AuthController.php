@@ -34,7 +34,7 @@ class AuthController extends FOSRestController {
 		$users = $repository->createQueryBuilder('u')
 				->where('u.bar = :bar')
 				->andWhere('u.login = :login')
-				->setParameter('bar', $bar->getId())
+				->setParameter('bar', $bar)
 				->setParameter('login', $login)
 				->getQuery()->getResult();
 
