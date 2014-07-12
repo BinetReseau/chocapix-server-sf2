@@ -5,43 +5,34 @@ VALUES
 ('avironjone', 'Aviron Jône');
 
 
-INSERT INTO Role
-(`id`, `name`)
-VALUES
-('ROLE_ADMIN', 'Admin');
-
 INSERT INTO User
-(`id`, `bar_id`, `name`,          `login`,   `password`)
+(`id`, `name`,          `login`,   `password`)
 VALUES
-(1, 'avironjone',    'Basile Bruneau',    'bb',                  'bb'),
-(2, 'avironjone',    'Thomas Dupond',     'fgdfg',               'kjhiuy'),
-(3, 'avironjone',    'Arthur Content',    'bdfgb',               'kjhiuy'),
-(4, 'avironjone',    'Benjamin Fleuri',   'bsfdsb',              'kjhiuy'),
-(5, 'avironjone',    'Amandine Rosier',   'df.fgh',              'kjhiuy'),
-(6, 'avironjone',    'Edouard Twilight',  'sdfsdfsdgery.fhgfh',  'kjhiuy'),
-(7, 'avironjone',    'Eric LeGrand',      'dfdfdfd',             'kjhiuy'),
-(8, 'avironjone',    'Etienne Marrant',   '12345',               'kjhiuy'),
-(9, 'natationjone',  'Admin',             'admin',               'admin' ),
-(10,'avironjone',    'Admin',             'admin',               'admin' );
-INSERT INTO Account
-VALUES
-(1, 1, 23.3),
-(2, 2, -10.2),
-(3, 3, 12),
-(4, 4, 11.11),
-(5, 5, 10.34),
-(6, 6, 90.23),
-(7, 7, 1.2),
-(8, 8, 9.1),
-(9, 9, 0.0),
-(10, 10, 0.0);
-INSERT INTO user_role
-(`user_id`, `role_id`)
-VALUES
-(1, 'ROLE_ADMIN'),
-(9, 'ROLE_ADMIN'),
-(10, 'ROLE_ADMIN');
+(1,  'Basile Bruneau',    'bb',                  'bb'),
+(2,  'Thomas Dupond',     'fgdfg',               'kjhiuy'),
+(3,  'Arthur Content',    'bdfgb',               'kjhiuy'),
+(4,  'Benjamin Fleuri',   'bsfdsb',              'kjhiuy'),
+(5,  'Amandine Rosier',   'df.fgh',              'kjhiuy'),
+(6,  'Edouard Twilight',  'sdfsdfsdgery.fhgfh',  'kjhiuy'),
+(7,  'Eric LeGrand',      'dfdfdfd',             'kjhiuy'),
+(8,  'Etienne Marrant',   '12345',               'kjhiuy'),
+(9,  'Admin',             'admin',               'admin' ),
+(10, 'Admin',             'admin2',               'admin' );
 
+
+INSERT INTO Account
+(`id`, `user_id`, `bar_id`, `money`)
+VALUES
+(1, 1,   'avironjone',    23.3),
+(2, 2,   'avironjone',    -10.2),
+(3, 3,   'avironjone',    12),
+(4, 4,   'avironjone',    11.11),
+(5, 5,   'avironjone',    10.34),
+(6, 6,   'avironjone',    90.23),
+(7, 7,   'avironjone',    1.2),
+(8, 8,   'avironjone',    9.1),
+(9, 9,   'natationjone',  0.0),
+(10, 10, 'avironjone',    0.0);
 
 
 INSERT INTO StockItem

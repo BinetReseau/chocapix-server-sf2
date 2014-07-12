@@ -32,9 +32,7 @@ class AuthController extends FOSRestController {
 				->getRepository('BRBarBundle:Auth\User');
 
 		$users = $repository->createQueryBuilder('u')
-				->where('u.bar = :bar')
-				->andWhere('u.login = :login')
-				->setParameter('bar', $bar)
+				->where('u.login = :login')
 				->setParameter('login', $login)
 				->getQuery()->getResult();
 
@@ -64,11 +62,12 @@ class AuthController extends FOSRestController {
 
 
 	/**
-     * @Security("has_role('ROLE_USER')")
-     *
 	 * @Get("/{bar}/auth/me")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 *
      * @View(serializerGroups={"Default", "auth", "account"})
+     *
+     * @Security("has_role('ROLE_USER')")
      */
 	public function getMeAction(Bar $bar) {
 		return $this->getUser();

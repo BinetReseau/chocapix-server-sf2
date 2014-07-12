@@ -4,6 +4,7 @@ namespace BR\BarBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\Get;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -15,6 +16,9 @@ class UserController extends FOSRestController {
 	/**
 	 * @Get("/{bar}/user")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 *
+     * @Security("is_granted('ACCOUNT', bar)")
+	 *
      * @View(serializerGroups={"Default", "account"})
      */
 	public function getUsersAction(Bar $bar) {
@@ -22,9 +26,7 @@ class UserController extends FOSRestController {
 				->getRepository('BRBarBundle:Auth\User');
 
 		$users = $repository->createQueryBuilder('u')
-		        ->where('u.bar = :bar')
 				->orderBy('u.name', 'ASC')
-				->setParameter('bar', $bar)
 				->getQuery()->getResult();
 
 		return $users;
@@ -33,6 +35,7 @@ class UserController extends FOSRestController {
 	/**
 	 * @Get("/{bar}/user/{id}")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 *
      * @View(serializerGroups={"Default", "account"})
      */
 	public function getUserAction(Bar $bar, $id) {
@@ -41,10 +44,8 @@ class UserController extends FOSRestController {
 
 		$user = $repository->createQueryBuilder('u')
 		        ->where('u.id = :id')
-		        ->andWhere('u.bar = :bar')
 				->orderBy('u.name', 'ASC')
 				->setParameter('id', $id)
-				->setParameter('bar', $bar)
 				->getQuery()->getSingleResult();
 
 		return $user;

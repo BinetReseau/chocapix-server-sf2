@@ -2,6 +2,7 @@
 namespace BR\BarBundle\Entity\Account;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
 /** @ORM\Entity */
 class Account
@@ -12,14 +13,30 @@ class Account
      */
     private $id;
 
-    /** @ORM\Column(type="decimal", precision=9, scale=3) */
-    private $money;
+    /**
+     * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar\Bar")
+     * @JMS\Exclude
+     */
+    private $bar;
+
 
     /**
      * @ORM\OneToOne(targetEntity="\BR\BarBundle\Entity\Auth\User", inversedBy="account")
      */
     private $user;
 
+    /** @ORM\Column(type="decimal", precision=9, scale=3) */
+    private $money;
+
+
+    /**
+     * @JMS\SerializedName("bar")
+     * @JMS\VirtualProperty
+     */
+    public function getBarId()
+    {
+        return $this->bar->getId();
+    }
 
     public function operation($transaction, $deltamoney)
     {
@@ -28,6 +45,7 @@ class Account
         $transaction->addOperation($op);
         return $op;
     }
+
 
 
     /**
@@ -61,5 +79,51 @@ class Account
     public function getMoney()
     {
         return $this->money;
+    }
+
+    /**
+     * Set bar
+     *
+     * @param \BR\BarBundle\Entity\Bar\Bar $bar
+     * @return Account
+     */
+    public function setBar(\BR\BarBundle\Entity\Bar\Bar $bar = null)
+    {
+        $this->bar = $bar;
+
+        return $this;
+    }
+
+    /**
+     * Get bar
+     *
+     * @return \BR\BarBundle\Entity\Bar\Bar 
+     */
+    public function getBar()
+    {
+        return $this->bar;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \BR\BarBundle\Entity\Auth\User $user
+     * @return Account
+     */
+    public function setUser(\BR\BarBundle\Entity\Auth\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \BR\BarBundle\Entity\Auth\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }

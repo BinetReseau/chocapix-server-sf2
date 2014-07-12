@@ -20,26 +20,13 @@ class User implements UserInterface, \Serializable
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar\Bar")
-     * @JMS\Exclude
-     */
-    private $bar;
-
-
-    /**
 	 * @ORM\Column(type="string", length=50)
 	 */
     private $name;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="Role", fetch="EAGER")
-     * @JMS\Exclude
-     */
-    private $roles;
-
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @ORM\Column(type="string", length=50, unique=true)
      * @JMS\Groups({"auth"})
 	 */
     private $login;
@@ -58,15 +45,6 @@ class User implements UserInterface, \Serializable
     private $account;
 
 
-	/**
-	 * @JMS\SerializedName("bar")
-	 * @JMS\VirtualProperty
-	 */
-    public function getBarId()
-    {
-        return $this->bar->getId();
-    }
-
 
     /**
      * @JMS\Groups({"account"})
@@ -79,25 +57,9 @@ class User implements UserInterface, \Serializable
     }
 
 
-    /**
-     * @JMS\Type("array<string>")
-     * @JMS\Groups({"auth"})
-     * @JMS\SerializedName("roles")
-     * @JMS\VirtualProperty
-     */
     public function getRoles()
     {
-        return array_merge(
-            array('ROLE_USER'),
-            array_map(function($role) {return $role->getRole();},
-                $this->roles->toArray())
-        );
-    }
-
-    public function __construct()
-    {
-        parent::__construct();
-        $this->roles = new ArrayCollection();
+        return array('ROLE_USER');
     }
 
 
@@ -212,52 +174,6 @@ class User implements UserInterface, \Serializable
         $this->password = $password;
 
         return $this;
-    }
-
-    /**
-     * Set bar
-     *
-     * @param \BR\BarBundle\Entity\Bar\Bar $bar
-     * @return User
-     */
-    public function setBar(\BR\BarBundle\Entity\Bar\Bar $bar = null)
-    {
-        $this->bar = $bar;
-
-        return $this;
-    }
-
-    /**
-     * Get bar
-     *
-     * @return \BR\BarBundle\Entity\Bar\Bar
-     */
-    public function getBar()
-    {
-        return $this->bar;
-    }
-
-    /**
-     * Add roles
-     *
-     * @param \BR\BarBundle\Entity\Auth\Role $roles
-     * @return User
-     */
-    public function addRole(\BR\BarBundle\Entity\Auth\Role $roles)
-    {
-        $this->roles[] = $roles;
-
-        return $this;
-    }
-
-    /**
-     * Remove roles
-     *
-     * @param \BR\BarBundle\Entity\Auth\Role $roles
-     */
-    public function removeRole(\BR\BarBundle\Entity\Auth\Role $roles)
-    {
-        $this->roles->removeElement($roles);
     }
 
     /**
