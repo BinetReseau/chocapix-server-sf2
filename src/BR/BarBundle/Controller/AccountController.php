@@ -13,14 +13,13 @@ use FOS\RestBundle\Controller\Annotations\RequestParam;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use BR\BarBundle\Entity\Bar\Bar;
-use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class AccountController extends FOSRestController {
 	/**
 	 * @Get("/{bar}/account/me")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 *
-     * @View(serializerGroups={"Default", "auth", "account"})
+     * @View(serializerGroups={"Default"})
      *
      * @Security("is_granted('ACCOUNT', bar)")
      */

@@ -2,6 +2,10 @@ br_bar_root:
     type:     rest
     resource: BR\BarBundle\Controller\DefaultController
 
+br_bar_account:
+    type:     rest
+    resource: BR\BarBundle\Controller\AccountController
+
 br_bar_auth:
     type:     rest
     resource: BR\BarBundle\Controller\AuthController
