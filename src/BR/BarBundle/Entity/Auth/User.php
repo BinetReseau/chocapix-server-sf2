@@ -52,7 +52,7 @@ class User implements UserInterface, \Serializable
 
 
     /**
-	 * @ORM\OneToOne(targetEntity="\BR\BarBundle\Entity\Account\Account")
+	 * @ORM\OneToOne(targetEntity="\BR\BarBundle\Entity\Account\Account", mappedBy="user")
      * @JMS\Exclude
 	 */
     private $account;

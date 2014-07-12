@@ -15,6 +15,11 @@ class Account
     /** @ORM\Column(type="decimal") */
     private $money;
 
+    /**
+     * @ORM\OneToOne(targetEntity="\BR\BarBundle\Entity\Auth\User", inversedBy="account")
+     */
+    private $user;
+
 
     public function operation($transaction, $deltamoney)
     {
@@ -56,5 +61,28 @@ class Account
     public function getMoney()
     {
         return $this->money;
+    }
+
+    /**
+     * Set user
+     *
+     * @param \BR\BarBundle\Entity\Auth\User $user
+     * @return Account
+     */
+    public function setUser(\BR\BarBundle\Entity\Auth\User $user = null)
+    {
+        $this->user = $user;
+
+        return $this;
+    }
+
+    /**
+     * Get user
+     *
+     * @return \BR\BarBundle\Entity\Auth\User 
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
