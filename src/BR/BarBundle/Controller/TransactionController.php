@@ -13,10 +13,11 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use BR\BarBundle\Entity\Bar\Bar;
-use BR\BarBundle\Entity\Stock\StockItem;
 use BR\BarBundle\Entity\Operation\Transaction;
-use BR\BarBundle\Entity\Stock\StockOperation;
+use BR\BarBundle\Entity\Account\Account;
 use BR\BarBundle\Entity\Account\AccountOperation;
+use BR\BarBundle\Entity\Stock\StockItem;
+use BR\BarBundle\Entity\Stock\StockOperation;
 
 class TransactionController extends FOSRestController {
 
@@ -34,7 +35,8 @@ class TransactionController extends FOSRestController {
 				->where('t.bar = :bar')
 				->orderBy('t.timestamp', 'DESC')
 				->setParameter('bar', $bar->getId())
-				->getQuery()->setMaxResults($limit)->getResult();
+				->setMaxResults($limit)
+				->getQuery()->getResult();
 
 		return $transactions;
 	}
@@ -55,6 +57,58 @@ class TransactionController extends FOSRestController {
 				->setParameter('id', $id)
 				->setParameter('bar', $bar->getId())
 				->getQuery()->getResult();
+
+		return $transactions;
+	}
+
+	/**
+	 * @Get("/{bar}/transaction/by-item/{item}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
+	 *
+     * @View(serializerGroups={"Default"})
+     */
+	public function getTransactionByItemAction(Bar $bar, StockItem $item) {
+		$repository = $this->getDoctrine()
+				->getRepository('BRBarBundle:Stock\StockOperation');
+
+		$transactions = $repository->createQueryBuilder('so')
+				->select('IDENTITY(so.transaction) as id')
+				->where('so.item = :item')
+				->setParameter('item', $item->getId())
+				->getQuery()->getResult();
+
+		$repository = $this->getDoctrine()
+				->getRepository('BRBarBundle:Operation\Transaction');
+
+		$transactions = array_map(function($d){return $d['id'];}, $transactions);
+		$transactions = $repository->findById($transactions);
+
+		return $transactions;
+	}
+
+	/**
+	 * @Get("/{bar}/transaction/by-account/{account}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @ParamConverter("account", class="BRBarBundle:Account\Account", options={"id" = "account"})
+	 *
+     * @View(serializerGroups={"Default"})
+     */
+	public function getTransactionByAccountAction(Bar $bar, Account $account) {
+		$repository = $this->getDoctrine()
+				->getRepository('BRBarBundle:Account\AccountOperation');
+
+		$transactions = $repository->createQueryBuilder('ao')
+				->select('IDENTITY(ao.transaction) as id')
+				->where('ao.account = :account')
+				->setParameter('account', $account->getId())
+				->getQuery()->getResult();
+
+		$repository = $this->getDoctrine()
+				->getRepository('BRBarBundle:Operation\Transaction');
+
+		$transactions = array_map(function($d){return $d['id'];}, $transactions);
+		$transactions = $repository->findById($transactions);
 
 		return $transactions;
 	}
