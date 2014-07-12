@@ -39,22 +39,11 @@ class User implements UserInterface, \Serializable
 
 
     /**
-	 * @ORM\OneToOne(targetEntity="\BR\BarBundle\Entity\Account\Account", mappedBy="user")
+	 * @ORM\OneToMany(targetEntity="\BR\BarBundle\Entity\Account\Account", mappedBy="user")
      * @JMS\Exclude
 	 */
-    private $account;
+    private $accounts;
 
-
-
-    /**
-     * @JMS\Groups({"account"})
-     * @JMS\SerializedName("money")
-     * @JMS\VirtualProperty
-     */
-    public function getMoney()
-    {
-        return $this->account->getMoney();
-    }
 
 
     public function getRoles()

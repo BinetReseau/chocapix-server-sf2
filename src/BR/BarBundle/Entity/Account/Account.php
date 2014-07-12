@@ -21,7 +21,7 @@ class Account
 
 
     /**
-     * @ORM\OneToOne(targetEntity="\BR\BarBundle\Entity\Auth\User", inversedBy="account")
+     * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Auth\User", inversedBy="accounts")
      */
     private $user;
 
@@ -97,7 +97,7 @@ class Account
     /**
      * Get bar
      *
-     * @return \BR\BarBundle\Entity\Bar\Bar 
+     * @return \BR\BarBundle\Entity\Bar\Bar
      */
     public function getBar()
     {
@@ -120,7 +120,7 @@ class Account
     /**
      * Get user
      *
-     * @return \BR\BarBundle\Entity\Auth\User 
+     * @return \BR\BarBundle\Entity\Auth\User
      */
     public function getUser()
     {
