@@ -2,13 +2,25 @@
 namespace BR\BarBundle\Entity\Stock;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 
-/** @ORM\Entity */
-/* @ORM\Entity(repositoryClass="BR\BarBundle\Entity\Stock\StockRepository") */
+/**
+ * @ORM\Entity
+ * @JMS\ExclusionPolicy("none")
+ */
 class StockItem
 {
-    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
+    /**
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
     private $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar\Bar")
+     * @JMS\Exclude
+     */
+    private $bar;
 
 
     /** @ORM\Column(type="string", length=255) */
@@ -27,27 +39,29 @@ class StockItem
     /** @ORM\Column(type="decimal") */
     private $tax;
 
-    /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar")
-     *  @ORM\JoinColumn(name="bar", referencedColumnName="id")
-     */
-    private $bar;
-
     /** @ORM\Column(type="text") */
     private $keywords;
 
 
-    /**
-     * Set id
-     *
-     * @param integer $id
-     * @return StockItem
-     */
-    public function setId($id)
+    public function operation($transaction, $deltaqty)
     {
-        $this->id = $id;
-
-        return $this;
+        $this->qty += $deltaqty;
+        $op = new StockOperation($transaction, $this, $deltaqty);
+        $transaction->addOperation($op);
+        return $op;
     }
+
+
+    /**
+     * @JMS\SerializedName("bar")
+     * @JMS\VirtualProperty
+     */
+    public function getBarId()
+    {
+        return $this->bar->getId();
+    }
+
+
 
     /**
      * Get id
@@ -175,29 +189,6 @@ class StockItem
     }
 
     /**
-     * Set bar
-     *
-     * @param \BR\BarBundle\Entity\Bar $bar
-     * @return StockItem
-     */
-    public function setBar(\BR\BarBundle\Entity\Bar $bar = null)
-    {
-        $this->bar = $bar;
-
-        return $this;
-    }
-
-    /**
-     * Get bar
-     *
-     * @return \BR\BarBundle\Entity\Bar
-     */
-    public function getBar()
-    {
-        return $this->bar;
-    }
-
-    /**
      * Set keywords
      *
      * @param string $keywords
@@ -218,5 +209,28 @@ class StockItem
     public function getKeywords()
     {
         return $this->keywords;
+    }
+
+    /**
+     * Set bar
+     *
+     * @param \BR\BarBundle\Entity\Bar\Bar $bar
+     * @return StockItem
+     */
+    public function setBar(\BR\BarBundle\Entity\Bar\Bar $bar = null)
+    {
+        $this->bar = $bar;
+
+        return $this;
+    }
+
+    /**
+     * Get bar
+     *
+     * @return \BR\BarBundle\Entity\Bar\Bar
+     */
+    public function getBar()
+    {
+        return $this->bar;
     }
 }

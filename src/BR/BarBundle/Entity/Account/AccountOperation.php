@@ -2,34 +2,29 @@
 namespace BR\BarBundle\Entity\Account;
 
 use Doctrine\ORM\Mapping as ORM;
+use BR\BarBundle\Entity\Operation\Operation;
 
 /** @ORM\Entity */
-class AccountOperation
+class AccountOperation extends Operation
 {
-    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
-    private $id;
-
-    /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Transaction") */
-    private $transaction;
-
     /** @ORM\ManyToOne(targetEntity="Account") */
     private $account;
 
     /** @ORM\Column(type="decimal") */
     private $deltamoney;
+
     /** @ORM\Column(type="decimal") */
     private $newmoney;
 
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
+    public function __construct($transaction, $account, $deltamoney)
     {
-        return $this->id;
+        parent::__construct($transaction);
+        $this->account = $account;
+        $this->deltamoney = $deltamoney;
+        $this->newmoney = $account->getMoney();
     }
+
 
     /**
      * Set deltamoney
@@ -47,7 +42,7 @@ class AccountOperation
     /**
      * Get deltamoney
      *
-     * @return string 
+     * @return string
      */
     public function getDeltamoney()
     {
@@ -70,34 +65,11 @@ class AccountOperation
     /**
      * Get newmoney
      *
-     * @return string 
+     * @return string
      */
     public function getNewmoney()
     {
         return $this->newmoney;
-    }
-
-    /**
-     * Set transaction
-     *
-     * @param \BR\BarBundle\Entity\Transaction $transaction
-     * @return AccountOperation
-     */
-    public function setTransaction(\BR\BarBundle\Entity\Transaction $transaction = null)
-    {
-        $this->transaction = $transaction;
-
-        return $this;
-    }
-
-    /**
-     * Get transaction
-     *
-     * @return \BR\BarBundle\Entity\Transaction 
-     */
-    public function getTransaction()
-    {
-        return $this->transaction;
     }
 
     /**
@@ -116,7 +88,7 @@ class AccountOperation
     /**
      * Get account
      *
-     * @return \BR\BarBundle\Entity\Account\Account 
+     * @return \BR\BarBundle\Entity\Account\Account
      */
     public function getAccount()
     {

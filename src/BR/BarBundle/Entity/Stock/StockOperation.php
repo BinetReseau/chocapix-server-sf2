@@ -2,17 +2,11 @@
 namespace BR\BarBundle\Entity\Stock;
 
 use Doctrine\ORM\Mapping as ORM;
-use BR\BarBundle\Entity\Transaction as Transaction;
+use BR\BarBundle\Entity\Operation\Operation;
 
 /** @ORM\Entity */
-class StockOperation
+class StockOperation extends Operation
 {
-    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
-    private $id;
-
-    /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Transaction") */
-    private $transaction;
-
     /** @ORM\ManyToOne(targetEntity="StockItem") */
     private $item;
 
@@ -23,28 +17,15 @@ class StockOperation
     private $newqty;
 
 
-    /**
-     * Set id
-     *
-     * @param integer $id
-     * @return StockOperation
-     */
-    public function setId($id)
+    public function __construct($transaction, $item, $deltaqty)
     {
-        $this->id = $id;
-
-        return $this;
+        parent::__construct($transaction);
+        $this->item = $item;
+        $this->deltaqty = $deltaqty;
+        $this->newqty = $item->getQty();
     }
 
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
+
 
     /**
      * Set deltaqty
@@ -90,29 +71,6 @@ class StockOperation
     public function getNewqty()
     {
         return $this->newqty;
-    }
-
-    /**
-     * Set transaction
-     *
-     * @param \BR\BarBundle\Entity\Transaction $transaction
-     * @return StockOperation
-     */
-    public function setTransaction(\BR\BarBundle\Entity\Transaction $transaction = null)
-    {
-        $this->transaction = $transaction;
-
-        return $this;
-    }
-
-    /**
-     * Get transaction
-     *
-     * @return \BR\BarBundle\Entity\Transaction
-     */
-    public function getTransaction()
-    {
-        return $this->transaction;
     }
 
     /**

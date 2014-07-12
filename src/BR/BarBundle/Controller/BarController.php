@@ -1,21 +1,23 @@
 <?php
-
 namespace BR\BarBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
+
+use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\Get;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
+use BR\BarBundle\Entity\Bar\Bar;
 
 class BarController extends FOSRestController {
 
-	/** @Get("/{bar}") */
-	public function getBarAction(Request $request, $bar) {
-		$repository = $this->getDoctrine()
-				->getRepository('BRBarBundle:Bar');
-
-		$bar = $repository->find($bar);
-
-		return $this->handleView($this->view($bar, 200));
+	/**
+	 * @Get("/{bar}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+     * @View()
+     */
+	public function getBarAction(Bar $bar) {
+		return $bar;
 	}
 }

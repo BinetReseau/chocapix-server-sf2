@@ -73,7 +73,9 @@ swiftmailer:
 
 # FOS REST API Configuration
 fos_rest:
+    param_fetcher_listener: force
     view:
+        view_response_listener: force
         force_redirects:
             html: true
         formats:
@@ -84,6 +86,10 @@ fos_rest:
         jsonp_handler: ~
     routing_loader:
         default_format: json
+
+sensio_framework_extra:
+    view:    { annotations: false }
+    # router:  { annotations: true }
 
 # Lexik JWT Authentification Configuration
 lexik_jwt_authentication:

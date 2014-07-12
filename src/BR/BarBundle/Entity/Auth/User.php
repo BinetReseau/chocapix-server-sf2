@@ -4,36 +4,95 @@ namespace BR\BarBundle\Entity\Auth;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
+use JMS\Serializer\Annotation as JMS;
 
-/** @ORM\Entity */
+/**
+ * @ORM\Entity
+ * @JMS\ExclusionPolicy("none")
+ */
 class User implements UserInterface, \Serializable
 {
-    /** @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer") */
+    /**
+	 * @ORM\Id @ORM\GeneratedValue
+	 * @ORM\Column(type="integer")
+	 */
     private $id;
 
-    /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar")
-     *  @ORM\JoinColumn(name="bar", referencedColumnName="id")
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar\Bar")
+     * @JMS\Exclude
      */
     private $bar;
 
 
-    /** @ORM\Column(type="string", length=50) */
+    /**
+	 * @ORM\Column(type="string", length=50)
+	 */
     private $name;
 
-    /** @ORM\ManyToMany(targetEntity="Role", fetch="EAGER") */
+    /**
+     * @ORM\ManyToMany(targetEntity="Role", fetch="EAGER")
+     * @JMS\Exclude
+     */
     private $roles;
 
 
-    /** @ORM\Column(type="string", length=50, unique=true) */
+    /**
+     * @ORM\Column(type="string", length=50)
+     * @JMS\Groups({"auth"})
+	 */
     private $login;
 
-    /** @ORM\Column(type="string", length=64) */
+    /**
+	 * @ORM\Column(type="string", length=64)
+     * @JMS\Exclude
+	 */
     private $password;
 
 
-    /** @ORM\OneToOne(targetEntity="\BR\BarBundle\Entity\Account\Account") */
+    /**
+	 * @ORM\OneToOne(targetEntity="\BR\BarBundle\Entity\Account\Account")
+     * @JMS\Exclude
+	 */
     private $account;
 
+
+	/**
+	 * @JMS\SerializedName("bar")
+	 * @JMS\VirtualProperty
+	 */
+    public function getBarId()
+    {
+        return $this->bar->getId();
+    }
+
+
+    /**
+     * @JMS\Groups({"account"})
+     * @JMS\SerializedName("money")
+     * @JMS\VirtualProperty
+     */
+    public function getMoney()
+    {
+        return $this->account->getMoney();
+    }
+
+
+    /**
+     * @JMS\Type("array<string>")
+     * @JMS\Groups({"auth"})
+     * @JMS\SerializedName("roles")
+     * @JMS\VirtualProperty
+     */
+    public function getRoles()
+    {
+        return array_merge(
+            array('ROLE_USER'),
+            array_map(function($role) {return $role->getRole();},
+                $this->roles->toArray())
+        );
+    }
 
     public function __construct()
     {
@@ -55,11 +114,6 @@ class User implements UserInterface, \Serializable
     public function getPassword()
     {
         return $this->password;
-    }
-
-    public function getRoles()
-    {
-        return $this->roles->toArray();
     }
 
     public function eraseCredentials()
@@ -86,6 +140,8 @@ class User implements UserInterface, \Serializable
             $this->password
         ) = unserialize($serialized);
     }
+
+
 
 
 
@@ -161,10 +217,10 @@ class User implements UserInterface, \Serializable
     /**
      * Set bar
      *
-     * @param \BR\BarBundle\Entity\Bar $bar
+     * @param \BR\BarBundle\Entity\Bar\Bar $bar
      * @return User
      */
-    public function setBar(\BR\BarBundle\Entity\Bar $bar = null)
+    public function setBar(\BR\BarBundle\Entity\Bar\Bar $bar = null)
     {
         $this->bar = $bar;
 
@@ -174,7 +230,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get bar
      *
-     * @return \BR\BarBundle\Entity\Bar
+     * @return \BR\BarBundle\Entity\Bar\Bar
      */
     public function getBar()
     {

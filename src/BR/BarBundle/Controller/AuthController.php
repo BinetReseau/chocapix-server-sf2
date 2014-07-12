@@ -1,22 +1,30 @@
 <?php
-
 namespace BR\BarBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 use FOS\RestBundle\Controller\FOSRestController;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\Get;
+use FOS\RestBundle\Controller\Annotations\View;
+use FOS\RestBundle\Controller\Annotations\RequestParam;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
+use BR\BarBundle\Entity\Bar\Bar;
 use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class AuthController extends FOSRestController {
 	/**
 	 * @Post("/{bar}/auth/login")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @RequestParam(name="login", strict=true)
+	 * @RequestParam(name="password", strict=true)
+	 *
+     * @View(serializerGroups={"Default", "auth", "account"})
 	 */
-	public function loginAction(Request $request, $bar) {
-		$login = $request->request->get('login');
-		$password = $request->request->get('password');
-
+	public function loginAction(Bar $bar, $login, $password) {
 		if($login == null || $password == null)
 			throw new UnauthorizedHttpException('Bad credentials');
 
@@ -26,7 +34,7 @@ class AuthController extends FOSRestController {
 		$users = $repository->createQueryBuilder('u')
 				->where('u.bar = :bar')
 				->andWhere('u.login = :login')
-				->setParameter('bar', $bar)
+				->setParameter('bar', $bar->getId())
 				->setParameter('login', $login)
 				->getQuery()->getResult();
 
@@ -51,6 +59,18 @@ class AuthController extends FOSRestController {
 
 		$jwt = $this->get('lexik_jwt_authentication.jwt_encoder')->encode($payload)->getTokenString();
 
-		return $this->handleView($this->view(array('token' => $jwt, 'url_safe_token' => urlencode($jwt), 'user' => $user), 200));
+		return array('token' => $jwt, 'url_safe_token' => urlencode($jwt), 'user' => $user);
+	}
+
+
+	/**
+     * @Security("has_role('ROLE_USER')")
+     *
+	 * @Get("/{bar}/auth/me")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+     * @View(serializerGroups={"Default", "auth", "account"})
+     */
+	public function getMeAction(Bar $bar) {
+		return $this->getUser();
 	}
 }
