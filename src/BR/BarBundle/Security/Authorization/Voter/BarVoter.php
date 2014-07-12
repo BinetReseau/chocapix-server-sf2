@@ -37,7 +37,7 @@ class BarVoter implements VoterInterface
         }
 
 
-        if(count($attributes) !== 1) {
+        if(count($attributes) != 1) {
             throw new InvalidArgumentException(
                 'Only one attribute is allowed for BarVoter'
             );
@@ -57,15 +57,10 @@ class BarVoter implements VoterInterface
 
         switch($attribute) {
             case 'ACCOUNT':
-                $accounts = $this->em->getRepository('BR\BarBundle\Entity\Account\Account')
-                        ->createQueryBuilder('a')
-                        ->where('a.bar = :bar')
-                        ->andWhere('a.user = :user')
-                        ->setParameter('bar', $bar)
-                        ->setParameter('user', $user)
-                        ->getQuery()->getResult();
+                $account = $this->em->getRepository('BR\BarBundle\Entity\Account\Account')
+                        ->findFromUserAndBar($user, $bar);
 
-                if (count($accounts) >= 1) {
+                if ($account != null) {
                     return VoterInterface::ACCESS_GRANTED;
                 } else {
                     return VoterInterface::ACCESS_DENIED;

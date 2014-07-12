@@ -124,7 +124,8 @@ class TransactionController extends FOSRestController {
 
 		$operation1 = $item->operation($transaction, -$qty);
 
-		$account = $this->getUser()->getAccount();
+		$account = $this->getDoctrine()->getRepository('BR\BarBundle\Entity\Account\Account')
+                ->findFromUserAndBar($this->getUser(), $bar);
 		$operation2 = $account->operation($transaction, -$qty * $item->getPrice());
 
 		$em->persist($operation1);

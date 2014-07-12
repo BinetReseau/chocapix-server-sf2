@@ -4,7 +4,7 @@ namespace BR\BarBundle\Entity\Account;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
-/** @ORM\Entity */
+/** @ORM\Entity(repositoryClass="BR\BarBundle\Entity\Account\AccountRepository") */
 class Account
 {
     /**
@@ -22,6 +22,7 @@ class Account
 
     /**
      * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Auth\User", inversedBy="accounts")
+     * @JMS\Exclude
      */
     private $user;
 
@@ -36,6 +37,15 @@ class Account
     public function getBarId()
     {
         return $this->bar->getId();
+    }
+
+    /**
+     * @JMS\SerializedName("user")
+     * @JMS\VirtualProperty
+     */
+    public function getUserId()
+    {
+        return $this->user->getId();
     }
 
     public function operation($transaction, $deltamoney)
