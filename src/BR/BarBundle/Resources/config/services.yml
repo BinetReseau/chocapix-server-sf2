@@ -5,3 +5,12 @@
 #    br_bar.user_provider:
 #        class: %br_bar.user_provider.class%
 #        arguments: ['@doctrine.orm.entity_manager']
+
+services:
+    security.access.bar_voter:
+        class:      BR\BarBundle\Security\Authorization\Voter\BarVoter
+        arguments:
+            em: "@doctrine.orm.entity_manager"
+        public:     false
+        tags:
+           - { name: security.voter }

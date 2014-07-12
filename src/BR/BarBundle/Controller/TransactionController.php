@@ -20,11 +20,11 @@ use BR\BarBundle\Entity\Stock\StockItem;
 use BR\BarBundle\Entity\Stock\StockOperation;
 
 class TransactionController extends FOSRestController {
-
 	/**
 	 * @Get("/{bar}/transaction")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 * @QueryParam(name="limit", requirements="\d+", default="0")
+	 *
      * @View(serializerGroups={"Default"})
      */
 	public function getTransactionsAction(Bar $bar, $limit) {
@@ -35,23 +35,6 @@ class TransactionController extends FOSRestController {
 				->setParameter('bar', $bar);
 		if($limit!=0)
 			$qb->setMaxResults($limit);
-
-		return $qb->getQuery()->getResult();
-	}
-
-	/**
-	 * @Get("/{bar}/transaction/{id}")
-	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
-     * @View(serializerGroups={"Default"})
-     */
-	public function getTransactionAction(Bar $bar, $id) {
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\Transaction')
-				->createQueryBuilder('t')
-		        ->where('t.id = :id')
-		        ->andWhere('t.bar = :bar')
-				->orderBy('t.timestamp', 'DESC')
-				->setParameter('id', $id)
-				->setParameter('bar', $bar);
 
 		return $qb->getQuery()->getResult();
 	}
@@ -112,14 +95,26 @@ class TransactionController extends FOSRestController {
 
 
 	/**
-     * @Security("has_role('ROLE_USER')")
-     *
+	 * @Get("/{bar}/transaction/{transaction}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @ParamConverter("transaction", class="BRBarBundle:Operation\Transaction", options={"id" = "transaction"})
+	 *
+     * @View(serializerGroups={"Default"})
+     */
+	public function getTransactionAction(Bar $bar, Transaction $transaction) {
+		return $transaction;
+	}
+
+
+	/**
 	 * @Post("/{bar}/buy")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 * @RequestParam(name="item", requirements="\d+", strict=true)
 	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
 	 * @RequestParam(name="qty", requirements="[0-9.]+", strict=true)
 	 *
+     * @Security("is_granted('ACCOUNT', bar)")
+     *
      * @View(serializerGroups={"Default"})
      */
 	public function buyAction(Bar $bar, StockItem $item, $qty) {
