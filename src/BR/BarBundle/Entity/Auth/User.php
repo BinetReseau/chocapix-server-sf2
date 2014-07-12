@@ -8,46 +8,52 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
- * @JMS\ExclusionPolicy("all")
+ * @JMS\ExclusionPolicy("none")
  */
 class User implements UserInterface, \Serializable
 {
     /**
 	 * @ORM\Id @ORM\GeneratedValue
 	 * @ORM\Column(type="integer")
-	 * @JMS\Expose
 	 */
     private $id;
 
-    /** @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar\Bar") */
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar\Bar")
+     * @JMS\Exclude
+     */
     private $bar;
 
 
     /**
 	 * @ORM\Column(type="string", length=50)
-	 * @JMS\Expose
 	 */
     private $name;
 
-    /** @ORM\ManyToMany(targetEntity="Role", fetch="EAGER") */
+    /**
+     * @ORM\ManyToMany(targetEntity="Role", fetch="EAGER")
+     * @JMS\Exclude
+     */
     private $roles;
 
 
     /**
      * @ORM\Column(type="string", length=50)
      * @JMS\Groups({"auth"})
-     * @JMS\Expose
 	 */
     private $login;
 
     /**
 	 * @ORM\Column(type="string", length=64)
+     * @JMS\Exclude
 	 */
     private $password;
 
 
     /**
 	 * @ORM\OneToOne(targetEntity="\BR\BarBundle\Entity\Account\Account")
+     * @JMS\Exclude
 	 */
     private $account;
 
@@ -142,7 +148,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -165,7 +171,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get name
      *
-     * @return string 
+     * @return string
      */
     public function getName()
     {
@@ -188,7 +194,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get login
      *
-     * @return string 
+     * @return string
      */
     public function getLogin()
     {
@@ -224,7 +230,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get bar
      *
-     * @return \BR\BarBundle\Entity\Bar\Bar 
+     * @return \BR\BarBundle\Entity\Bar\Bar
      */
     public function getBar()
     {
@@ -270,7 +276,7 @@ class User implements UserInterface, \Serializable
     /**
      * Get account
      *
-     * @return \BR\BarBundle\Entity\Account\Account 
+     * @return \BR\BarBundle\Entity\Account\Account
      */
     public function getAccount()
     {
