@@ -4,8 +4,11 @@ namespace BR\BarBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use BR\BarBundle\Form\HistoryType;
-use BR\BarBundle\Entity\History;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use FOS\RestBundle\Controller\Annotations\Get;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+
 
 class DefaultController extends Controller {
 
@@ -35,6 +38,9 @@ class DefaultController extends Controller {
 	// 	return $this->render('BRBarBundle:Default:index.html.twig', array('bar' => $bar, 'form' => $form->createView(), 'histories' => $histories));
 	// }
 
+	/**
+	 * @Get("/")
+     */
 	public function defaultAction(Request $request) {
 		return $this->render('BRBarBundle:Default:default.html.twig');
 	}

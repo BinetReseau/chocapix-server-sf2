@@ -1,6 +1,6 @@
 br_bar_root:
-    path: /
-    defaults:  { _controller: BRBarBundle:Default:default }
+    type:     rest
+    resource: BR\BarBundle\Controller\DefaultController
 
 br_bar_auth:
     type:     rest
