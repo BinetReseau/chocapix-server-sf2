@@ -2,9 +2,9 @@
 namespace BR\BarBundle\Entity\Auth;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as JMS;
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
-use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
@@ -21,26 +21,34 @@ class User implements UserInterface, \Serializable
 
     /**
 	 * @ORM\Column(type="string", length=50)
-	 */
+     */
     private $name;
 
 
     /**
      * @ORM\Column(type="string", length=50, unique=true)
-	 */
+     */
     private $login;
 
+
     /**
-	 * @ORM\Column(type="string", length=64)
+     * @ORM\Column(type="string", length=64)
      * @JMS\Exclude
-	 */
+     */
     private $password;
 
 
     /**
-	 * @ORM\OneToMany(targetEntity="\BR\BarBundle\Entity\Account\Account", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="\BR\BarBundle\Entity\Account\Account", mappedBy="user")
+     * @JMS\MaxDepth(1)
 	 */
     private $accounts;
+
+
+    public function __construct()
+    {
+        $this->accounts = new ArrayCollection();
+    }
 
 
 
@@ -161,28 +169,5 @@ class User implements UserInterface, \Serializable
         $this->password = $password;
 
         return $this;
-    }
-
-    /**
-     * Set account
-     *
-     * @param \BR\BarBundle\Entity\Account\Account $account
-     * @return User
-     */
-    public function setAccount(\BR\BarBundle\Entity\Account\Account $account = null)
-    {
-        $this->account = $account;
-
-        return $this;
-    }
-
-    /**
-     * Get account
-     *
-     * @return \BR\BarBundle\Entity\Account\Account
-     */
-    public function getAccount()
-    {
-        return $this->account;
     }
 }

@@ -13,11 +13,20 @@ class Account
      */
     private $id;
 
+
     /**
      * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar\Bar")
      * @JMS\Exclude
      */
     private $bar;
+    /**
+     * @JMS\SerializedName("bar")
+     * @JMS\VirtualProperty
+     */
+    public function getBarId()
+    {
+        return $this->bar->getId();
+    }
 
 
     /**
@@ -30,14 +39,6 @@ class Account
     private $money;
 
 
-    /**
-     * @JMS\SerializedName("bar")
-     * @JMS\VirtualProperty
-     */
-    public function getBarId()
-    {
-        return $this->bar->getId();
-    }
 
     /**
      * @JMS\SerializedName("user")

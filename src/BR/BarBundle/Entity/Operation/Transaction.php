@@ -24,6 +24,14 @@ class Transaction
      * @JMS\Exclude
      */
     private $bar;
+    /**
+     * @JMS\SerializedName("bar")
+     * @JMS\VirtualProperty
+     */
+    public function getBarId()
+    {
+        return $this->bar->getId();
+    }
 
 
     /** @ORM\Column(type="datetime") */
@@ -45,14 +53,6 @@ class Transaction
         $this->operations = new ArrayCollection();
     }
 
-    /**
-     * @JMS\SerializedName("bar")
-     * @JMS\VirtualProperty
-     */
-    public function getBarId()
-    {
-        return $this->bar->getId();
-    }
 
 
 
@@ -174,7 +174,7 @@ class Transaction
     /**
      * Get bar
      *
-     * @return \BR\BarBundle\Entity\Bar\Bar 
+     * @return \BR\BarBundle\Entity\Bar\Bar
      */
     public function getBar()
     {
