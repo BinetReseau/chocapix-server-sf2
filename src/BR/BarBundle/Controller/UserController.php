@@ -17,8 +17,6 @@ class UserController extends FOSRestController {
 	 * @Get("/{bar}/user")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 *
-     * @Security("is_granted('ACCOUNT', bar)")
-	 *
      * @View(serializerGroups={"Default", "account"})
      */
 	public function getUsersAction(Bar $bar) {
