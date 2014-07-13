@@ -16,23 +16,22 @@ VALUES
 (6,  'Edouard Twilight',  'sdfsdfsdgery.fhgfh',  'kjhiuy'),
 (7,  'Eric LeGrand',      'dfdfdfd',             'kjhiuy'),
 (8,  'Etienne Marrant',   '12345',               'kjhiuy'),
-(9,  'Admin',             'admin',               'admin' ),
-(10, 'Admin',             'admin2',               'admin' );
+(9,  'Admin',             'admin',               'admin' );
 
 
 INSERT INTO Account
-(`id`, `user_id`, `bar_id`, `money`)
+(`user_id`, `bar_id`, `money`)
 VALUES
-(1, 1,   'avironjone',    23.3),
-(2, 2,   'avironjone',    -10.2),
-(3, 3,   'avironjone',    12),
-(4, 4,   'avironjone',    11.11),
-(5, 5,   'avironjone',    10.34),
-(6, 6,   'avironjone',    90.23),
-(7, 7,   'avironjone',    1.2),
-(8, 8,   'avironjone',    9.1),
-(9, 9,   'natationjone',  0.0),
-(10, 10, 'avironjone',    0.0);
+(1, 'avironjone',    23.3),
+(2, 'avironjone',    -10.2),
+(3, 'avironjone',    12),
+(4, 'avironjone',    11.11),
+(5, 'avironjone',    10.34),
+(6, 'avironjone',    90.23),
+(7, 'avironjone',    1.2),
+(8, 'avironjone',    9.1),
+(9, 'natationjone',  10.0),
+(9, 'avironjone',    20.0);
 
 
 INSERT INTO StockItem
