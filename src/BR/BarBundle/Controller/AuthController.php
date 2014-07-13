@@ -17,14 +17,13 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class AuthController extends FOSRestController {
 	/**
-	 * @Post("/{bar}/auth/login")
-	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @Post("/nobar/auth/login")
 	 * @RequestParam(name="login", strict=true)
 	 * @RequestParam(name="password", strict=true)
 	 *
      * @View()
 	 */
-	public function loginAction(Bar $bar, $login, $password) {
+	public function loginAction($login, $password) {
 		if($login == null || $password == null)
 			throw new UnauthorizedHttpException('Bad credentials');
 
