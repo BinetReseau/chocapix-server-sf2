@@ -27,7 +27,6 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=50, unique=true)
-     * @JMS\Groups({"auth"})
 	 */
     private $login;
 

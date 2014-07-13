@@ -22,7 +22,7 @@ class AuthController extends FOSRestController {
 	 * @RequestParam(name="login", strict=true)
 	 * @RequestParam(name="password", strict=true)
 	 *
-     * @View(serializerGroups={"Default", "auth", "account"})
+     * @View()
 	 */
 	public function loginAction(Bar $bar, $login, $password) {
 		if($login == null || $password == null)
@@ -64,7 +64,7 @@ class AuthController extends FOSRestController {
 	/**
 	 * @Get("/nobar/auth/me")
 	 *
-     * @View(serializerGroups={"Default", "auth", "account"})
+     * @View()
      *
      * @Security("has_role('ROLE_USER')")
      */

@@ -16,7 +16,7 @@ class UserController extends FOSRestController {
 	 * @Get("/{bar}/user")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 *
-     * @View(serializerGroups={"Default", "account"})
+     * @View()
      */
 	public function getUsersAction(Bar $bar) {
 		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Account\Account')
@@ -37,7 +37,7 @@ class UserController extends FOSRestController {
 	 * @Get("/{bar}/user/{id}")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 *
-     * @View(serializerGroups={"Default", "account"})
+     * @View()
      */
 	public function getUserAction(Bar $bar, $id) {
 		$repository = $this->getDoctrine()
