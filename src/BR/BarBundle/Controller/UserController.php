@@ -12,24 +12,25 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use BR\BarBundle\Entity\Bar\Bar;
 
 class UserController extends FOSRestController {
-
 	/**
 	 * @Get("/{bar}/user")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 *
-     * @Security("is_granted('ACCOUNT', bar)")
-	 *
      * @View(serializerGroups={"Default", "account"})
      */
 	public function getUsersAction(Bar $bar) {
-		$repository = $this->getDoctrine()
-				->getRepository('BRBarBundle:Auth\User');
+		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Account\Account')
+				->createQueryBuilder('a')
+				->select('IDENTITY(a.user)')
+				->where('a.bar = :bar');
 
-		$users = $repository->createQueryBuilder('u')
+		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Auth\User')
+				->createQueryBuilder('u')
+				->andWhere('u.id IN ('.$qb->getDQL().')')
 				->orderBy('u.name', 'ASC')
-				->getQuery()->getResult();
+				->setParameter('bar', $bar);
 
-		return $users;
+		return $qb->getQuery()->getResult();
 	}
 
 	/**
