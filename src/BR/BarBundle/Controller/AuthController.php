@@ -62,14 +62,13 @@ class AuthController extends FOSRestController {
 
 
 	/**
-	 * @Get("/{bar}/auth/me")
-	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @Get("/nobar/auth/me")
 	 *
      * @View(serializerGroups={"Default", "auth", "account"})
      *
      * @Security("has_role('ROLE_USER')")
      */
-	public function getMyUserAction(Bar $bar) {
+	public function getMyUserAction() {
 		return $this->getUser();
 	}
 }
