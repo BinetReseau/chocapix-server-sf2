@@ -38,16 +38,6 @@ class Account
     private $money;
 
 
-
-    /**
-     * @JMS\SerializedName("user")
-     * @JMS\VirtualProperty
-     */
-    public function getUserId()
-    {
-        return $this->user->getId();
-    }
-
     public function operation($transaction, $deltamoney)
     {
         $this->money += $deltamoney;
