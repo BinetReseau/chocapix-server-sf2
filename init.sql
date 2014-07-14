@@ -16,22 +16,23 @@ VALUES
 (6,  'Edouard Twilight',  'sdfsdfsdgery.fhgfh',  'kjhiuy'),
 (7,  'Eric LeGrand',      'dfdfdfd',             'kjhiuy'),
 (8,  'Etienne Marrant',   '12345',               'kjhiuy'),
-(9,  'Admin',             'admin',               'admin' );
+(9,  'Admin',             'admin',               'admin' ),
+(10, 'Admin',             'admin2',               'admin' );
 
 
 INSERT INTO Account
-(`user_id`, `bar_id`, `money`)
+(`id`, `user_id`, `bar_id`, `money`)
 VALUES
-(1, 'avironjone',    23.3),
-(2, 'avironjone',    -10.2),
-(3, 'avironjone',    12),
-(4, 'avironjone',    11.11),
-(5, 'avironjone',    10.34),
-(6, 'avironjone',    90.23),
-(7, 'avironjone',    1.2),
-(8, 'avironjone',    9.1),
-(9, 'natationjone',  10.0),
-(9, 'avironjone',    20.0);
+(1, 1,   'avironjone',    23.3),
+(2, 2,   'avironjone',    -10.2),
+(3, 3,   'avironjone',    12),
+(4, 4,   'avironjone',    11.11),
+(5, 5,   'avironjone',    10.34),
+(6, 6,   'avironjone',    90.23),
+(7, 7,   'avironjone',    1.2),
+(8, 8,   'avironjone',    9.1),
+(9, 9,   'natationjone',  0.0),
+(10, 10, 'avironjone',    0.0);
 
 
 INSERT INTO StockItem
@@ -40,9 +41,9 @@ VALUES
 ('natationjone', 'Chocolat', 20, 'g', 0.1, 0),
 ('natationjone', 'Pain', 40, 'g', 0.2, 0),
 ('avironjone', 'Pizza', 4, '', 3.34, 0),
-('avironjone', 'Tomates', 40, '', 0.4, 0),
+('avironjone', 'Tomate', 40, '', 0.4, 0),
 ('avironjone', 'Fromage', 1.34, 'kg', 7.1, 0),
-('avironjone', 'Galettes', 4, '', 0.4, 0),
+('avironjone', 'Galette', 4, '', 0.4, 0),
 ('avironjone', 'Yaourt', 8, '', 0.67, 0),
 ('avironjone', 'Pates', 12.34, 'kg', 1.23, 0),
 ('avironjone', 'Steak', 20, '', 0.87, 0);
