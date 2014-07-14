@@ -31,7 +31,6 @@ class Account
 
     /**
      * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Auth\User", inversedBy="accounts")
-     * @JMS\Exclude
      */
     private $user;
 
