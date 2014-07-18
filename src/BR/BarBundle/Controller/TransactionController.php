@@ -20,12 +20,13 @@ use BR\BarBundle\Entity\Stock\StockItem;
 use BR\BarBundle\Entity\Stock\StockOperation;
 
 class TransactionController extends FOSRestController {
+     // * @View(serializerEnableMaxDepthChecks=true)
 	/**
 	 * @Get("/{bar}/transaction")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 * @QueryParam(name="limit", requirements="\d+", default="0")
 	 *
-     * @View(serializerEnableMaxDepthChecks=true)
+     * @View()
      */
 	public function getTransactionsAction(Bar $bar, $limit) {
 		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\Transaction')
