@@ -41,7 +41,7 @@ class Transaction
     private $type;
 
 
-    /** @ORM\OneToMany(targetEntity="Operation", mappedBy="transaction") */
+    /** @ORM\OneToMany(targetEntity="Operation", mappedBy="transaction", cascade={"persist", "remove"}, orphanRemoval=true) */
     private $operations;
 
 
