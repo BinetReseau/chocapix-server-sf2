@@ -55,9 +55,9 @@ class StockItem
 
     public function operation($transaction, $deltaqty)
     {
-        $this->qty += $deltaqty;
         $op = new StockOperation($transaction, $this, $deltaqty);
         $transaction->addOperation($op);
+        $this->qty += $deltaqty;
         return $op;
     }
 

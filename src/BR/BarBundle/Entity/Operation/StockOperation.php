@@ -18,7 +18,7 @@ class StockOperation extends Operation
     private $deltaqty;
 
     /** @ORM\Column(type="decimal", precision=8, scale=3) */
-    private $newqty;
+    private $oldqty;
 
 
     public function __construct($transaction, $item, $deltaqty)
@@ -26,6 +26,6 @@ class StockOperation extends Operation
         parent::__construct($transaction);
         $this->item = $item;
         $this->deltaqty = $deltaqty;
-        $this->newqty = $item->getQty();
+        $this->oldqty = $item->getQty();
     }
 }

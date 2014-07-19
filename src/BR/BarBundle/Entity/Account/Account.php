@@ -43,9 +43,9 @@ class Account
 
     public function operation($transaction, $deltamoney)
     {
-        $this->money += $deltamoney;
         $op = new AccountOperation($transaction, $this, $deltamoney);
         $transaction->addOperation($op);
+        $this->money += $deltamoney;
         return $op;
     }
 

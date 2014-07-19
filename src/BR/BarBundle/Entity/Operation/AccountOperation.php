@@ -18,7 +18,7 @@ class AccountOperation extends Operation
     private $deltamoney;
 
     /** @ORM\Column(type="decimal", precision=8, scale=3) */
-    private $newmoney;
+    private $oldmoney;
 
 
     public function __construct($transaction, $account, $deltamoney)
@@ -26,6 +26,6 @@ class AccountOperation extends Operation
         parent::__construct($transaction);
         $this->account = $account;
         $this->deltamoney = $deltamoney;
-        $this->newmoney = $account->getMoney();
+        $this->oldmoney = $account->getMoney();
     }
 }
