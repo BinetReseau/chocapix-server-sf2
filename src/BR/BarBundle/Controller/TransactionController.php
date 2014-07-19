@@ -15,9 +15,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use BR\BarBundle\Entity\Bar\Bar;
 use BR\BarBundle\Entity\Operation\Transaction;
 use BR\BarBundle\Entity\Account\Account;
-use BR\BarBundle\Entity\Account\AccountOperation;
+use BR\BarBundle\Entity\Operation\AccountOperation;
 use BR\BarBundle\Entity\Stock\StockItem;
-use BR\BarBundle\Entity\Stock\StockOperation;
+use BR\BarBundle\Entity\Operation\StockOperation;
 
 class TransactionController extends FOSRestController {
 	/**
@@ -48,7 +48,7 @@ class TransactionController extends FOSRestController {
      * @View()
      */
 	public function getTransactionByItemAction(Bar $bar, StockItem $item, $limit) {
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Stock\StockOperation')
+		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\StockOperation')
 				->createQueryBuilder('o')
 				->select('IDENTITY(o.transaction)')
 				->where('o.item = :item');
@@ -75,7 +75,7 @@ class TransactionController extends FOSRestController {
      * @View()
      */
 	public function getTransactionByAccountAction(Bar $bar, Account $account, $limit) {
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Account\AccountOperation')
+		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\AccountOperation')
 				->createQueryBuilder('o')
 				->select('IDENTITY(o.transaction)')
 				->where('o.account = :account');

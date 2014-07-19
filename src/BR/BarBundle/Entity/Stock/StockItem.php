@@ -4,6 +4,8 @@ namespace BR\BarBundle\Entity\Stock;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
+use BR\BarBundle\Entity\Operation\StockOperation;
+
 /**
  * @ORM\Entity
  * @JMS\ExclusionPolicy("none")

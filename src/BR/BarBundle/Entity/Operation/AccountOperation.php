@@ -1,15 +1,17 @@
 <?php
-namespace BR\BarBundle\Entity\Account;
+namespace BR\BarBundle\Entity\Operation;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
 
-use BR\BarBundle\Entity\Operation\Operation;
+use BR\BarBundle\Entity\Account\Account;
 
-/** @ORM\Entity */
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="op_Account")
+ */
 class AccountOperation extends Operation
 {
-    /** @ORM\ManyToOne(targetEntity="Account") */
+    /** @ORM\ManyToOne(targetEntity="BR\BarBundle\Entity\Account\Account") */
     private $account;
 
     /** @ORM\Column(type="decimal", precision=7, scale=3) */
