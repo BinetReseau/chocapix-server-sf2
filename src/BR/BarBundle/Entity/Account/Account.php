@@ -46,4 +46,8 @@ class Account
         $transaction->addOperation($op);
         return $op;
     }
+
+    public function getMoney() {
+        return $this->money;
+    }
 }

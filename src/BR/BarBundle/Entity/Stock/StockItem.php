@@ -58,4 +58,12 @@ class StockItem
         $transaction->addOperation($op);
         return $op;
     }
+
+    public function getPrice() {
+        return $this->price;
+    }
+
+    public function getQty() {
+        return $this->qty;
+    }
 }
