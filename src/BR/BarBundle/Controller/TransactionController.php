@@ -18,6 +18,7 @@ use BR\BarBundle\Entity\Operation\AccountOperation;
 use BR\BarBundle\Entity\Stock\StockItem;
 use BR\BarBundle\Entity\Operation\StockOperation;
 use BR\BarBundle\Entity\Transaction\Transaction;
+use BR\BarBundle\Entity\Transaction\BuyTransaction;
 
 class TransactionController extends FOSRestController {
 	/**
@@ -120,7 +121,7 @@ class TransactionController extends FOSRestController {
 	public function buyAction(Bar $bar, StockItem $item, $qty) {
 		$em = $this->getDoctrine()->getManager();
 
-		$transaction = new Transaction($bar, "buy");
+		$transaction = new BuyTransaction($bar);
 
 		$item->operation($transaction, -$qty);
 
