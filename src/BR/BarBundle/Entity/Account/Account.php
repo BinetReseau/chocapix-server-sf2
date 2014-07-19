@@ -31,6 +31,7 @@ class Account
 
     /**
      * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Auth\User", inversedBy="accounts")
+     * @JMS\MaxDepth(2)
      */
     private $user;
 
