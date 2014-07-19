@@ -12,6 +12,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="tr_All")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
+ * @ORM\DiscriminatorMap({"buy" = "BuyTransaction"})
  *
  * @JMS\ExclusionPolicy("none")
  */
