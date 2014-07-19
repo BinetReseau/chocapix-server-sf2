@@ -13,11 +13,11 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use BR\BarBundle\Entity\Bar\Bar;
-use BR\BarBundle\Entity\Operation\Transaction;
 use BR\BarBundle\Entity\Account\Account;
 use BR\BarBundle\Entity\Operation\AccountOperation;
 use BR\BarBundle\Entity\Stock\StockItem;
 use BR\BarBundle\Entity\Operation\StockOperation;
+use BR\BarBundle\Entity\Transaction\Transaction;
 
 class TransactionController extends FOSRestController {
 	/**
@@ -28,7 +28,7 @@ class TransactionController extends FOSRestController {
      * @View(serializerEnableMaxDepthChecks=true)
      */
 	public function getTransactionsAction(Bar $bar, $limit) {
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\Transaction')
+		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Transaction\Transaction')
 				->createQueryBuilder('t')
 				->where('t.bar = :bar')
 				->orderBy('t.timestamp', 'DESC')
@@ -53,7 +53,7 @@ class TransactionController extends FOSRestController {
 				->select('IDENTITY(o.transaction)')
 				->where('o.item = :item');
 
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\Transaction')
+		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Transaction\Transaction')
 				->createQueryBuilder('t')
 				->where('t.bar = :bar')
 				->andWhere('t.id IN ('.$qb->getDQL().')')
@@ -80,7 +80,7 @@ class TransactionController extends FOSRestController {
 				->select('IDENTITY(o.transaction)')
 				->where('o.account = :account');
 
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\Transaction')
+		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Transaction\Transaction')
 				->createQueryBuilder('t')
 				->where('t.bar = :bar')
 				->andWhere('t.id IN ('.$qb->getDQL().')')
@@ -97,7 +97,7 @@ class TransactionController extends FOSRestController {
 	/**
 	 * @Get("/{bar}/transaction/{transaction}")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
-	 * @ParamConverter("transaction", class="BRBarBundle:Operation\Transaction", options={"id" = "transaction"})
+	 * @ParamConverter("transaction", class="BRBarBundle:Transaction\Transaction", options={"id" = "transaction"})
 	 *
      * @View()
      */
