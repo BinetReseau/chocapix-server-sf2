@@ -17,7 +17,7 @@ class Operation
      */
     private $id;
 
-    /** @ORM\ManyToOne(targetEntity="BR\BarBundle\Entity\Operation\Transaction", inversedBy="operations") */
+    /** @ORM\ManyToOne(targetEntity="BR\BarBundle\Entity\Transaction\Transaction", inversedBy="operations") */
     private $transaction;
 
 
