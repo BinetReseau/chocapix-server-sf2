@@ -30,8 +30,8 @@ VALUES
 (6, 'avironjone',    90.23),
 (7, 'avironjone',    1.2),
 (8, 'avironjone',    9.1),
-(9, 'natationjone',  0.0),
-(9, 'avironjone',    0.0);
+(9, 'natationjone',  100.0),
+(9, 'avironjone',    150.0);
 
 
 INSERT INTO StockItem
