@@ -19,7 +19,7 @@ use BR\BarBundle\Entity\Stock\StockItem;
 use BR\BarBundle\Entity\Operation\StockOperation;
 use BR\BarBundle\Entity\Transaction\Transaction;
 use BR\BarBundle\Entity\Transaction\BuyTransaction;
-use BR\BarBundle\Entity\Transaction\JeterTransaction;
+use BR\BarBundle\Entity\Transaction\ThrowTransaction;
 
 class TransactionController extends FOSRestController {
 	/**
@@ -73,6 +73,26 @@ class TransactionController extends FOSRestController {
 	}
 
 
+
+	/**
+	 * @Get("/{bar}/transaction/cancel/{transaction}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @ParamConverter("transaction", class="BRBarBundle:Transaction\Transaction", options={"id" = "transaction"})
+	 *
+     * @View()
+     */
+	public function cancelTransactionAction(Bar $bar, Transaction $transaction) {
+		$em = $this->getDoctrine()->getManager();
+
+		$transaction->setCanceled(true);
+
+		$repo = $em->getRepository('BRBarBundle:Transaction\Transaction');
+		$repo->propagateTransactionModification($transaction);
+
+		$em->flush();
+	}
+
+
 	/**
 	 * @Post("/{bar}/buy")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
@@ -102,28 +122,8 @@ class TransactionController extends FOSRestController {
 	}
 
 
-
 	/**
-	 * @Get("/{bar}/transaction/cancel/{transaction}")
-	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
-	 * @ParamConverter("transaction", class="BRBarBundle:Transaction\Transaction", options={"id" = "transaction"})
-	 *
-     * @View()
-     */
-	public function cancelTransactionAction(Bar $bar, Transaction $transaction) {
-		$em = $this->getDoctrine()->getManager();
-
-		$transaction->setCanceled(true);
-
-		$repo = $em->getRepository('BRBarBundle:Transaction\Transaction');
-		$repo->propagateTransactionModification($transaction);
-
-		$em->flush();
-	}
-
-
-	/**
-	 * @Post("/{bar}/jeter")
+	 * @Post("/{bar}/throw")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 * @RequestParam(name="item", requirements="\d+", strict=true)
 	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
@@ -133,16 +133,13 @@ class TransactionController extends FOSRestController {
 	 *
 	 * @View()
 	 */
-	public function jeterAction(Bar $bar, StockItem $item, $qty)
+	public function throwAction(Bar $bar, StockItem $item, $qty)
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$transaction = new JeterTransaction($bar);
+		$transaction = new ThrowTransaction($bar);
 
 		$item->operation($transaction, -$qty);
-		$account = $this->getDoctrine()->getRepository('BR\BarBundle\Entity\Account\Account')
-                ->findFromUserAndBar($this->getUser(), $bar);
-		$account->operation($transaction, 0);
 
 		$em->persist($transaction);
 		$em->flush();

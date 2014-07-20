@@ -7,9 +7,9 @@ use JMS\Serializer\Annotation as JMS;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="tr_Jeter")
+ * @ORM\Table(name="tr_Throw")
  */
-class JeterTransaction extends Transaction
+class ThrowTransaction extends Transaction
 {
 
 }
