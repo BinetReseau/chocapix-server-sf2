@@ -4,7 +4,7 @@ namespace BR\BarBundle\Entity\Operation;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="BR\BarBundle\Entity\Operation\OperationRepository")
  * @ORM\Table(name="op_All")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
