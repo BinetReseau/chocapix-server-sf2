@@ -13,8 +13,40 @@ use FOS\RestBundle\Controller\Annotations\RequestParam;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use BR\BarBundle\Entity\Bar\Bar;
+use BR\BarBundle\Entity\Auth\User;
+use BR\BarBundle\Entity\Account\Account;
 
 class AccountController extends FOSRestController {
+	/**
+	 * @Get("/{bar}/account")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 *
+     * @View(serializerEnableMaxDepthChecks=true)
+     */
+	public function getAccountsAction(Bar $bar) {
+		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Account\Account')
+				->createQueryBuilder('a')
+				->select('a, u')
+				->leftjoin('a.user', 'u')
+				->where('a.bar = :bar')
+				->orderBy('u.name', 'ASC')
+				->setParameter('bar', $bar);
+
+		return $qb->getQuery()->getResult();
+	}
+
+	/**
+	 * @Get("/{bar}/account/by-user/{user}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @ParamConverter("user", class="BRBarBundle:Auth\User", options={"id" = "user"})
+	 *
+     * @View(serializerEnableMaxDepthChecks=true)
+     */
+	public function getAccountByUserAction(Bar $bar, User $user) {
+		return $this->getDoctrine()->getRepository('BR\BarBundle\Entity\Account\Account')
+                ->findFromUserAndBar($user, $bar);
+	}
+
 	/**
 	 * @Get("/{bar}/account/me")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
@@ -27,4 +59,16 @@ class AccountController extends FOSRestController {
 		return $this->getDoctrine()->getRepository('BR\BarBundle\Entity\Account\Account')
                 ->findFromUserAndBar($this->getUser(), $bar);
 	}
+
+	/**
+	 * @Get("/{bar}/account/{account}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @ParamConverter("account", class="BRBarBundle:Account\Account", options={"id" = "account"})
+	 *
+     * @View(serializerEnableMaxDepthChecks=true)
+     */
+	public function getAccountAction(Bar $bar, Account $account) {
+		return $account;
+	}
+
 }
