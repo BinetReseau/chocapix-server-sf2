@@ -24,4 +24,37 @@ class Operation
     {
         $this->transaction = $transaction;
     }
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set transaction
+     *
+     * @param \BR\BarBundle\Entity\Operation\Transaction $transaction
+     * @return Operation
+     */
+    public function setTransaction(\BR\BarBundle\Entity\Operation\Transaction $transaction = null)
+    {
+        $this->transaction = $transaction;
+
+        return $this;
+    }
+
+    /**
+     * Get transaction
+     *
+     * @return \BR\BarBundle\Entity\Operation\Transaction 
+     */
+    public function getTransaction()
+    {
+        return $this->transaction;
+    }
 }
