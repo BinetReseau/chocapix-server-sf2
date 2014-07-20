@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="tr_All")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"buy" = "BuyTransaction"})
+ * @ORM\DiscriminatorMap({"buy" = "BuyTransaction", "jeter" = "JeterTransaction"})
  *
  * @JMS\ExclusionPolicy("none")
  */
@@ -92,5 +92,38 @@ class Transaction
 
     public function isCanceled() {
         return $this->canceled;
+    }
+
+    /**
+     * Get canceled
+     *
+     * @return boolean 
+     */
+    public function getCanceled()
+    {
+        return $this->canceled;
+    }
+
+    /**
+     * Set bar
+     *
+     * @param \BR\BarBundle\Entity\Bar\Bar $bar
+     * @return Transaction
+     */
+    public function setBar(\BR\BarBundle\Entity\Bar\Bar $bar = null)
+    {
+        $this->bar = $bar;
+
+        return $this;
+    }
+
+    /**
+     * Get bar
+     *
+     * @return \BR\BarBundle\Entity\Bar\Bar 
+     */
+    public function getBar()
+    {
+        return $this->bar;
     }
 }
