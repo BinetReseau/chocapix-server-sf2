@@ -32,7 +32,7 @@ class TransactionController extends FOSRestController {
 		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Transaction\Transaction')
 				->createQueryBuilder('t')
 				->where('t.bar = :bar')
-				->orderBy('t.timestamp', 'DESC')
+				->orderBy('t.id', 'DESC')
 				->setParameter('bar', $bar);
 		if($limit!=0)
 			$qb->setMaxResults($limit);
@@ -58,7 +58,7 @@ class TransactionController extends FOSRestController {
 				->createQueryBuilder('t')
 				->where('t.bar = :bar')
 				->andWhere('t.id IN ('.$qb->getDQL().')')
-				->orderBy('t.timestamp', 'DESC')
+				->orderBy('t.id', 'DESC')
 				->setParameter('bar', $bar)
 				->setParameter('item', $item);
 		if($limit!=0)
@@ -85,7 +85,7 @@ class TransactionController extends FOSRestController {
 				->createQueryBuilder('t')
 				->where('t.bar = :bar')
 				->andWhere('t.id IN ('.$qb->getDQL().')')
-				->orderBy('t.timestamp', 'DESC')
+				->orderBy('t.id', 'DESC')
 				->setParameter('bar', $bar)
 				->setParameter('account', $account);
 		if($limit!=0)
@@ -133,5 +133,26 @@ class TransactionController extends FOSRestController {
 		$em->flush();
 
 		return $transaction;
+	}
+
+
+
+	/**
+	 * @Get("/{bar}/transaction/cancel/{transaction}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @ParamConverter("transaction", class="BRBarBundle:Transaction\Transaction", options={"id" = "transaction"})
+	 *
+     * @View()
+     */
+	public function cancelTransactionAction(Bar $bar, Transaction $transaction) {
+		$em = $this->getDoctrine()->getManager();
+
+		$transaction->setCanceled(true);
+
+		$repo = $em->getRepository('BRBarBundle:Operation\Operation');
+		$repo->propagateModifiedOperation($transaction->getOperations()[0]);
+		$repo->propagateModifiedOperation($transaction->getOperations()[1]);
+
+		$em->flush();
 	}
 }

@@ -5,21 +5,21 @@ use Doctrine\ORM\EntityRepository;
 
 class OperationRepository extends EntityRepository
 {
-	public function cancelOperation(Operation $op) {
+	public function propagateModifiedOperation(Operation $op) {
 		if($op instanceof AccountOperation)
-			cancelAccountOperation($op);
+			$this->propagateModifiedAccountOperation($op);
 		elseif($op instanceof StockOperation)
-			cancelStockOperation($op);
+			$this->propagateModifiedStockOperation($op);
 	}
 
-	protected function cancelAccountOperation(AccountOperation $ao) {
+	protected function propagateModifiedAccountOperation(AccountOperation $ao) {
 		$em = $this->getEntityManager();
 
 		$nextops = $em->getRepository('BRBarBundle:Operation\AccountOperation')
 				->createQueryBuilder('o')
 				->leftjoin('o.transaction', 't')
 				->where('o.account = :account')
-				->andWhere('t.id > :id')
+				->andWhere('t.id >= :id')
 				->orderBy('t.id', 'ASC')
 				->setParameter('account', $ao->getAccount())
 				->setParameter('id', $ao->getTransaction()->getId())
@@ -28,21 +28,22 @@ class OperationRepository extends EntityRepository
 		$money = $ao->getOldmoney();
 		foreach ($nextops as $no) {
 			$no->setOldmoney($money);
-			$money += $no->getDeltamoney();
+			if(!$no->getTransaction()->isCanceled())
+				$money += $no->getDeltamoney();
 		}
 		$ao->getAccount()->setMoney($money);
 
 		$em->flush();
 	}
 
-	protected function cancelStockOperation(StockOperation $so) {
+	protected function propagateModifiedStockOperation(StockOperation $so) {
 		$em = $this->getEntityManager();
 
 		$nextops = $em->getRepository('BRBarBundle:Operation\StockOperation')
 				->createQueryBuilder('o')
 				->leftjoin('o.transaction', 't')
 				->where('o.item = :item')
-				->andWhere('t.id > :id')
+				->andWhere('t.id >= :id')
 				->orderBy('t.id', 'ASC')
 				->setParameter('item', $so->getItem())
 				->setParameter('id', $so->getTransaction()->getId())
@@ -51,7 +52,8 @@ class OperationRepository extends EntityRepository
 		$qty = $so->getOldqty();
 		foreach ($nextops as $no) {
 			$no->setOldqty($qty);
-			$qty += $no->getDeltaqty();
+			if(!$no->getTransaction()->isCanceled())
+				$qty += $no->getDeltaqty();
 		}
 		$so->getItem()->setQty($qty);
 

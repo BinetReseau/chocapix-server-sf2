@@ -29,6 +29,25 @@ class Transaction
      * @JMS\Exclude
      */
     private $bar;
+
+    /** @ORM\Column(type="datetime") */
+    private $timestamp;
+
+    /** @ORM\OneToMany(targetEntity="BR\BarBundle\Entity\Operation\Operation", mappedBy="transaction", cascade={"persist", "remove"}, orphanRemoval=true) */
+    private $operations;
+
+    /** @ORM\Column(type="boolean") */
+    private $canceled;
+
+
+    public function __construct($bar)
+    {
+        $this->bar = $bar;
+        $this->timestamp = new \DateTime("now");
+        $this->canceled = false;
+        $this->operations = new ArrayCollection();
+    }
+
     /**
      * @JMS\SerializedName("bar")
      * @JMS\VirtualProperty
@@ -37,22 +56,6 @@ class Transaction
     {
         return $this->bar->getId();
     }
-
-
-    /** @ORM\Column(type="datetime") */
-    private $timestamp;
-
-    /** @ORM\OneToMany(targetEntity="BR\BarBundle\Entity\Operation\Operation", mappedBy="transaction", cascade={"persist", "remove"}, orphanRemoval=true) */
-    private $operations;
-
-
-    public function __construct($bar)
-    {
-        $this->bar = $bar;
-        $this->timestamp = new \DateTime("now");
-        $this->operations = new ArrayCollection();
-    }
-
 
 
     public function addOperation(\BR\BarBundle\Entity\Operation\Operation $operations) {
@@ -81,5 +84,14 @@ class Transaction
 
     public function getTimestamp() {
         return $this->timestamp;
+    }
+
+    public function setCanceled($canceled) {
+        $this->canceled = $canceled;
+        return $this;
+    }
+
+    public function isCanceled() {
+        return $this->canceled;
     }
 }
