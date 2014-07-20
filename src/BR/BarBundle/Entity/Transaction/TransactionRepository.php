@@ -51,9 +51,10 @@ class TransactionRepository extends EntityRepository
 
 		$qb = $this->createQueryBuilder('t')
 				->where('t.bar = :bar')
-				->andWhere('t.id IN ('.$qb->getDQL().')')
+				->andWhere('t.id IN ('.$qb->getDQL().') OR t.author = :user')
 				->orderBy('t.id', 'DESC')
 				->setParameter('bar', $bar)
+				->setParameter('user', $account->getUser())
 				->setParameter('account', $account);
 		if($limit!=0)
 			$qb->setMaxResults($limit);

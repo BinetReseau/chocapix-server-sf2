@@ -15,21 +15,11 @@ class Account
      */
     private $id;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="BR\BarBundle\Entity\Bar\Bar")
      * @JMS\Exclude
      */
     private $bar;
-    /**
-     * @JMS\SerializedName("bar")
-     * @JMS\VirtualProperty
-     */
-    public function getBarId()
-    {
-        return $this->bar->getId();
-    }
-
 
     /**
      * @ORM\ManyToOne(targetEntity="BR\BarBundle\Entity\Auth\User", inversedBy="accounts")
@@ -41,18 +31,27 @@ class Account
     private $money;
 
 
-    public function operation($transaction, $deltamoney)
-    {
+    public function operation($transaction, $deltamoney) {
         $op = new AccountOperation($transaction, $this, $deltamoney);
         $transaction->addOperation($op);
         $this->money += $deltamoney;
         return $op;
     }
 
+    /**
+     * @JMS\SerializedName("bar")
+     * @JMS\VirtualProperty
+     */
+    public function getBarId() {
+        return $this->bar->getId();
+    }
 
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
+    }
+
+    public function getUser() {
+        return $this->user;
     }
 
     public function setMoney($money) {
