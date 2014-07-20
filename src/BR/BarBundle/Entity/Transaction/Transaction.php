@@ -5,10 +5,9 @@ use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 use Doctrine\Common\Collections\ArrayCollection;
 
- // * @ORM\Entity(repositoryClass="BR\BarBundle\Entity\Operation\TransactionRepository")
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="BR\BarBundle\Entity\Transaction\TransactionRepository")
  * @ORM\Table(name="tr_All")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")

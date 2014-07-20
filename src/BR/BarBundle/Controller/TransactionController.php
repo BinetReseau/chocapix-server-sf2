@@ -29,15 +29,8 @@ class TransactionController extends FOSRestController {
      * @View(serializerEnableMaxDepthChecks=true)
      */
 	public function getTransactionsAction(Bar $bar, $limit) {
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Transaction\Transaction')
-				->createQueryBuilder('t')
-				->where('t.bar = :bar')
-				->orderBy('t.id', 'DESC')
-				->setParameter('bar', $bar);
-		if($limit!=0)
-			$qb->setMaxResults($limit);
-
-		return $qb->getQuery()->getResult();
+		return $this->getDoctrine()->getRepository('BRBarBundle:Transaction\Transaction')
+				->getTransactionsByBar($bar, $limit);
 	}
 
 	/**
@@ -46,25 +39,11 @@ class TransactionController extends FOSRestController {
 	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
 	 * @QueryParam(name="limit", requirements="\d+", default="0")
 	 *
-     * @View()
+     * @View(serializerEnableMaxDepthChecks=true)
      */
 	public function getTransactionByItemAction(Bar $bar, StockItem $item, $limit) {
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\StockOperation')
-				->createQueryBuilder('o')
-				->select('IDENTITY(o.transaction)')
-				->where('o.item = :item');
-
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Transaction\Transaction')
-				->createQueryBuilder('t')
-				->where('t.bar = :bar')
-				->andWhere('t.id IN ('.$qb->getDQL().')')
-				->orderBy('t.id', 'DESC')
-				->setParameter('bar', $bar)
-				->setParameter('item', $item);
-		if($limit!=0)
-			$qb->setMaxResults($limit);
-
-		return $qb->getQuery()->getResult();
+		return $this->getDoctrine()->getRepository('BRBarBundle:Transaction\Transaction')
+				->getTransactionsByBarAndItem($bar, $item, $limit);
 	}
 
 	/**
@@ -73,25 +52,11 @@ class TransactionController extends FOSRestController {
 	 * @ParamConverter("account", class="BRBarBundle:Account\Account", options={"id" = "account"})
 	 * @QueryParam(name="limit", requirements="\d+", default="0")
 	 *
-     * @View()
+     * @View(serializerEnableMaxDepthChecks=true)
      */
 	public function getTransactionByAccountAction(Bar $bar, Account $account, $limit) {
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\AccountOperation')
-				->createQueryBuilder('o')
-				->select('IDENTITY(o.transaction)')
-				->where('o.account = :account');
-
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Transaction\Transaction')
-				->createQueryBuilder('t')
-				->where('t.bar = :bar')
-				->andWhere('t.id IN ('.$qb->getDQL().')')
-				->orderBy('t.id', 'DESC')
-				->setParameter('bar', $bar)
-				->setParameter('account', $account);
-		if($limit!=0)
-			$qb->setMaxResults($limit);
-
-		return $qb->getQuery()->getResult();
+		return $this->getDoctrine()->getRepository('BRBarBundle:Transaction\Transaction')
+				->getTransactionsByBarAndAccount($bar, $account, $limit);
 	}
 
 
@@ -100,7 +65,7 @@ class TransactionController extends FOSRestController {
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 * @ParamConverter("transaction", class="BRBarBundle:Transaction\Transaction", options={"id" = "transaction"})
 	 *
-     * @View()
+     * @View(serializerEnableMaxDepthChecks=true)
      */
 	public function getTransactionAction(Bar $bar, Transaction $transaction) {
 		return $transaction;
