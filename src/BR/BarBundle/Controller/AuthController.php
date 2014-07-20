@@ -54,7 +54,7 @@ class AuthController extends FOSRestController {
 				'username' => $user->getUsername()
 			);
 
-		$jwt = $this->get('lexik_jwt_authentication.jwt_encoder')->encode($payload)->getTokenString();
+		$jwt = $this->get('lexik_jwt_authentication.jwt_encoder')->encode($payload);
 
 		return array('token' => $jwt, 'url_safe_token' => urlencode($jwt), 'user' => $user);
 	}
