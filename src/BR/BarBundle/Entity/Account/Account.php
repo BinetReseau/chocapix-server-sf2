@@ -4,6 +4,8 @@ namespace BR\BarBundle\Entity\Account;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
+use BR\BarBundle\Entity\Operation\AccountOperation;
+
 /** @ORM\Entity(repositoryClass="BR\BarBundle\Entity\Account\AccountRepository") */
 class Account
 {
@@ -15,7 +17,7 @@ class Account
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar\Bar")
+     * @ORM\ManyToOne(targetEntity="BR\BarBundle\Entity\Bar\Bar")
      * @JMS\Exclude
      */
     private $bar;
@@ -30,7 +32,7 @@ class Account
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Auth\User", inversedBy="accounts")
+     * @ORM\ManyToOne(targetEntity="BR\BarBundle\Entity\Auth\User", inversedBy="accounts")
      * @JMS\MaxDepth(2)
      */
     private $user;
@@ -41,10 +43,21 @@ class Account
 
     public function operation($transaction, $deltamoney)
     {
-        $this->money += $deltamoney;
         $op = new AccountOperation($transaction, $this, $deltamoney);
         $transaction->addOperation($op);
+        $this->money += $deltamoney;
         return $op;
+    }
+
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setMoney($money) {
+        $this->money = $money;
+        return $this;
     }
 
     public function getMoney() {

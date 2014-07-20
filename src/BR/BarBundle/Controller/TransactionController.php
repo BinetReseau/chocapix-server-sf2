@@ -13,11 +13,12 @@ use FOS\RestBundle\Controller\Annotations\QueryParam;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 use BR\BarBundle\Entity\Bar\Bar;
-use BR\BarBundle\Entity\Operation\Transaction;
 use BR\BarBundle\Entity\Account\Account;
-use BR\BarBundle\Entity\Account\AccountOperation;
+use BR\BarBundle\Entity\Operation\AccountOperation;
 use BR\BarBundle\Entity\Stock\StockItem;
-use BR\BarBundle\Entity\Stock\StockOperation;
+use BR\BarBundle\Entity\Operation\StockOperation;
+use BR\BarBundle\Entity\Transaction\Transaction;
+use BR\BarBundle\Entity\Transaction\BuyTransaction;
 
 class TransactionController extends FOSRestController {
 	/**
@@ -28,15 +29,8 @@ class TransactionController extends FOSRestController {
      * @View(serializerEnableMaxDepthChecks=true)
      */
 	public function getTransactionsAction(Bar $bar, $limit) {
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\Transaction')
-				->createQueryBuilder('t')
-				->where('t.bar = :bar')
-				->orderBy('t.timestamp', 'DESC')
-				->setParameter('bar', $bar);
-		if($limit!=0)
-			$qb->setMaxResults($limit);
-
-		return $qb->getQuery()->getResult();
+		return $this->getDoctrine()->getRepository('BRBarBundle:Transaction\Transaction')
+				->getTransactionsByBar($bar, $limit);
 	}
 
 	/**
@@ -48,22 +42,8 @@ class TransactionController extends FOSRestController {
      * @View(serializerEnableMaxDepthChecks=true)
      */
 	public function getTransactionByItemAction(Bar $bar, StockItem $item, $limit) {
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Stock\StockOperation')
-				->createQueryBuilder('o')
-				->select('IDENTITY(o.transaction)')
-				->where('o.item = :item');
-
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\Transaction')
-				->createQueryBuilder('t')
-				->where('t.bar = :bar')
-				->andWhere('t.id IN ('.$qb->getDQL().')')
-				->orderBy('t.timestamp', 'DESC')
-				->setParameter('bar', $bar)
-				->setParameter('item', $item);
-		if($limit!=0)
-			$qb->setMaxResults($limit);
-
-		return $qb->getQuery()->getResult();
+		return $this->getDoctrine()->getRepository('BRBarBundle:Transaction\Transaction')
+				->getTransactionsByBarAndItem($bar, $item, $limit);
 	}
 
 	/**
@@ -75,29 +55,15 @@ class TransactionController extends FOSRestController {
      * @View(serializerEnableMaxDepthChecks=true)
      */
 	public function getTransactionByAccountAction(Bar $bar, Account $account, $limit) {
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Account\AccountOperation')
-				->createQueryBuilder('o')
-				->select('IDENTITY(o.transaction)')
-				->where('o.account = :account');
-
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Operation\Transaction')
-				->createQueryBuilder('t')
-				->where('t.bar = :bar')
-				->andWhere('t.id IN ('.$qb->getDQL().')')
-				->orderBy('t.timestamp', 'DESC')
-				->setParameter('bar', $bar)
-				->setParameter('account', $account);
-		if($limit!=0)
-			$qb->setMaxResults($limit);
-
-		return $qb->getQuery()->getResult();
+		return $this->getDoctrine()->getRepository('BRBarBundle:Transaction\Transaction')
+				->getTransactionsByBarAndAccount($bar, $account, $limit);
 	}
 
 
 	/**
 	 * @Get("/{bar}/transaction/{transaction}")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
-	 * @ParamConverter("transaction", class="BRBarBundle:Operation\Transaction", options={"id" = "transaction"})
+	 * @ParamConverter("transaction", class="BRBarBundle:Transaction\Transaction", options={"id" = "transaction"})
 	 *
      * @View(serializerEnableMaxDepthChecks=true)
      */
@@ -120,7 +86,7 @@ class TransactionController extends FOSRestController {
 	public function buyAction(Bar $bar, StockItem $item, $qty) {
 		$em = $this->getDoctrine()->getManager();
 
-		$transaction = new Transaction($bar, "buy");
+		$transaction = new BuyTransaction($bar);
 
 		$item->operation($transaction, -$qty);
 
@@ -132,5 +98,25 @@ class TransactionController extends FOSRestController {
 		$em->flush();
 
 		return $transaction;
+	}
+
+
+
+	/**
+	 * @Get("/{bar}/transaction/cancel/{transaction}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @ParamConverter("transaction", class="BRBarBundle:Transaction\Transaction", options={"id" = "transaction"})
+	 *
+     * @View()
+     */
+	public function cancelTransactionAction(Bar $bar, Transaction $transaction) {
+		$em = $this->getDoctrine()->getManager();
+
+		$transaction->setCanceled(true);
+
+		$repo = $em->getRepository('BRBarBundle:Transaction\Transaction');
+		$repo->propagateTransactionModification($transaction);
+
+		$em->flush();
 	}
 }

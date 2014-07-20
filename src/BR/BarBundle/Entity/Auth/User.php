@@ -40,7 +40,7 @@ class User implements UserInterface, \Serializable
 
 
     /**
-     * @ORM\OneToMany(targetEntity="\BR\BarBundle\Entity\Account\Account", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="BR\BarBundle\Entity\Account\Account", mappedBy="user")
      * @JMS\MaxDepth(3)
 	 */
     private $accounts;

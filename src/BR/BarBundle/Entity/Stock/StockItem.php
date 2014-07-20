@@ -4,6 +4,8 @@ namespace BR\BarBundle\Entity\Stock;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
+use BR\BarBundle\Entity\Operation\StockOperation;
+
 /**
  * @ORM\Entity
  * @JMS\ExclusionPolicy("none")
@@ -53,17 +55,68 @@ class StockItem
 
     public function operation($transaction, $deltaqty)
     {
-        $this->qty += $deltaqty;
         $op = new StockOperation($transaction, $this, $deltaqty);
         $transaction->addOperation($op);
+        $this->qty += $deltaqty;
         return $op;
+    }
+
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function setQty($qty) {
+        $this->qty = $qty;
+        return $this;
+    }
+
+    public function getQty() {
+        return $this->qty;
+    }
+
+    public function setUnit($unit) {
+        $this->unit = $unit;
+        return $this;
+    }
+
+    public function getUnit() {
+        return $this->unit;
+    }
+
+    public function setPrice($price) {
+        $this->price = $price;
+        return $this;
     }
 
     public function getPrice() {
         return $this->price;
     }
 
-    public function getQty() {
-        return $this->qty;
+    public function setTax($tax) {
+        $this->tax = $tax;
+        return $this;
+    }
+
+    public function getTax() {
+        return $this->tax;
+    }
+
+    public function setKeywords($keywords) {
+        $this->keywords = $keywords;
+        return $this;
+    }
+
+    public function getKeywords() {
+        return $this->keywords;
     }
 }
