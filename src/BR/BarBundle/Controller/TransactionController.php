@@ -107,7 +107,7 @@ class TransactionController extends FOSRestController {
 	public function buyAction(Bar $bar, StockItem $item, $qty) {
 		$em = $this->getDoctrine()->getManager();
 
-		$transaction = new BuyTransaction($bar);
+		$transaction = new BuyTransaction($bar, $this->getUser());
 
 		$item->operation($transaction, -$qty);
 
@@ -137,7 +137,7 @@ class TransactionController extends FOSRestController {
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$transaction = new ThrowTransaction($bar);
+		$transaction = new ThrowTransaction($bar, $this->getUser());
 
 		$item->operation($transaction, -$qty);
 

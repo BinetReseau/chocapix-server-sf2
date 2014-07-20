@@ -29,6 +29,11 @@ class Transaction
      */
     private $bar;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="BR\BarBundle\Entity\Auth\User")
+     */
+    private $author;
+
     /** @ORM\Column(type="datetime") */
     private $timestamp;
 
@@ -39,9 +44,10 @@ class Transaction
     private $canceled;
 
 
-    public function __construct($bar)
+    public function __construct($bar, $author)
     {
         $this->bar = $bar;
+        $this->author = $author;
         $this->timestamp = new \DateTime("now");
         $this->canceled = false;
         $this->operations = new ArrayCollection();
