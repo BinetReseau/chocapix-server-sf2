@@ -16,6 +16,24 @@ use BR\BarBundle\Entity\Bar\Bar;
 
 class AccountController extends FOSRestController {
 	/**
+	 * @Get("/{bar}/account")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 *
+     * @View(serializerEnableMaxDepthChecks=true)
+     */
+	public function getAccountsAction(Bar $bar) {
+		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Account\Account')
+				->createQueryBuilder('a')
+				->select('a, u')
+				->leftjoin('a.user', 'u')
+				->where('a.bar = :bar')
+				->orderBy('u.name', 'ASC')
+				->setParameter('bar', $bar);
+
+		return $qb->getQuery()->getResult();
+	}
+
+	/**
 	 * @Get("/{bar}/account/me")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 *

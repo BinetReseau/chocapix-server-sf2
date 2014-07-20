@@ -45,7 +45,7 @@ class TransactionController extends FOSRestController {
 	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
 	 * @QueryParam(name="limit", requirements="\d+", default="0")
 	 *
-     * @View()
+     * @View(serializerEnableMaxDepthChecks=true)
      */
 	public function getTransactionByItemAction(Bar $bar, StockItem $item, $limit) {
 		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Stock\StockOperation')
@@ -72,7 +72,7 @@ class TransactionController extends FOSRestController {
 	 * @ParamConverter("account", class="BRBarBundle:Account\Account", options={"id" = "account"})
 	 * @QueryParam(name="limit", requirements="\d+", default="0")
 	 *
-     * @View()
+     * @View(serializerEnableMaxDepthChecks=true)
      */
 	public function getTransactionByAccountAction(Bar $bar, Account $account, $limit) {
 		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Account\AccountOperation')
@@ -99,7 +99,7 @@ class TransactionController extends FOSRestController {
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 * @ParamConverter("transaction", class="BRBarBundle:Operation\Transaction", options={"id" = "transaction"})
 	 *
-     * @View()
+     * @View(serializerEnableMaxDepthChecks=true)
      */
 	public function getTransactionAction(Bar $bar, Transaction $transaction) {
 		return $transaction;

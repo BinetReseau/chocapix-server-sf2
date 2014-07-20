@@ -27,6 +27,7 @@ class User implements UserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=50, unique=true)
+     * @JMS\Exclude
      */
     private $login;
 
