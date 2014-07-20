@@ -28,4 +28,30 @@ class AccountOperation extends Operation
         $this->deltamoney = $deltamoney;
         $this->oldmoney = $account->getMoney();
     }
+
+
+
+    public function getAccount() {
+        return $this->account;
+    }
+
+
+    public function setDeltamoney($deltamoney) {
+        $this->deltamoney = $deltamoney;
+        return $this;
+    }
+
+    public function getDeltamoney() {
+        return $this->deltamoney;
+    }
+
+
+    public function setOldmoney($oldmoney) {
+        $this->oldmoney = $oldmoney;
+        return $this;
+    }
+
+    public function getOldmoney() {
+        return $this->oldmoney;
+    }
 }

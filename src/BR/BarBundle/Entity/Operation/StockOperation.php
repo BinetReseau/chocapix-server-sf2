@@ -28,4 +28,29 @@ class StockOperation extends Operation
         $this->deltaqty = $deltaqty;
         $this->oldqty = $item->getQty();
     }
+
+
+    public function setDeltaqty($deltaqty) {
+        $this->deltaqty = $deltaqty;
+        return $this;
+    }
+
+    public function getDeltaqty() {
+        return $this->deltaqty;
+    }
+
+
+    public function setOldqty($oldqty) {
+        $this->oldqty = $oldqty;
+        return $this;
+    }
+
+    public function getOldqty() {
+        return $this->oldqty;
+    }
+
+
+    public function getItem() {
+        return $this->item;
+    }
 }

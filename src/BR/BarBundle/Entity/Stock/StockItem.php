@@ -61,11 +61,64 @@ class StockItem
         return $op;
     }
 
-    public function getPrice() {
-        return $this->price;
+
+
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function setQty($qty) {
+        $this->qty = $qty;
+        return $this;
     }
 
     public function getQty() {
         return $this->qty;
+    }
+
+    public function setUnit($unit) {
+        $this->unit = $unit;
+        return $this;
+    }
+
+    public function getUnit() {
+        return $this->unit;
+    }
+
+    public function setPrice($price) {
+        $this->price = $price;
+        return $this;
+    }
+
+    public function getPrice() {
+        return $this->price;
+    }
+
+    public function setTax($tax) {
+        $this->tax = $tax;
+        return $this;
+    }
+
+    public function getTax() {
+        return $this->tax;
+    }
+
+    public function setKeywords($keywords) {
+        $this->keywords = $keywords;
+        return $this;
+    }
+
+    public function getKeywords() {
+        return $this->keywords;
     }
 }

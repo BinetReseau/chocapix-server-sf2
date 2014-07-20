@@ -25,4 +25,9 @@ class Operation
     {
         $this->transaction = $transaction;
     }
+
+
+    public function getTransaction() {
+        return $this->transaction;
+    }
 }

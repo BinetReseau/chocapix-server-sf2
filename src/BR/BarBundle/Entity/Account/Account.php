@@ -49,6 +49,19 @@ class Account
         return $op;
     }
 
+
+
+    public function getId()
+    {
+        return $this->id;
+    }
+
+
+    public function setMoney($money) {
+        $this->money = $money;
+        return $this;
+    }
+
     public function getMoney() {
         return $this->money;
     }

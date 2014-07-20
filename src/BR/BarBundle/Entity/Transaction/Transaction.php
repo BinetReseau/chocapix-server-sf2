@@ -54,6 +54,7 @@ class Transaction
     }
 
 
+
     public function addOperation(\BR\BarBundle\Entity\Operation\Operation $operations) {
         $this->operations[] = $operations;
         return $this;
@@ -61,5 +62,24 @@ class Transaction
 
     public function removeOperation(\BR\BarBundle\Entity\Operation\Operation $operations) {
         $this->operations->removeElement($operations);
+    }
+
+    public function getOperations() {
+        return $this->operations;
+    }
+
+
+    public function getId() {
+        return $this->id;
+    }
+
+
+    public function setTimestamp($timestamp) {
+        $this->timestamp = $timestamp;
+        return $this;
+    }
+
+    public function getTimestamp() {
+        return $this->timestamp;
     }
 }
