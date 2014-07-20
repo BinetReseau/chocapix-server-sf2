@@ -31,9 +31,8 @@ class OperationRepository extends EntityRepository
 			if(!$no->getTransaction()->isCanceled())
 				$money += $no->getDeltamoney();
 		}
-		$ao->getAccount()->setMoney($money);
 
-		$em->flush();
+		$ao->getAccount()->setMoney($money);
 	}
 
 	protected function propagateModifiedStockOperation(StockOperation $so) {
@@ -55,8 +54,7 @@ class OperationRepository extends EntityRepository
 			if(!$no->getTransaction()->isCanceled())
 				$qty += $no->getDeltaqty();
 		}
-		$so->getItem()->setQty($qty);
 
-		$em->flush();
+		$so->getItem()->setQty($qty);
 	}
 }

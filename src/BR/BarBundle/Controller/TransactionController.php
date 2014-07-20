@@ -114,9 +114,8 @@ class TransactionController extends FOSRestController {
 
 		$transaction->setCanceled(true);
 
-		$repo = $em->getRepository('BRBarBundle:Operation\Operation');
-		$repo->propagateModifiedOperation($transaction->getOperations()[0]);
-		$repo->propagateModifiedOperation($transaction->getOperations()[1]);
+		$repo = $em->getRepository('BRBarBundle:Transaction\Transaction');
+		$repo->propagateTransactionModification($transaction);
 
 		$em->flush();
 	}

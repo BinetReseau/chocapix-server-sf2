@@ -60,4 +60,14 @@ class TransactionRepository extends EntityRepository
 
 		return $qb->getQuery()->getResult();
 	}
+
+
+	public function propagateTransactionModification(Transaction $transaction) {
+		$em = $this->getEntityManager();
+
+		$repo = $em->getRepository('BRBarBundle:Operation\Operation');
+		foreach ($transaction->getOperations() as $op) {
+			$repo->propagateModifiedOperation($op);
+		}
+	}
 }
