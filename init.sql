@@ -39,7 +39,7 @@ INSERT INTO StockItem
 VALUES
 ('natationjone', 'Chocolat', 20, 'g', 0.1, 0),
 ('natationjone', 'Pain', 40, 'g', 0.2, 0),
-('avironjone', 'Pizza', 4, '', 3.34, 0),
+('avironjone', 'Pizza', 4, '', 2, 0),
 ('avironjone', 'Tomate', 40, '', 0.4, 0),
 ('avironjone', 'Fromage', 1.34, 'kg', 7.1, 0),
 ('avironjone', 'Galette', 4, '', 0.4, 0),
