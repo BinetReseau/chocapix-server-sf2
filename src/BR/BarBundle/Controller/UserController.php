@@ -26,7 +26,9 @@ class UserController extends FOSRestController {
 
 		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Auth\User')
 				->createQueryBuilder('u')
-				->andWhere('u.id IN ('.$qb->getDQL().')')
+				->select('u', 'account')
+				->leftjoin('u.accounts', 'account', 'WITH', 'account.bar = :bar')
+				->where('u.id IN ('.$qb->getDQL().')')
 				->orderBy('u.name', 'ASC')
 				->setParameter('bar', $bar);
 
@@ -44,8 +46,9 @@ class UserController extends FOSRestController {
 				->getRepository('BRBarBundle:Auth\User');
 
 		$user = $repository->createQueryBuilder('u')
+				->select('u', 'account')
+				->leftjoin('u.accounts', 'account', 'WITH', 'account.bar = :bar')
 		        ->where('u.id = :id')
-				->orderBy('u.name', 'ASC')
 				->setParameter('id', $id)
 				->getQuery()->getSingleResult();
 
