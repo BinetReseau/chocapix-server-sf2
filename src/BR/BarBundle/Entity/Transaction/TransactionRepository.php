@@ -10,6 +10,21 @@ use BR\BarBundle\Entity\Transaction\Transaction;
 
 class TransactionRepository extends EntityRepository
 {
+	public function getTransactionsByIdAndBar($id, Bar $bar, $limit = 0) {
+		$qb = $this->createQueryBuilder('t')
+				->select('t, author, author_account')
+				->where('t.id = :id')
+				->innerjoin('t.author', 'author')
+				->leftjoin('author.accounts', 'author_account', 'WITH', 'author_account.bar = :bar')
+				->orderBy('t.id', 'DESC')
+				->setParameter('id', $id)
+				->setParameter('bar', $bar);
+		if($limit!=0)
+			$qb->setMaxResults($limit);
+
+		return $qb->getQuery()->getResult();
+	}
+
 	public function getTransactionsByBar(Bar $bar, $limit = 0) {
 		$qb = $this->createQueryBuilder('t')
 				->select('t, author, author_account')

@@ -24,15 +24,8 @@ class AccountController extends FOSRestController {
      * @View(serializerEnableMaxDepthChecks=true)
      */
 	public function getAccountsAction(Bar $bar) {
-		$qb = $this->getDoctrine()->getRepository('BRBarBundle:Account\Account')
-				->createQueryBuilder('a')
-				->select('a, u')
-				->leftjoin('a.user', 'u')
-				->where('a.bar = :bar')
-				->orderBy('u.name', 'ASC')
-				->setParameter('bar', $bar);
-
-		return $qb->getQuery()->getResult();
+		return $this->getDoctrine()->getRepository('BR\BarBundle\Entity\Account\Account')
+                ->findFromBar($bar);
 	}
 
 	/**

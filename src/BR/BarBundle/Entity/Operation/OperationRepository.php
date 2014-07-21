@@ -17,7 +17,7 @@ class OperationRepository extends EntityRepository
 
 		$nextops = $em->getRepository('BRBarBundle:Operation\AccountOperation')
 				->createQueryBuilder('o')
-				->leftjoin('o.transaction', 't')
+				->innerjoin('o.transaction', 't')
 				->where('o.account = :account')
 				->andWhere('t.id >= :id')
 				->orderBy('t.id', 'ASC')
@@ -40,7 +40,7 @@ class OperationRepository extends EntityRepository
 
 		$nextops = $em->getRepository('BRBarBundle:Operation\StockOperation')
 				->createQueryBuilder('o')
-				->leftjoin('o.transaction', 't')
+				->innerjoin('o.transaction', 't')
 				->where('o.item = :item')
 				->andWhere('t.id >= :id')
 				->orderBy('t.id', 'ASC')
