@@ -99,4 +99,13 @@ class User implements UserInterface, \Serializable
         ) = unserialize($serialized);
     }
 
+
+    public function getAccounts() {
+        return $this->accounts;
+    }
+
+    public function setAccounts($accounts) {
+        $this->accounts = $accounts;
+        return $this;
+    }
 }

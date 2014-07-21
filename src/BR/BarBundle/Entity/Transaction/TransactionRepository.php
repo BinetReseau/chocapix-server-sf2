@@ -12,7 +12,10 @@ class TransactionRepository extends EntityRepository
 {
 	public function getTransactionsByBar(Bar $bar, $limit = 0) {
 		$qb = $this->createQueryBuilder('t')
+				->select('t, author, author_account')
 				->where('t.bar = :bar')
+				->innerjoin('t.author', 'author')
+				->leftjoin('author.accounts', 'author_account', 'WITH', 'author_account.bar = :bar')
 				->orderBy('t.id', 'DESC')
 				->setParameter('bar', $bar);
 		if($limit!=0)
@@ -30,7 +33,10 @@ class TransactionRepository extends EntityRepository
 				->where('o.item = :item');
 
 		$qb = $this->createQueryBuilder('t')
+				->select('t, author, author_account')
 				->where('t.bar = :bar')
+				->innerjoin('t.author', 'author')
+				->leftjoin('author.accounts', 'author_account', 'WITH', 'author_account.bar = :bar')
 				->andWhere('t.id IN ('.$qb->getDQL().')')
 				->orderBy('t.id', 'DESC')
 				->setParameter('bar', $bar)
@@ -50,7 +56,10 @@ class TransactionRepository extends EntityRepository
 				->where('o.account = :account');
 
 		$qb = $this->createQueryBuilder('t')
+				->select('t, author, author_account')
 				->where('t.bar = :bar')
+				->innerjoin('t.author', 'author')
+				->leftjoin('author.accounts', 'author_account', 'WITH', 'author_account.bar = :bar')
 				->andWhere('t.id IN ('.$qb->getDQL().') OR t.author = :user')
 				->orderBy('t.id', 'DESC')
 				->setParameter('bar', $bar)

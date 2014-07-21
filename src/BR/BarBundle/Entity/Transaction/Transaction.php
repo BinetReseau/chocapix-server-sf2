@@ -53,12 +53,12 @@ class Transaction
         $this->operations = new ArrayCollection();
     }
 
+
     /**
      * @JMS\SerializedName("bar")
      * @JMS\VirtualProperty
      */
-    public function getBarId()
-    {
+    public function getBarId() {
         return $this->bar->getId();
     }
 
@@ -81,6 +81,10 @@ class Transaction
         return $this->id;
     }
 
+    public function getAuthor() {
+        return $this->author;
+    }
+
 
     public function setTimestamp($timestamp) {
         $this->timestamp = $timestamp;
@@ -90,6 +94,7 @@ class Transaction
     public function getTimestamp() {
         return $this->timestamp;
     }
+
 
     public function setCanceled($canceled) {
         $this->canceled = $canceled;

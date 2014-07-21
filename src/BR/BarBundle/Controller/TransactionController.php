@@ -100,9 +100,9 @@ class TransactionController extends FOSRestController {
 	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
 	 * @RequestParam(name="qty", requirements="[0-9.]+", strict=true)
 	 *
-     * @Security("is_granted('ACCOUNT', bar)")
-     *
      * @View()
+     *
+     * @Security("is_granted('ACCOUNT', bar)")
      */
 	public function buyAction(Bar $bar, StockItem $item, $qty) {
 		$em = $this->getDoctrine()->getManager();
@@ -129,9 +129,9 @@ class TransactionController extends FOSRestController {
 	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
 	 * @RequestParam(name="qty", requirements="[0-9.]+", strict=true)
 	 *
-	 * @Security("is_granted('ACCOUNT', bar)")
-	 *
 	 * @View()
+	 *
+	 * @Security("is_granted('ACCOUNT', bar)")
 	 */
 	public function throwAction(Bar $bar, StockItem $item, $qty)
 	{
