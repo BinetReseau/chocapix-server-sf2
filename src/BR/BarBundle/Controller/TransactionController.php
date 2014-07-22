@@ -152,4 +152,36 @@ class TransactionController extends FOSRestController {
 
 		return $transaction;
 	}
+
+
+	/**
+	 * @Post("/{bar}/give")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @RequestParam(name="recipient", requirements="\d+", strict=true)
+	 * @ParamConverter("recipient", class="BRBarBundle:Account\Account", options={"id" = "recipient"})
+	 * @RequestParam(name="qty", requirements="[0-9.]+", strict=true)
+	 *
+     * @View()
+     *
+     * @Security("is_granted('ACCOUNT', bar)")
+     */
+	public function giveAction(Bar $bar, Account $recipient, $qty) {
+		$em = $this->getDoctrine()->getManager();
+
+		$transaction = new GiveTransaction($bar, $this->getUser());
+
+		$account = $this->getDoctrine()->getRepository('BR\BarBundle\Entity\Account\Account')
+                ->findFromUserAndBar($this->getUser(), $bar);
+		$account->operation($transaction, -$qty);
+
+		$recipient->operation($transaction, $qty);
+
+		if(!$transaction->checkIntegrity())
+			throw new \Exception('Invalid Transaction');
+
+		$em->persist($transaction);
+		$em->flush();
+
+		return $transaction;
+	}
 }
