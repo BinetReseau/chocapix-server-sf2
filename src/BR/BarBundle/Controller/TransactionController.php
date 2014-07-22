@@ -115,6 +115,9 @@ class TransactionController extends FOSRestController {
                 ->findFromUserAndBar($this->getUser(), $bar);
 		$account->operation($transaction, -$qty * $item->getPrice());
 
+		if(!$transaction->checkIntegrity())
+			throw new \Exception('Invalid Transaction');
+
 		$em->persist($transaction);
 		$em->flush();
 
@@ -140,6 +143,9 @@ class TransactionController extends FOSRestController {
 		$transaction = new ThrowTransaction($bar, $this->getUser());
 
 		$item->operation($transaction, -$qty);
+
+		if(!$transaction->checkIntegrity())
+			throw new \Exception('Invalid Transaction');
 
 		$em->persist($transaction);
 		$em->flush();
