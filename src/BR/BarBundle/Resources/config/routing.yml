@@ -6,6 +6,10 @@ br_bar_account:
     type:     rest
     resource: BR\BarBundle\Controller\AccountController
 
+br_bar_action:
+    type:     rest
+    resource: BR\BarBundle\Controller\ActionController
+
 br_bar_auth:
     type:     rest
     resource: BR\BarBundle\Controller\AuthController
