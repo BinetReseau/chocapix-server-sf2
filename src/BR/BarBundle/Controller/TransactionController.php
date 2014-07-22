@@ -75,7 +75,7 @@ class TransactionController extends FOSRestController {
 
 
 	/**
-	 * @Get("/{bar}/transaction/cancel/{transaction}")
+	 * @Post("/{bar}/transaction/cancel/{transaction}")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 * @ParamConverter("transaction", class="BRBarBundle:Transaction\Transaction", options={"id" = "transaction"})
 	 *
