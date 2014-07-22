@@ -29,6 +29,10 @@ class StockOperation extends Operation
         $this->oldqty = $item->getQty();
     }
 
+    public function getMoneyFlow() {
+        return $this->deltaqty * $this->item->getPrice();
+    }
+
 
     public function setDeltaqty($deltaqty) {
         $this->deltaqty = $deltaqty;

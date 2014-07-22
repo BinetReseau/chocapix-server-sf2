@@ -11,37 +11,40 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="tr_All")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"buy" = "BuyTransaction", "throw" = "ThrowTransaction"})
+ * @ORM\DiscriminatorMap({"buy" = "BuyTransaction", "throw" = "ThrowTransaction", "give" = "GiveTransaction"})
  *
  * @JMS\ExclusionPolicy("none")
  */
-class Transaction
+abstract class Transaction
 {
     /**
      * @ORM\Id @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    protected $id;
 
     /**
      * @ORM\ManyToOne(targetEntity="BR\BarBundle\Entity\Bar\Bar")
      * @JMS\Exclude
      */
-    private $bar;
+    protected $bar;
 
     /**
      * @ORM\ManyToOne(targetEntity="BR\BarBundle\Entity\Auth\User")
      */
-    private $author;
+    protected $author;
 
     /** @ORM\Column(type="datetime") */
-    private $timestamp;
+    protected $timestamp;
 
     /** @ORM\OneToMany(targetEntity="BR\BarBundle\Entity\Operation\Operation", mappedBy="transaction", cascade={"persist", "remove"}, orphanRemoval=true) */
-    private $operations;
+    protected $operations;
+
+    /** @ORM\Column(type="decimal", precision=7, scale=3) */
+    public $moneyflow;
 
     /** @ORM\Column(type="boolean") */
-    private $canceled;
+    protected $canceled;
 
 
     public function __construct($bar, $author)
@@ -49,9 +52,12 @@ class Transaction
         $this->bar = $bar;
         $this->author = $author;
         $this->timestamp = new \DateTime("now");
-        $this->canceled = false;
         $this->operations = new ArrayCollection();
+        $this->moneyflow = 0;
+        $this->canceled = false;
     }
+
+    abstract public function checkIntegrity();
 
 
     /**
@@ -63,13 +69,13 @@ class Transaction
     }
 
 
-    public function addOperation(\BR\BarBundle\Entity\Operation\Operation $operations) {
-        $this->operations[] = $operations;
+    public function addOperation(\BR\BarBundle\Entity\Operation\Operation $operation) {
+        $this->operations[] = $operation;
         return $this;
     }
 
-    public function removeOperation(\BR\BarBundle\Entity\Operation\Operation $operations) {
-        $this->operations->removeElement($operations);
+    public function removeOperation(\BR\BarBundle\Entity\Operation\Operation $operation) {
+        $this->operations->removeElement($operation);
     }
 
     public function getOperations() {

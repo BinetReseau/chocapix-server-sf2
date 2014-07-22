@@ -9,7 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
  */
-class Operation
+abstract class Operation
 {
     /**
      * @ORM\Id @ORM\GeneratedValue
@@ -26,6 +26,7 @@ class Operation
         $this->transaction = $transaction;
     }
 
+    abstract public function getMoneyFlow();
 
     public function getTransaction() {
         return $this->transaction;

@@ -29,6 +29,9 @@ class AccountOperation extends Operation
         $this->oldmoney = $account->getMoney();
     }
 
+    public function getMoneyFlow() {
+        return $this->deltamoney;
+    }
 
 
     public function getAccount() {
