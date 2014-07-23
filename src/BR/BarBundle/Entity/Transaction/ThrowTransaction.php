@@ -16,7 +16,7 @@ class ThrowTransaction extends Transaction
     	$money = 0;
 
     	foreach ($this->operations as $op) {
-    		if($op instanceof StockOperation && $op->getMoneyFlow() < 0)
+    		if($op instanceof StockOperation && $op->getMoneyFlow() <= 0)
     			$money += -$op->getMoneyFlow();
     		else
     			return false;
