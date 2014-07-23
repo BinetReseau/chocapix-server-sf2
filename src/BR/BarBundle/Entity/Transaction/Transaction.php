@@ -41,7 +41,7 @@ abstract class Transaction
     protected $operations;
 
     /** @ORM\Column(type="decimal", precision=7, scale=3) */
-    public $moneyflow;
+    protected $moneyflow;
 
     /** @ORM\Column(type="boolean") */
     protected $canceled;
