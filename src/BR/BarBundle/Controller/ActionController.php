@@ -55,34 +55,6 @@ class ActionController extends FOSRestController {
 	}
 
 
-	/**
-	 * @Post("/{bar}/action/throw")
-	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
-	 * @RequestParam(name="item", requirements="\d+", strict=true)
-	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
-	 * @RequestParam(name="qty", requirements="[0-9.]+", strict=true)
-	 *
-	 * @View()
-	 *
-	 * @Security("is_granted('ACCOUNT', bar)")
-	 */
-	public function throwAction(Bar $bar, StockItem $item, $qty)
-	{
-		$em = $this->getDoctrine()->getManager();
-
-		$transaction = new ThrowTransaction($bar, $this->getUser());
-
-		$item->operation($transaction, -$qty);
-
-		if(!$transaction->checkIntegrity())
-			throw new \Exception('Invalid Transaction');
-
-		$em->persist($transaction);
-		$em->flush();
-
-		return $transaction;
-	}
-
 
 	/**
 	 * @Post("/{bar}/action/give")
@@ -103,8 +75,39 @@ class ActionController extends FOSRestController {
 		$account = $this->getDoctrine()->getRepository('BR\BarBundle\Entity\Account\Account')
                 ->findFromUserAndBar($this->getUser(), $bar);
 		$account->operation($transaction, -$qty);
+		if($account == $recipient)
+			throw new \Exception('Cannot give to same account');
 
 		$recipient->operation($transaction, $qty);
+
+		if(!$transaction->checkIntegrity())
+			throw new \Exception('Invalid Transaction');
+
+		$em->persist($transaction);
+		$em->flush();
+
+		return $transaction;
+	}
+
+
+	/**
+	 * @Post("/{bar}/action/throw")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @RequestParam(name="item", requirements="\d+", strict=true)
+	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
+	 * @RequestParam(name="qty", requirements="[0-9.]+", strict=true)
+	 *
+	 * @View()
+	 *
+	 * @Security("is_granted('ACCOUNT', bar)")
+	 */
+	public function throwAction(Bar $bar, StockItem $item, $qty)
+	{
+		$em = $this->getDoctrine()->getManager();
+
+		$transaction = new ThrowTransaction($bar, $this->getUser());
+
+		$item->operation($transaction, -$qty);
 
 		if(!$transaction->checkIntegrity())
 			throw new \Exception('Invalid Transaction');
