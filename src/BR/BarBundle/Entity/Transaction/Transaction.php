@@ -11,7 +11,11 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="tr_All")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap({"buy" = "BuyTransaction", "throw" = "ThrowTransaction", "give" = "GiveTransaction"})
+ * @ORM\DiscriminatorMap(
+ *      {"appro" = "ApproTransaction",
+ *      "buy" = "BuyTransaction",
+ *      "give" = "GiveTransaction",
+ *      "throw" = "ThrowTransaction"})
  *
  * @JMS\ExclusionPolicy("none")
  */
