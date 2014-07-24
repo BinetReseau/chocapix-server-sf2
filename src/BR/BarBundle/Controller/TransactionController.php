@@ -76,7 +76,7 @@ class TransactionController extends FOSRestController {
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 * @ParamConverter("transaction", class="BRBarBundle:Transaction\Transaction", options={"id" = "transaction"})
 	 *
-     * @View()
+     * @View(serializerEnableMaxDepthChecks=true)
      */
 	public function cancelTransactionAction(Bar $bar, Transaction $transaction) {
 		$em = $this->getDoctrine()->getManager();
@@ -87,5 +87,6 @@ class TransactionController extends FOSRestController {
 		$repo->propagateTransactionModification($transaction);
 
 		$em->flush();
+		return $transaction;
 	}
 }
