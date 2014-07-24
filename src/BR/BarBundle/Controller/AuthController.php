@@ -63,7 +63,7 @@ class AuthController extends FOSRestController {
 	/**
 	 * @Get("/nobar/auth/me")
 	 *
-     * @View()
+     * @View(serializerEnableMaxDepthChecks=true)
      *
      * @Security("has_role('ROLE_USER')")
      */

@@ -44,7 +44,7 @@ class AccountController extends FOSRestController {
 	 * @Get("/{bar}/account/me")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 *
-     * @View(serializerGroups={"Default"})
+     * @View(serializerEnableMaxDepthChecks=true)
      *
      * @Security("is_granted('ACCOUNT', bar)")
      */
