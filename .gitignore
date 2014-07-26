@@ -8,7 +8,7 @@
 /composer.lock
 /composer.phar
 /web/bundles/
-
+.DS_Store
 
 /vendor/*
 !/vendor/jms/
