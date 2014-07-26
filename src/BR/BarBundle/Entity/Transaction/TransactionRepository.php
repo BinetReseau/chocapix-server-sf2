@@ -16,7 +16,7 @@ class TransactionRepository extends EntityRepository
 				->where('t.id = :id')
 				->innerjoin('t.author', 'author')
 				->leftjoin('author.accounts', 'author_account', 'WITH', 'author_account.bar = :bar')
-				->orderBy('t.id', 'DESC')
+				->orderBy('t.timestamp', 'DESC')
 				->setParameter('id', $id)
 				->setParameter('bar', $bar);
 		if($limit!=0)
@@ -31,7 +31,7 @@ class TransactionRepository extends EntityRepository
 				->where('t.bar = :bar')
 				->innerjoin('t.author', 'author')
 				->leftjoin('author.accounts', 'author_account', 'WITH', 'author_account.bar = :bar')
-				->orderBy('t.id', 'DESC')
+				->orderBy('t.timestamp', 'DESC')
 				->setParameter('bar', $bar);
 		if($limit!=0)
 			$qb->setMaxResults($limit);
@@ -53,7 +53,7 @@ class TransactionRepository extends EntityRepository
 				->innerjoin('t.author', 'author')
 				->leftjoin('author.accounts', 'author_account', 'WITH', 'author_account.bar = :bar')
 				->andWhere('t.id IN ('.$qb->getDQL().')')
-				->orderBy('t.id', 'DESC')
+				->orderBy('t.timestamp', 'DESC')
 				->setParameter('bar', $bar)
 				->setParameter('item', $item);
 		if($limit!=0)
@@ -76,7 +76,7 @@ class TransactionRepository extends EntityRepository
 				->innerjoin('t.author', 'author')
 				->leftjoin('author.accounts', 'author_account', 'WITH', 'author_account.bar = :bar')
 				->andWhere('t.id IN ('.$qb->getDQL().') OR t.author = :user')
-				->orderBy('t.id', 'DESC')
+				->orderBy('t.timestamp', 'DESC')
 				->setParameter('bar', $bar)
 				->setParameter('user', $account->getUser())
 				->setParameter('account', $account);
