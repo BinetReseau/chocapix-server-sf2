@@ -89,4 +89,24 @@ class TransactionController extends FOSRestController {
 		$em->flush();
 		return $transaction;
 	}
+
+
+	/**
+	 * @Post("/{bar}/transaction/uncancel/{transaction}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @ParamConverter("transaction", class="BRBarBundle:Transaction\Transaction", options={"id" = "transaction"})
+	 *
+     * @View(serializerEnableMaxDepthChecks=true)
+	 */
+	public function uncancelTransactionAction(Bar $bar, Transaction $transaction) {
+		$em = $this->getDoctrine()->getManager();
+
+		$transaction->setCanceled(false);
+
+		$repo = $em->getRepository('BRBarBundle:Transaction\Transaction');
+		$repo->propagateTransactionModification($transaction);
+
+		$em->flush();
+		return $transaction;
+	}
 }
