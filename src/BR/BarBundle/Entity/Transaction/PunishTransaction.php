@@ -31,7 +31,7 @@ class PunishTransaction extends Transaction
     			return false;
     	}
 
-        $this->moneyflow = (-1)*$moneyout;
+        $this->moneyflow = -$moneyout;
         return true;
     }
 
