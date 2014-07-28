@@ -126,7 +126,7 @@ class ActionController extends FOSRestController {
 	 * @RequestParam(name="accused", requirements="\d+", strict=true)
 	 * @ParamConverter("accused", class="BRBarBundle:Account\Account", options={"id" = "accused"})
 	 * @RequestParam(name="qty", requirements="[0-9.]+", strict=true)
-	 * @RequestParam(name="motive", requirements="\w+", strict=true)
+	 * @RequestParam(name="motive", requirements="[a-zA-Z0-9]+.+", strict=true)
 	 *
      * @View()
      *

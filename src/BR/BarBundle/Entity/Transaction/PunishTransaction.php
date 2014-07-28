@@ -18,17 +18,21 @@ class PunishTransaction extends Transaction
     protected $motive;
 
     public function checkIntegrity() {
-    	$moneyin = 0;
     	$moneyout = 0;
 
     	foreach ($this->operations as $op) {
     		if($op instanceof AccountOperation) {
     			if($op->getMoneyFlow() < 0)
-    				return true;
+                    $moneyout += $op->getMoneyFlow();
+                else
+                    return false;
     		}
     		else
     			return false;
     	}
+
+        $this->moneyflow = (-1)*$moneyout;
+        return true;
     }
 
     public function getMotive() {
