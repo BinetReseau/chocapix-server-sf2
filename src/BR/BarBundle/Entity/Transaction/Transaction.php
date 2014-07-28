@@ -15,7 +15,8 @@ use Doctrine\Common\Collections\ArrayCollection;
  *      {"appro" = "ApproTransaction",
  *      "buy" = "BuyTransaction",
  *      "give" = "GiveTransaction",
- *      "throw" = "ThrowTransaction"})
+ *      "throw" = "ThrowTransaction",
+ *      "punish" = "PunishTransaction"})
  *
  * @JMS\ExclusionPolicy("none")
  */
@@ -113,5 +114,74 @@ abstract class Transaction
 
     public function isCanceled() {
         return $this->canceled;
+    }
+
+    /**
+     * Set moneyflow
+     *
+     * @param string $moneyflow
+     * @return Transaction
+     */
+    public function setMoneyflow($moneyflow)
+    {
+        $this->moneyflow = $moneyflow;
+
+        return $this;
+    }
+
+    /**
+     * Get moneyflow
+     *
+     * @return string 
+     */
+    public function getMoneyflow()
+    {
+        return $this->moneyflow;
+    }
+
+    /**
+     * Get canceled
+     *
+     * @return boolean 
+     */
+    public function getCanceled()
+    {
+        return $this->canceled;
+    }
+
+    /**
+     * Set bar
+     *
+     * @param \BR\BarBundle\Entity\Bar\Bar $bar
+     * @return Transaction
+     */
+    public function setBar(\BR\BarBundle\Entity\Bar\Bar $bar = null)
+    {
+        $this->bar = $bar;
+
+        return $this;
+    }
+
+    /**
+     * Get bar
+     *
+     * @return \BR\BarBundle\Entity\Bar\Bar 
+     */
+    public function getBar()
+    {
+        return $this->bar;
+    }
+
+    /**
+     * Set author
+     *
+     * @param \BR\BarBundle\Entity\Auth\User $author
+     * @return Transaction
+     */
+    public function setAuthor(\BR\BarBundle\Entity\Auth\User $author = null)
+    {
+        $this->author = $author;
+
+        return $this;
     }
 }

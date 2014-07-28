@@ -21,6 +21,7 @@ use BR\BarBundle\Entity\Transaction\Transaction;
 use BR\BarBundle\Entity\Transaction\BuyTransaction;
 use BR\BarBundle\Entity\Transaction\GiveTransaction;
 use BR\BarBundle\Entity\Transaction\ThrowTransaction;
+use BR\BarBundle\Entity\Transaction\PunishTransaction;
 
 class ActionController extends FOSRestController {
 	/**
@@ -108,6 +109,36 @@ class ActionController extends FOSRestController {
 		$transaction = new ThrowTransaction($bar, $this->getUser());
 
 		$item->operation($transaction, -$qty);
+
+		if(!$transaction->checkIntegrity())
+			throw new \Exception('Invalid Transaction');
+
+		$em->persist($transaction);
+		$em->flush();
+
+		return $transaction;
+	}
+
+
+	/**
+	 * @Post("/{bar}/action/punish")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @RequestParam(name="accused", requirements="\d+", strict=true)
+	 * @ParamConverter("accused", class="BRBarBundle:Account\Account", options={"id" = "accused"})
+	 * @RequestParam(name="qty", requirements="[0-9.]+", strict=true)
+	 * @RequestParam(name="motive", requirements="\w+", strict=true)
+	 *
+     * @View()
+     *
+     * @Security("is_granted('ACCOUNT', bar)")
+     */
+	public function punishAction(Bar $bar, Account $accused, $qty, $motive) {
+		$em = $this->getDoctrine()->getManager();
+
+		$transaction = new PunishTransaction($bar, $this->getUser());
+		$transaction->setMotive($motive);
+
+		$accused->operation($transaction, -$qty);
 
 		if(!$transaction->checkIntegrity())
 			throw new \Exception('Invalid Transaction');
