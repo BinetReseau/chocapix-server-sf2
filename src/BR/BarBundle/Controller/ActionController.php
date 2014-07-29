@@ -18,6 +18,7 @@ use BR\BarBundle\Entity\Operation\AccountOperation;
 use BR\BarBundle\Entity\Stock\StockItem;
 use BR\BarBundle\Entity\Operation\StockOperation;
 use BR\BarBundle\Entity\Transaction\Transaction;
+use BR\BarBundle\Entity\Transaction\ApproTransaction;
 use BR\BarBundle\Entity\Transaction\BuyTransaction;
 use BR\BarBundle\Entity\Transaction\GiveTransaction;
 use BR\BarBundle\Entity\Transaction\ThrowTransaction;
@@ -139,6 +140,34 @@ class ActionController extends FOSRestController {
 		$transaction->setMotive($motive);
 
 		$accused->operation($transaction, -$qty);
+
+		if(!$transaction->checkIntegrity())
+			throw new \Exception('Invalid Transaction');
+
+		$em->persist($transaction);
+		$em->flush();
+
+		return $transaction;
+	}
+
+	/**
+	 * @Post("/{bar}/action/appro")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @RequestParam(name="item", requirements="\d+", strict=true)
+	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
+	 * @RequestParam(name="qty", requirements="[0-9.]+", strict=true)
+	 *
+	 * @View()
+	 *
+	 * @Security("is_granted('ACCOUNT', bar)")
+	 */
+	public function approAction(Bar $bar, StockItem $item, $qty)
+	{
+		$em = $this->getDoctrine()->getManager();
+
+		$transaction = new ApproTransaction($bar, $this->getUser());
+
+		$item->operation($transaction, $qty);
 
 		if(!$transaction->checkIntegrity())
 			throw new \Exception('Invalid Transaction');
