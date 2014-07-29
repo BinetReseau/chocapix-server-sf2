@@ -104,14 +104,46 @@ class FoodController extends FOSRestController {
 	}
 
 	/**
+	 * @Post("/{bar}/food/{item}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
+	 * @RequestParam(name="name")
+	 * @RequestParam(name="unit")
+	 * @RequestParam(name="price", requirements="[0-9.]+", strict=true)
+	 * @RequestParam(name="tax", requirements="[0-9.]+", strict=true)
+	 * @View()
+	 */
+	public function updateStockItemAction($bar, StockItem $item, $name, $unit, $price, $tax, $qty, $keywords) {
+		# code...
+	}
+
+	/**
 	 * @Delete("/{bar}/food/{item}")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
 	 *
-	 * @View(serializerEnableMaxDepthChecks=true)
+	 * @View()
 	 */
 	public function deleteStockItemAction($bar, StockItem $item) {
+		$em = $this->getDoctrine()->getManager();
 		$item->setDeleted(true);
+		$em->persist($item);
+		$em->flush();
+		return $item;
+	}
+
+	/**
+	 * @Post("/{bar}/food/undelete/{item}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
+	 *
+	 * @View()
+	 */
+	public function undeleteStockItemAction($bar, StockItem $item) {
+		$em = $this->getDoctrine()->getManager();
+		$item->setDeleted(false);
+		$em->persist($item);
+		$em->flush();
 		return $item;
 	}
 }
