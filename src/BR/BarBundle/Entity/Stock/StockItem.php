@@ -52,6 +52,10 @@ class StockItem
     /** @ORM\Column(type="text") */
     private $keywords;
 
+    public function __construct($bar) {
+        $this->bar = $bar;
+    }
+
 
     public function operation($transaction, $deltaqty)
     {
