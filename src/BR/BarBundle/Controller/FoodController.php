@@ -73,6 +73,8 @@ class FoodController extends FOSRestController {
 	 * @RequestParam(name="unit")
 	 * @RequestParam(name="price", requirements="[0-9.]+", strict=true)
 	 * @RequestParam(name="tax", requirements="[0-9.]+", strict=true)
+	 * @RequestParam(name="qty")
+	 * @RequestParam(name="keywords")
 	 * @View()
 	 */
 	public function addStockItemAction(Bar $bar, $name, $unit, $price, $tax, $qty = 0, $keywords = '') {
