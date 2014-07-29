@@ -17,7 +17,7 @@ class ApproTransaction extends Transaction
 
     	foreach ($this->operations as $op) {
     		if($op instanceof StockOperation && $op->getMoneyFlow() >= 0)
-    			$money += -$op->getMoneyFlow();
+    			$money += $op->getMoneyFlow();
     		else
     			return false;
     	}
