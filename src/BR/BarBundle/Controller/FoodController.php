@@ -7,6 +7,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -99,6 +100,18 @@ class FoodController extends FOSRestController {
 
 		$em->flush();
 
+		return $item;
+	}
+
+	/**
+	 * @Delete("/{bar}/food/{item}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
+	 *
+	 * @View(serializerEnableMaxDepthChecks=true)
+	 */
+	public function deleteStockItemAction($bar, StockItem $item) {
+		$item->setDeleted(true);
 		return $item;
 	}
 }

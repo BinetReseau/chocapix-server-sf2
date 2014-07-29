@@ -52,8 +52,14 @@ class StockItem
     /** @ORM\Column(type="text") */
     private $keywords;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $deleted;
+
     public function __construct($bar) {
         $this->bar = $bar;
+        $this->deleted = false;
     }
 
 
@@ -122,5 +128,14 @@ class StockItem
 
     public function getKeywords() {
         return $this->keywords;
+    }
+
+    public function getDeleted() {
+        return $this->deleted;
+    }
+
+    public function setDeleted($value) {
+        $this->deleted = $value;
+        return $this;
     }
 }
