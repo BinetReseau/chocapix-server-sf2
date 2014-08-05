@@ -16,6 +16,8 @@ Then, run the following command to install the project dependencies:
 
     php composer.phar install
 
+Also need cgi enabled and lttoolbox for the pluralization script
+
 2) Checking your System Configuration
 -------------------------------------
 
