@@ -29,3 +29,7 @@ br_bar_transaction:
 br_bar_user:
     type:     rest
     resource: BR\BarBundle\Controller\UserController
+
+api:
+    path:      /api/{route}
+    defaults:  { _controller: BRBarBundle:Api:api }
