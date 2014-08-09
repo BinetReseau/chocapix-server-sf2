@@ -1,16 +1,22 @@
 <?php
 namespace BR\BarBundle\Type\{{namespace}};
 
-use BR\BarBundle\Type\IdTypeBase;
 use Doctrine\Common\Persistence\ObjectManager;
+use BR\BarBundle\Type\IdTypeBase;
 
 class {{class}}IdType extends IdTypeBase
 {
     public function __construct(ObjectManager $om) {
-        parent::__construct($om, 'BRBarBundle:{{namespace}}\{{class}}', '{{short_name}}');
+        parent::__construct($om, '{{complete_class_name}}', '{{short_name}}');
     }
 
     public function getName() {
         return '{{short_name}}_id';
     }
+
+{% if parent != "integer" %}
+    public function getParent() {
+        return '{{parent}}';
+    }
+{% endif %}
 }

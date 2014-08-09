@@ -71,9 +71,11 @@ class GenerateTypesCommand extends ContainerAwareCommand
                 $entities[] = array(
                     'namespace' => implode("\\", $namespace),
                     'class' => $className,
+                    'complete_class_name' => $class,
                     'short_name' => $annotation->getTypeName(),
                     'gen_type' => $annotation->genTypeClass(),
-                    'gen_typeid' => $annotation->genTypeIdClass());
+                    'gen_typeid' => $annotation->genTypeIdClass(),
+                    'parent' => $annotation->getParent());
             }
         }
 

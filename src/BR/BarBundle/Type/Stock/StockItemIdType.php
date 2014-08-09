@@ -1,16 +1,17 @@
 <?php
 namespace BR\BarBundle\Type\Stock;
 
-use BR\BarBundle\Type\IdTypeBase;
 use Doctrine\Common\Persistence\ObjectManager;
+use BR\BarBundle\Type\IdTypeBase;
 
 class StockItemIdType extends IdTypeBase
 {
     public function __construct(ObjectManager $om) {
-        parent::__construct($om, 'BRBarBundle:Stock\StockItem', 'item');
+        parent::__construct($om, 'BR\BarBundle\Entity\Stock\StockItem', 'item');
     }
 
     public function getName() {
         return 'item_id';
     }
+
 }

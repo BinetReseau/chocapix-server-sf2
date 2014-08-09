@@ -9,6 +9,7 @@ class GenerateType
     private $type_name;
     private $gen_type = false;
     private $gen_typeid = false;
+    private $parent = "integer";
 
     public function __construct($options) {
         if (isset($options['value'])) {
@@ -34,5 +35,9 @@ class GenerateType
     }
     public function genTypeIdClass() {
         return property_exists($this, "gen_typeid") ? $this->gen_typeid : false;
+    }
+
+    public function getParent() {
+        return $this->parent;
     }
 }
