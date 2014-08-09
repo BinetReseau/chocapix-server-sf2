@@ -3,6 +3,7 @@ namespace BR\BarBundle\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class IdTypeBase extends AbstractType
@@ -19,7 +20,7 @@ class IdTypeBase extends AbstractType
     /**
      * @param ObjectManager $om
      */
-    public function __construct(ObjectManager $om, entityClassName, $name) {
+    public function __construct(ObjectManager $om, $entityClassName, $name) {
         $this->om = $om;
         $this->entityClassName = $entityClassName;
         $this->name = $name;
