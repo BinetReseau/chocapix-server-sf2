@@ -1,6 +1,6 @@
 services:
 {% for e in entities %}
-{% if e.type %}
+{% if e.gen_type %}
     br_bar.type.{{e.short_name}}:
         class: BR\BarBundle\Form\{{e.namespace}}\{{e.class}}Type
         arguments: ["@doctrine.orm.entity_manager"]
@@ -10,7 +10,7 @@ services:
 {% endfor %}
 
 {% for e in entities %}
-{% if e.typeid %}
+{% if e.gen_typeid %}
     br_bar.type.{{e.short_name}}_id:
         class: BR\BarBundle\Form\{{e.namespace}}\{{e.class}}IdType
         arguments: ["@doctrine.orm.entity_manager"]

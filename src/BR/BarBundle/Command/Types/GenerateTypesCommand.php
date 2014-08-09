@@ -33,7 +33,7 @@ class GenerateTypesCommand extends ContainerAwareCommand
                 file_put_contents(
                     $file,
                     $this->getContainer()->get('templating')->render(
-                        'BRBarBundle:Command/Type:IdTypeTemplate.php.twig',
+                        'BRBarBundle:Command/Types:IdTypeTemplate.php.twig',
                         array('namespace' => $entity['namespace'],
                             'class' => $entity['class'],
                             'short_name' => $entity['short_name'])));
@@ -42,7 +42,7 @@ class GenerateTypesCommand extends ContainerAwareCommand
         file_put_contents(
                 'src/BR/BarBundle/Type/services.yml',
                 $this->getContainer()->get('templating') ->render(
-                    'BRBarBundle:Command/Type:services.yml.twig',
+                    'BRBarBundle:Command/Types:services.yml.twig',
                     array('entities' => $entities)));
 
 
