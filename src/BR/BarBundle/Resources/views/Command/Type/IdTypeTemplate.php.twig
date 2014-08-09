@@ -1,0 +1,12 @@
+<?php
+namespace BR\BarBundle\Form\{{namespace}};
+
+use BR\BarBundle\Form\IdTypeBase;
+use Doctrine\Common\Persistence\ObjectManager;
+
+class {{class}}IdType extends IdTypeBase
+{
+    public function __construct(ObjectManager $om, repoName, $name) {
+        parent::__construct($om, 'BRBarBundle:{{namespace}}\{{class}}', '{{short_name}}');
+    }
+}

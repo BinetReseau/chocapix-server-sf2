@@ -1,0 +1,20 @@
+services:
+{% for e in entities %}
+{% if e.type %}
+    br_bar.type.{{e.short_name}}:
+        class: BR\BarBundle\Form\{{e.namespace}}\{{e.class}}Type
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: {{e.short_name}} }
+{% endif %}
+{% endfor %}
+
+{% for e in entities %}
+{% if e.typeid %}
+    br_bar.type.{{e.short_name}}_id:
+        class: BR\BarBundle\Form\{{e.namespace}}\{{e.class}}IdType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: {{e.short_name}}_id }
+{% endif %}
+{% endfor %}
