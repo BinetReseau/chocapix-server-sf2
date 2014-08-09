@@ -9,4 +9,8 @@ class AccountIdType extends IdTypeBase
     public function __construct(ObjectManager $om) {
         parent::__construct($om, 'BRBarBundle:Account\Account', 'account');
     }
+
+    public function getName() {
+        return 'account_id';
+    }
 }

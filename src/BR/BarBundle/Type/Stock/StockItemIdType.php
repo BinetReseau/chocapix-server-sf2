@@ -9,4 +9,8 @@ class StockItemIdType extends IdTypeBase
     public function __construct(ObjectManager $om) {
         parent::__construct($om, 'BRBarBundle:Stock\StockItem', 'item');
     }
+
+    public function getName() {
+        return 'item_id';
+    }
 }

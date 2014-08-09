@@ -9,4 +9,8 @@ class UserIdType extends IdTypeBase
     public function __construct(ObjectManager $om) {
         parent::__construct($om, 'BRBarBundle:Auth\User', 'user');
     }
+
+    public function getName() {
+        return 'user_id';
+    }
 }
