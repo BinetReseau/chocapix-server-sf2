@@ -2,8 +2,12 @@
 namespace BR\BarBundle\Entity\Bar;
 
 use Doctrine\ORM\Mapping as ORM;
+use BR\BarBundle\Command\Types\Annotations\GenerateType;
 
-/** @ORM\Entity */
+/**
+ * @ORM\Entity
+ * @GenerateType("bar", gen_typeid=true)
+ */
 class Bar
 {
     /** @ORM\Id @ORM\Column(type="string") */

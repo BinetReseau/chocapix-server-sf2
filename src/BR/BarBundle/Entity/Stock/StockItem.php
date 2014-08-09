@@ -3,12 +3,14 @@ namespace BR\BarBundle\Entity\Stock;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use BR\BarBundle\Command\Types\Annotations\GenerateType;
 
 use BR\BarBundle\Entity\Operation\StockOperation;
 
 /**
  * @ORM\Entity
  * @JMS\ExclusionPolicy("none")
+ * @GenerateType("item", gen_typeid=true)
  */
 class StockItem
 {
