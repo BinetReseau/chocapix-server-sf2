@@ -86,6 +86,8 @@ fos_rest:
         jsonp_handler: ~
     routing_loader:
         default_format: json
+    service:
+        serializer: br_bar.form_serializer
 
 sensio_framework_extra:
     view:    { annotations: false }

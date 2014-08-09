@@ -17,3 +17,9 @@ services:
         public:     false
         tags:
            - { name: security.voter }
+
+
+    br_bar.form_serializer:
+        class: BR\BarBundle\Controller\FormSerializer
+        arguments:
+            serializer: "@jms_serializer.serializer"
