@@ -27,13 +27,12 @@ class IdTypeBase extends AbstractType
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->addModelTransformer(new EntityIdTransformer($this->om, $this->entityClassName));
+        $builder->addModelTransformer(new EntityIdTransformer($this->om, $this->entityClassName, $this->name));
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
         $resolver->setDefaults(array(
-            'invalid_message' => 'The selected ' + $this->name + ' does not exist',
-            'data_class' => $this->entityClassName
+            'invalid_message' => 'The selected ' + $this->name + ' does not exist'
             ));
     }
 
