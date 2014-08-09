@@ -1,8 +1,8 @@
 <?php
 namespace BR\BarBundle\Type;
 
-use Symfony\Component\Type\AbstractType;
-use Symfony\Component\Type\FormBuilderInterface;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class IdTypeBase extends AbstractType

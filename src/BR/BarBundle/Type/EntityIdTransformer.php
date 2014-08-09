@@ -1,8 +1,8 @@
 <?php
 namespace BR\BarBundle\Type;
 
-use Symfony\Component\Type\DataTransformerInterface;
-use Symfony\Component\Type\Exception\TransformationFailedException;
+use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Form\Exception\TransformationFailedException;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class EntityIdTransformer implements DataTransformerInterface
