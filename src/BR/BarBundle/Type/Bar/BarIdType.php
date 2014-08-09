@@ -1,8 +1,8 @@
 <?php
 namespace BR\BarBundle\Type\Bar;
 
-use BR\BarBundle\Type\IdTypeBase;
 use Doctrine\Common\Persistence\ObjectManager;
+use BR\BarBundle\Type\IdTypeBase;
 
 class BarIdType extends IdTypeBase
 {
@@ -12,5 +12,9 @@ class BarIdType extends IdTypeBase
 
     public function getName() {
         return 'bar_id';
+    }
+
+    public function getParent() {
+        return 'text';
     }
 }
