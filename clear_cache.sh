@@ -1,4 +1,4 @@
 #!/bin/sh
-sudo rm -R app/cache
-mkdir app/cache
-sudo chmod -R 777 app/cache/
+. chmod_cache.sh
+php app/console cache:clear
+. chmod_cache.sh
