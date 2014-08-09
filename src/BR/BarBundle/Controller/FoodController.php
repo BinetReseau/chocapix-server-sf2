@@ -10,6 +10,7 @@ use FOS\RestBundle\Controller\Annotations\Post;
 use FOS\RestBundle\Controller\Annotations\Delete;
 use FOS\RestBundle\Controller\Annotations\RequestParam;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\HttpFoundation\Request;
 
 use BR\BarBundle\Entity\Bar\Bar;
 use BR\BarBundle\Entity\Stock\StockItem;
@@ -34,16 +35,6 @@ class FoodController extends FOSRestController {
 				->getQuery()->getResult();
 
 		return $foods;
-	}
-
-	/**
-	 * @Get("/{bar}/food/{id}")
-	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
-	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
-     * @View()
-     */
-	public function getFoodAction(Bar $bar, StockItem $item) {
-		return $item;
 	}
 
 	/**
@@ -79,7 +70,7 @@ class FoodController extends FOSRestController {
 	 */
 	public function addStockItemAction(Bar $bar, $name, $unit, $price, $tax, $qty = 0, $keywords = '') {
 		$em = $this->getDoctrine()->getManager();
-		
+
 		$item = new StockItem($bar);
 		$item->setName($name);
 		$item->setUnit($unit);
@@ -106,17 +97,39 @@ class FoodController extends FOSRestController {
 	}
 
 	/**
+	 * @Get("/{bar}/food/{id}")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
+     * @View()
+     */
+	public function getFoodAction(Bar $bar, StockItem $item) {
+		// return $item;
+    	// $form = $this->createForm('bar_id', $item->getBar());
+    	$form = $this->createForm('item', $item);
+
+        return $form;
+	}
+
+	 // * @RequestParam(name="name")
+	 // * @RequestParam(name="unit")
+	 // * @RequestParam(name="price", requirements="[0-9.]+", strict=true)
+	 // * @RequestParam(name="tax", requirements="[0-9.]+", strict=true)
+	/**
 	 * @Post("/{bar}/food/{item}")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
 	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
-	 * @RequestParam(name="name")
-	 * @RequestParam(name="unit")
-	 * @RequestParam(name="price", requirements="[0-9.]+", strict=true)
-	 * @RequestParam(name="tax", requirements="[0-9.]+", strict=true)
 	 * @View()
 	 */
-	public function updateStockItemAction($bar, StockItem $item, $name, $unit, $price, $tax, $qty, $keywords) {
-		# code...
+	public function updateStockItemAction(Request $request, $bar, StockItem $item) {
+    	$form = $this->createForm('item', $item);
+
+	    $form->submit($request->request->all(), false);
+	    if ($form->isValid()) {
+		    $em = $this->getDoctrine()->getManager();
+		    $em->persist($item);
+		    $em->flush();
+	    }
+    	return $form;
 	}
 
 	/**

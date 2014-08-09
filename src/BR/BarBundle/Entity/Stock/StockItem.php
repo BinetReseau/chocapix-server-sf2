@@ -78,6 +78,20 @@ class StockItem
         return $this->id;
     }
 
+    public function setId($id) {
+        $this->id = $id;
+        return $this;
+    }
+
+    public function getBar() {
+        return $this->bar;
+    }
+
+    public function setBar($bar) {
+        $this->bar = $bar;
+        return $this;
+    }
+
     public function setName($name) {
         $this->name = $name;
         return $this;
