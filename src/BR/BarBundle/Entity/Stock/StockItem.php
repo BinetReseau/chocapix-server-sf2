@@ -10,7 +10,7 @@ use BR\BarBundle\Entity\Operation\StockOperation;
 /**
  * @ORM\Entity
  * @JMS\ExclusionPolicy("none")
- * @GenerateType("item", gen_typeid=true)
+ * @GenerateType("item", gen_type=true, gen_typeid=true)
  */
 class StockItem
 {
