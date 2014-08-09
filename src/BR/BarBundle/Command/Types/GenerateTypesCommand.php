@@ -7,6 +7,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Bundle\DoctrineBundle\Mapping\DisconnectedMetadataFactory;
 
 
 class GenerateTypesCommand extends ContainerAwareCommand
@@ -16,84 +18,66 @@ class GenerateTypesCommand extends ContainerAwareCommand
         $this->setName('brbar:generate:types');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $entities = array(
-            array('namespace' => 'Auth',
-            'class' => 'User',
-            'short_name' => 'user',
-            'type' => true,
-            'typeid' => true)
-            );
+    protected function generateTypes($entities) {
         foreach ($entities as $i => $entity) {
             $dir = 'src/BR/BarBundle/Type/' . $entity['namespace'];
-            // mkdir($dir);
-            if($entity['typeid']){
+            if(!is_dir($dir))
+                mkdir($dir);
+            if($entity['gen_typeid']){
                 $file = $dir . '/' . $entity['class'] . 'IdType.php';
-                file_put_contents(
-                    $file,
-                    $this->getContainer()->get('templating')->render(
-                        'BRBarBundle:Command/Types:IdTypeTemplate.php.twig',
-                        array('namespace' => $entity['namespace'],
-                            'class' => $entity['class'],
-                            'short_name' => $entity['short_name'])));
+                if(!is_file($file)) {
+                    file_put_contents($file,
+                        $this->getContainer()->get('templating')->render(
+                            'BRBarBundle:Command/Types:IdTypeTemplate.php.twig',
+                            $entity));
+                }
             }
         }
+    }
+
+    protected function generateServices($entities) {
         file_put_contents(
                 'src/BR/BarBundle/Type/services.yml',
                 $this->getContainer()->get('templating') ->render(
                     'BRBarBundle:Command/Types:services.yml.twig',
                     array('entities' => $entities)));
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $reader = new AnnotationReader();
+        $entities = array();
 
 
-        // $manager = new DisconnectedMetadataFactory($this->getContainer()->get('doctrine'));
+        $manager = new DisconnectedMetadataFactory($this->getContainer()->get('doctrine'));
 
-        // try {
-        //     $bundle = $this->getApplication()->getKernel()->getBundle($input->getArgument('name'));
+        $bundle = $this->getApplication()->getKernel()->getBundle("BRBarBundle");
+        $metadata = $manager->getBundleMetadata($bundle);
 
-        //     $output->writeln(sprintf('Generating entities for bundle "<info>%s</info>"', $bundle->getName()));
-        //     $metadata = $manager->getBundleMetadata($bundle);
-        // } catch (\InvalidArgumentException $e) {
-        //     $name = strtr($input->getArgument('name'), '/', '\\');
+        // Lists doctrine entities classes
+        foreach ($metadata->getMetadata() as $m) {
+            $class = $m->getName();
+            $annotation = $reader->getClassAnnotation(new \ReflectionClass($class), 'BR\\BarBundle\\Command\\Types\\Annotations\\GenerateType');
 
-        //     if (false !== $pos = strpos($name, ':')) {
-        //         $name = $this->getContainer()->get('doctrine')->getEntityNamespace(substr($name, 0, $pos)).'\\'.substr($name, $pos + 1);
-        //     }
+            if ($annotation !== null) {
+                $a = preg_replace("/^BR\\\\BarBundle\\\\/", "", $class);
+                $a = preg_replace("/^Entity\\\\/", "", $a);
+                $output->writeln("Generating types for " . $a);
+                $a = explode("\\", $a);
+                $className = array_slice($a, -1)[0];
+                $namespace = array_slice($a, 0, sizeof($a) - 1);
+                $namespace = array_diff($namespace, array('BR', 'BarBundle', 'Entity'));
 
-        //     if (class_exists($name)) {
-        //         $output->writeln(sprintf('Generating entity "<info>%s</info>"', $name));
-        //         $metadata = $manager->getClassMetadata($name, $input->getOption('path'));
-        //     } else {
-        //         $output->writeln(sprintf('Generating entities for namespace "<info>%s</info>"', $name));
-        //         $metadata = $manager->getNamespaceMetadata($name, $input->getOption('path'));
-        //     }
-        // }
+                $entities[] = array(
+                    'namespace' => implode("\\", $namespace),
+                    'class' => $className,
+                    'short_name' => $annotation->getTypeName(),
+                    'gen_type' => $annotation->genTypeClass(),
+                    'gen_typeid' => $annotation->genTypeIdClass());
+            }
+        }
 
-        // $generator = $this->getEntityGenerator();
-
-        // $backupExisting = !$input->getOption('no-backup');
-        // $generator->setBackupExisting($backupExisting);
-
-        // $repoGenerator = new EntityRepositoryGenerator();
-        // foreach ($metadata->getMetadata() as $m) {
-        //     if ($backupExisting) {
-        //         $basename = substr($m->name, strrpos($m->name, '\\') + 1);
-        //         $output->writeln(sprintf('  > backing up <comment>%s.php</comment> to <comment>%s.php~</comment>', $basename, $basename));
-        //     }
-        //     // Getting the metadata for the entity class once more to get the correct path if the namespace has multiple occurrences
-        //     try {
-        //         $entityMetadata = $manager->getClassMetadata($m->getName(), $input->getOption('path'));
-        //     } catch (\RuntimeException $e) {
-        //         // fall back to the bundle metadata when no entity class could be found
-        //         $entityMetadata = $metadata;
-        //     }
-
-        //     $output->writeln(sprintf('  > generating <comment>%s</comment>', $m->name));
-        //     $generator->generate(array($m), $entityMetadata->getPath());
-
-        //     if ($m->customRepositoryClassName && false !== strpos($m->customRepositoryClassName, $metadata->getNamespace())) {
-        //         $repoGenerator->writeEntityRepositoryClass($m->customRepositoryClassName, $metadata->getPath());
-        //     }
-        // }
+        $this->generateTypes($entities);
+        $this->generateServices($entities);
     }
 }

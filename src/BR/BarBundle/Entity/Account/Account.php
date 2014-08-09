@@ -3,10 +3,14 @@ namespace BR\BarBundle\Entity\Account;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use BR\BarBundle\Command\Types\Annotations\GenerateType;
 
 use BR\BarBundle\Entity\Operation\AccountOperation;
 
-/** @ORM\Entity(repositoryClass="BR\BarBundle\Entity\Account\AccountRepository") */
+/**
+ * @ORM\Entity(repositoryClass="BR\BarBundle\Entity\Account\AccountRepository")
+ * @GenerateType("account", gen_type=true, gen_typeid=true)
+ */
 class Account
 {
     /**

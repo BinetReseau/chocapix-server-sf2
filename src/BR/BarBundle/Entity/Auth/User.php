@@ -3,12 +3,15 @@ namespace BR\BarBundle\Entity\Auth;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
+use BR\BarBundle\Command\Types\Annotations\GenerateType;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity
  * @JMS\ExclusionPolicy("none")
+ * @GenerateType("user", gen_typeid=true)
  */
 class User implements UserInterface, \Serializable
 {
