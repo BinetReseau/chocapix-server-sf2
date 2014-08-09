@@ -6,7 +6,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 
 class UserIdType extends IdTypeBase
 {
-    public function __construct(ObjectManager $om, repoName, $name) {
+    public function __construct(ObjectManager $om) {
         parent::__construct($om, 'BRBarBundle:Auth\User', 'user');
     }
 }
