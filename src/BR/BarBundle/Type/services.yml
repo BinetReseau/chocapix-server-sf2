@@ -1,31 +1,32 @@
 services:
     br_bar.type.account:
-        class: BR\BarBundle\Form\Account\AccountType
+        class: BR\BarBundle\Type\Account\AccountType
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: account }
 
 
     br_bar.type.bar_id:
-        class: BR\BarBundle\Form\Bar\BarIdType
+        class: BR\BarBundle\Type\Bar\BarIdType
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: bar_id }
 
     br_bar.type.user_id:
-        class: BR\BarBundle\Form\Auth\UserIdType
+        class: BR\BarBundle\Type\Auth\UserIdType
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: user_id }
 
     br_bar.type.account_id:
-        class: BR\BarBundle\Form\Account\AccountIdType
+        class: BR\BarBundle\Type\Account\AccountIdType
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: account_id }
 
     br_bar.type.item_id:
-        class: BR\BarBundle\Form\Stock\StockItemIdType
+        class: BR\BarBundle\Type\Stock\StockItemIdType
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: item_id }
+

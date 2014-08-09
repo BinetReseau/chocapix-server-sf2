@@ -2,7 +2,7 @@ services:
 {% for e in entities %}
 {% if e.gen_type %}
     br_bar.type.{{e.short_name}}:
-        class: BR\BarBundle\Form\{{e.namespace}}\{{e.class}}Type
+        class: BR\BarBundle\Type\{{e.namespace}}\{{e.class}}Type
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: {{e.short_name}} }
@@ -13,7 +13,7 @@ services:
 {% for e in entities %}
 {% if e.gen_typeid %}
     br_bar.type.{{e.short_name}}_id:
-        class: BR\BarBundle\Form\{{e.namespace}}\{{e.class}}IdType
+        class: BR\BarBundle\Type\{{e.namespace}}\{{e.class}}IdType
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: {{e.short_name}}_id }
