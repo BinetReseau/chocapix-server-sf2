@@ -9,6 +9,7 @@ services:
 {% endif %}
 {% endfor %}
 
+
 {% for e in entities %}
 {% if e.gen_typeid %}
     br_bar.type.{{e.short_name}}_id:
@@ -17,4 +18,5 @@ services:
         tags:
             - { name: form.type, alias: {{e.short_name}}_id }
 {% endif %}
+
 {% endfor %}
