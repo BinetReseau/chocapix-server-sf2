@@ -73,13 +73,19 @@ class GenerateTypesCommand extends ContainerAwareCommand
 
 
         $overwrite = $input->getOption('overwrite');
+        $donesth = false;
         foreach ($entities as $entity) {
             // if($f = $this->generateType($entity, $overwrite)) {
             //     $output->writeln("Generated $f");
+            //     $donesth = true;
             // }
             if($f = $this->generateTypeId($entity, $overwrite)) {
                 $output->writeln("Generated $f");
+                $donesth = true;
             }
+        }
+        if(!$donesth) {
+            $output->writeln("Nothing to do");
         }
 
         $this->generateServices($entities);

@@ -47,6 +47,8 @@ class GenerateMetadataCommand extends ContainerAwareCommand
         if(!is_file($file) || $input->getOption('overwrite')) {
             file_put_contents($file, $metadata);
             $output->writeln("Generated Resources/metadata.json");
+        } else {
+            $output->writeln("File exists. Overwrite with --overwrite");
         }
     }
 }
