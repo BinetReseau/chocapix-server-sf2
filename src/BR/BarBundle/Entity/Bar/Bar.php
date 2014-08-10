@@ -6,7 +6,7 @@ use BR\BarBundle\Command\Types\Annotations\GenerateType;
 
 /**
  * @ORM\Entity
- * @GenerateType("bar", gen_typeid=true, parent="text")
+ * @GenerateType("bar", gen_type=true, gen_typeid=true, parent="text")
  */
 class Bar
 {

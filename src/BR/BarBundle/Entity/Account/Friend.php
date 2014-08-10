@@ -2,8 +2,12 @@
 namespace BR\BarBundle\Entity\Account;
 
 use Doctrine\ORM\Mapping as ORM;
+use BR\BarBundle\Command\Types\Annotations\GenerateType;
 
-/** @ORM\Entity */
+ // * @GenerateType("friend", gen_type=true, gen_typeid=true)
+/**
+ * @ORM\Entity
+ */
 class Friend
 {
     /**

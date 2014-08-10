@@ -11,7 +11,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity
  * @JMS\ExclusionPolicy("none")
- * @GenerateType("user", gen_typeid=true)
+ * @GenerateType("user", gen_typeid=true, gen_type=true)
  */
 class User implements UserInterface, \Serializable
 {
