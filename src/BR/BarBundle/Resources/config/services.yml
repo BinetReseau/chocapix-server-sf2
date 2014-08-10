@@ -20,6 +20,6 @@ services:
 
 
     br_bar.form_serializer:
-        class: BR\BarBundle\Controller\FormSerializer
+        class: BR\BarBundle\Tools\FormSerializer
         arguments:
             serializer: "@jms_serializer.serializer"

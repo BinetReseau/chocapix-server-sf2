@@ -1,5 +1,5 @@
 <?php
-namespace BR\BarBundle\Controller;
+namespace BR\BarBundle\Tools;
 
 use JMS\Serializer\SerializerInterface;
 use JMS\Serializer\SerializationContext;
@@ -19,6 +19,7 @@ class FormSerializer implements SerializerInterface
     public function serialize($data, $format, SerializationContext $context = null) {
         if($data instanceof FormInterface) {
             $data = $this->serializeFormView($data->createView());
+            // $data = $data->createView();
         }
         return $this->serializer->serialize($data, $format, $context);
     }
@@ -28,13 +29,19 @@ class FormSerializer implements SerializerInterface
     }
 
     private function serializeFormView(FormView $v) {
-        if(!is_object($v->vars["value"])) {
-            return $v->vars["value"];
+        if(count($v->children) == 0) {
+            return $v->vars;
         }
 
         $a = array();
         foreach ($v->children as $key => $child) {
-            $a[$key] = $this->serializeFormView($child);
+            $o = $this->serializeFormView($child);
+            if(in_array("checkbox", $o["block_prefixes"])) {
+                $o["value"] = $o["checked"];
+            }
+            // unset($o["form"]);
+            // $a[$key] = $o;
+            $a[$key] = $o["value"];
         }
         unset($a["_token"]);
         return $a;
