@@ -1,0 +1,19 @@
+<?php
+namespace BR\BarBundle\Type\{{namespace}};
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+
+class {{class}}Type extends AbstractType
+{
+    public function buildForm(FormBuilderInterface $builder, array $options) {
+        $builder
+{% for p in properties %}
+            ->add('{{p.name}}'{% if p.is_entity %}, '{{p.entity_name}}_id'{% endif %})
+{% endfor %}
+            ;
+    }
+    public function getName() {
+        return '{{short_name}}';
+    }
+}
