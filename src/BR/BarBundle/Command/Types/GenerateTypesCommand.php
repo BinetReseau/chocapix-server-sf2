@@ -81,9 +81,6 @@ class GenerateTypesCommand extends ContainerAwareCommand
                         foreach($p["foreign_key_names"] as $key) {
                             $properties[$key]["is_entity"] = true;
                             $properties[$key]["entity_class"] = $entity_class_name;
-                            $properties[$p["name"]] = $properties[$key];
-                            $properties[$p["name"]]["name"] = $p["name"];
-                            unset($properties[$key]);
                         }
                         }
                     }}

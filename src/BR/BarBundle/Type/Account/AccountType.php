@@ -11,7 +11,7 @@ class AccountType extends AbstractType
             ->add('id')
             ->add('money')
             ->add('bar')
-            ->add('user', 'user_id')
+            ->add('userId', 'user_id', array('property_path' => 'user'))
             ;
     }
     public function getName() {

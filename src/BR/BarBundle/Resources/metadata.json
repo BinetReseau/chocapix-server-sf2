@@ -108,11 +108,17 @@
             "data_type": "Boolean",
             "is_nullable": false
         }, {
-            "name": "bar",
+            "name": "barId",
             "data_type": "Int32",
             "is_nullable": true
         }],
-        "navigation_properties": []
+        "navigation_properties": [{
+            "name": "bar",
+            "entity_type_name": "Bar:#BR.BarBundle.Entity.Bar",
+            "is_scalar": true,
+            "association_name": "ASSOCIATION_StockItem_Bar",
+            "foreign_key_names": ["barId"]
+        }]
     }],
     "resource_entity_type_map": {
         "Bars": "Bar:#BR.BarBundle.Entity.Bar",

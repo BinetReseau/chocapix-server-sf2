@@ -14,11 +14,6 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: account }
-    br_bar.type.friend:
-        class: BR\BarBundle\Type\Account\FriendType
-        arguments: ["@doctrine.orm.entity_manager"]
-        tags:
-            - { name: form.type, alias: friend }
     br_bar.type.item:
         class: BR\BarBundle\Type\Stock\StockItemType
         arguments: ["@doctrine.orm.entity_manager"]
@@ -43,12 +38,6 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: account_id }
-
-    br_bar.type.friend_id:
-        class: BR\BarBundle\Type\Account\FriendIdType
-        arguments: ["@doctrine.orm.entity_manager"]
-        tags:
-            - { name: form.type, alias: friend_id }
 
     br_bar.type.item_id:
         class: BR\BarBundle\Type\Stock\StockItemIdType

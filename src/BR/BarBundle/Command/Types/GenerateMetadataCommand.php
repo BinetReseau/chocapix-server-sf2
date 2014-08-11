@@ -24,6 +24,12 @@ class GenerateMetadataCommand extends ContainerAwareCommand
     use GetAnnotedClasses;
 
     protected function execute(InputInterface $input, OutputInterface $output) {
+        $file = 'src/BR/BarBundle/Resources/metadata.json';
+        if(is_file($file) && !$input->getOption('overwrite')) {
+            $output->writeln("File exists. Overwrite with --overwrite");
+            return;
+        }
+
         $metadata = null;
         /* @var $serializer \JMS\Serializer\Serializer */
         $serializer = $this->getContainer()->get('serializer');
@@ -43,12 +49,7 @@ class GenerateMetadataCommand extends ContainerAwareCommand
         $metadata = $dispatcher->getMetadata();
         $metadata = $serializer->serialize($metadata, 'json');
 
-        $file = 'src/BR/BarBundle/Resources/metadata.json';
-        if(!is_file($file) || $input->getOption('overwrite')) {
-            file_put_contents($file, $metadata);
-            $output->writeln("Generated Resources/metadata.json");
-        } else {
-            $output->writeln("File exists. Overwrite with --overwrite");
-        }
+        file_put_contents($file, $metadata);
+        $output->writeln("Generated Resources/metadata.json");
     }
 }

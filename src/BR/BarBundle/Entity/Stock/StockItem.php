@@ -20,19 +20,19 @@ class StockItem
      */
     private $id;
 
+     // * @JMS\Exclude
     /**
      * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar\Bar")
-     * @JMS\Exclude
      */
     private $bar;
-    /**
-     * @JMS\SerializedName("bar")
-     * @JMS\VirtualProperty
-     */
-    public function getBarId()
-    {
-        return $this->bar->getId();
-    }
+    // /**
+    //  * @JMS\SerializedName("bar")
+    //  * @JMS\VirtualProperty
+    //  */
+    // public function getBarId()
+    // {
+    //     return $this->bar->getId();
+    // }
 
 
     /** @ORM\Column(type="string", length=255) */

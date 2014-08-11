@@ -9,7 +9,7 @@ class {{class}}Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options) {
         $builder
 {% for p in properties %}
-            ->add('{{p.name}}'{% if p.is_entity %}, '{{p.entity_name}}_id'{% endif %})
+            ->add('{{p.name}}'{% if p.is_entity %}, '{{p.entity_name}}_id', array('property_path' => '{{p.entity_name}}'){% endif %})
 {% endfor %}
             ;
     }
