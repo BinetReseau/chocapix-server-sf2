@@ -2,7 +2,6 @@
 namespace BR\BarBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\FOSRestController;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;

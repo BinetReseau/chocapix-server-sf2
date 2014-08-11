@@ -22,7 +22,7 @@ class MetadataController extends FOSRestController {
 	 * @Get("/{bar}/Metadata")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
      */
-	public function getAccountsAction(Bar $bar) {
+	public function getMetadataAction(Bar $bar) {
 		return new Response(file_get_contents("../src/BR/BarBundle/Resources/metadata.json"));
 	}
 }
