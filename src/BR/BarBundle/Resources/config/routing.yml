@@ -22,6 +22,10 @@ br_bar_food:
     type:     rest
     resource: BR\BarBundle\Controller\FoodController
 
+br_bar_metadata:
+    type:     rest
+    resource: BR\BarBundle\Controller\MetadataController
+
 br_bar_transaction:
     type:     rest
     resource: BR\BarBundle\Controller\TransactionController
