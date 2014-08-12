@@ -13,7 +13,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * @JMS\ExclusionPolicy("none")
  * @GenerateType("user", gen_typeid=true, gen_type=true)
  */
-class User implements UserInterface, \Serializable
+class User implements UserInterface
 {
     /**
 	 * @ORM\Id @ORM\GeneratedValue
@@ -82,26 +82,6 @@ class User implements UserInterface, \Serializable
     }
 
 
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id,
-            $this->bar,
-            $this->login,
-            $this->password
-        ));
-    }
-
-    public function unserialize($serialized)
-    {
-        list (
-            $this->id,
-            $this->bar,
-            $this->login,
-            $this->password
-        ) = unserialize($serialized);
-    }
-
 
     public function getAccounts() {
         return $this->accounts;
@@ -110,5 +90,41 @@ class User implements UserInterface, \Serializable
     public function setAccounts($accounts) {
         $this->accounts = $accounts;
         return $this;
+    }
+
+    public function getId() {
+        return $this->id;
+    }
+
+    public function setName($name) {
+        $this->name = $name;
+        return $this;
+    }
+
+    public function getName() {
+        return $this->name;
+    }
+
+    public function setLogin($login) {
+        $this->login = $login;
+        return $this;
+    }
+
+    public function getLogin() {
+        return $this->login;
+    }
+
+    public function setPassword($password) {
+        $this->password = $password;
+        return $this;
+    }
+
+    public function addAccount(\BR\BarBundle\Entity\Account\Account $accounts) {
+        $this->accounts[] = $accounts;
+        return $this;
+    }
+
+    public function removeAccount(\BR\BarBundle\Entity\Account\Account $accounts) {
+        $this->accounts->removeElement($accounts);
     }
 }
