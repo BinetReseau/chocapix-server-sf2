@@ -36,12 +36,16 @@ class FormSerializer implements SerializerInterface
         $a = array();
         foreach ($v->children as $key => $child) {
             $o = $this->serializeFormView($child);
-            if(in_array("checkbox", $o["block_prefixes"])) {
+            if(isset($o["block_prefixes"]) and in_array("checkbox", $o["block_prefixes"])) {
                 $o["value"] = $o["checked"];
             }
             // unset($o["form"]);
             // $a[$key] = $o;
-            $a[$key] = $o["value"];
+            if(isset($o["value"])) {
+                $a[$key] = $o["value"];
+            } else {
+                $a[$key] = $o;
+            }
         }
         unset($a["_token"]);
         return $a;
