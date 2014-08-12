@@ -7,11 +7,11 @@ use BR\BarBundle\Type\IdTypeBase;
 class {{class}}IdType extends IdTypeBase
 {
     public function __construct(ObjectManager $om) {
-        parent::__construct($om, '{{full_class_name}}', '{{short_name}}');
+        parent::__construct($om, '{{fullClassName}}', '{{shortName}}');
     }
 
     public function getName() {
-        return '{{short_name}}_id';
+        return '{{shortName}}_id';
     }
 
 {% if parent != "integer" %}

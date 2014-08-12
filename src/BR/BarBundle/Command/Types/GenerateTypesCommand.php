@@ -61,26 +61,26 @@ class GenerateTypesCommand extends ContainerAwareCommand
         $json = json_decode($string, true);
 
         $metadata = array();
-        foreach($json["structural_types"] as $classdef) {
+        foreach($json["structuralTypes"] as $classdef) {
             $o = array();
-                $full_class_name = $classdef["namespace"] . "." . $classdef["short_name"];
+                $full_class_name = $classdef["namespace"] . "." . $classdef["shortName"];
                 $full_class_name = str_replace(".", "\\", $full_class_name);
-                $o["full_class_name"] = $full_class_name;
+                $o["fullClassName"] = $full_class_name;
 
                 $properties = array();
-                    foreach($classdef["data_properties"] as $p) {
-                        $p["is_entity"] = false;
+                    foreach($classdef["dataProperties"] as $p) {
+                        $p["isEntity"] = false;
                         $properties[$p["name"]] = $p;
                     }
-                    if(isset($classdef["navigation_properties"])) {
-                    foreach($classdef["navigation_properties"] as $p) {
-                        $entity_class_name = $p["entity_type_name"];
+                    if(isset($classdef["navigationProperties"])) {
+                    foreach($classdef["navigationProperties"] as $p) {
+                        $entity_class_name = $p["entityTypeName"];
                         $entity_class_name = preg_replace("/^(.+):#(.+)/", "$2.$1", $entity_class_name);
                         $entity_class_name = str_replace(".", "\\", $entity_class_name);
-                        if(isset($p["foreign_key_names"])) {
-                        foreach($p["foreign_key_names"] as $key) {
-                            $properties[$key]["is_entity"] = true;
-                            $properties[$key]["entity_class"] = $entity_class_name;
+                        if(isset($p["foreignKeyNames"])) {
+                        foreach($p["foreignKeyNames"] as $key) {
+                            $properties[$key]["isEntity"] = true;
+                            $properties[$key]["entityClass"] = $entity_class_name;
                         }
                         }
                     }}
@@ -110,14 +110,14 @@ class GenerateTypesCommand extends ContainerAwareCommand
             $o = array(
                 'namespace' => implode("\\", $namespace),
                 'class' => $className,
-                'full_class_name' => $full_class_name,
-                'short_name' => $annotation->getTypeName(),
-                'gen_type' => $annotation->genTypeClass(),
-                'gen_typeid' => $annotation->genTypeIdClass(),
+                'fullClassName' => $full_class_name,
+                'shortName' => $annotation->getTypeName(),
+                'genType' => $annotation->genTypeClass(),
+                'genTypeid' => $annotation->genTypeIdClass(),
                 'parent' => $annotation->getParent()); // parent form type
 
             if(isset($metadata[$full_class_name])) {
-                $name_map[$full_class_name] = $o['short_name'];
+                $name_map[$full_class_name] = $o['shortName'];
                 $o = array_merge($o, $metadata[$full_class_name]);
             }
             $entities[] = $o;
@@ -126,8 +126,8 @@ class GenerateTypesCommand extends ContainerAwareCommand
         // Need name_map full
         foreach($entities as $k => $entity) {
             foreach ($entity['properties'] as $l => $p) {
-                if($p['is_entity']){
-                    $entities[$k]['properties'][$l]['entity_name'] = $name_map[$p['entity_class']];
+                if($p['isEntity']){
+                    $entities[$k]['properties'][$l]['entityName'] = $name_map[$p['entityClass']];
                 }
             }
         }
@@ -150,13 +150,13 @@ class GenerateTypesCommand extends ContainerAwareCommand
         $overwrite = $input->getOption('overwrite');
         $donesth = false;
         foreach ($entities as $entity) {
-            if($entity['gen_typeid']){
+            if($entity['genTypeid']){
                 if($f = $this->generateTypeId($entity, $overwrite)) {
                     $output->writeln("Generated $f");
                     $donesth = true;
                 }
             }
-            if($entity['gen_type']){
+            if($entity['genType']){
                 if($f = $this->generateType($entity, $metadata, $overwrite)) {
                     $output->writeln("Generated $f");
                     $donesth = true;
