@@ -3,6 +3,7 @@ namespace BR\BarBundle\Type\Bar;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
 class BarType extends AbstractType
 {
@@ -10,8 +11,17 @@ class BarType extends AbstractType
         $builder
             ->add('id')
             ->add('name')
+            ->add('_type', 'text', array('data' => 'BR\BarBundle\Entity\Bar\Bar', 'mapped' => false))
             ;
     }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+             'data_class' => 'BR\BarBundle\Entity\Bar\Bar',
+        ));
+    }
+
     public function getName() {
         return 'bar';
     }
