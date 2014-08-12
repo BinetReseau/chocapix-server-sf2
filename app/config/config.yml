@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
     - { resource: "@BRBarBundle/Resources/config/services.yml" }
+    - { resource: "@AdrotecBreezeJsBundle/Resources/config/services.xml" }
 
 framework:
     #esi:             ~
