@@ -11,7 +11,7 @@ class BarType extends AbstractType
         $builder
             ->add('id')
             ->add('name')
-            ->add('_type', 'text', array('data' => 'BR\BarBundle\Entity\Bar\Bar', 'mapped' => false))
+            ->add('_type', 'text', array('data' => 'Bar\Bar', 'mapped' => false))
             ;
     }
 

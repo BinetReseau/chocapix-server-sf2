@@ -11,7 +11,7 @@ class UserType extends AbstractType
         $builder
             ->add('id')
             ->add('name')
-            ->add('_type', 'text', array('data' => 'BR\BarBundle\Entity\Auth\User', 'mapped' => false))
+            ->add('_type', 'text', array('data' => 'Auth\User', 'mapped' => false))
             ;
     }
 

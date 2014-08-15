@@ -12,12 +12,12 @@ class {{class}}Type extends AbstractType
 {% for p in properties %}
 {% if p.isEntity %}
             ->add('{{p.name}}', '{{p.entityName}}_id', array('property_path' => '{{p.entityName}}'))
-            ->add('{{p.entityName}}', '{{p.entityName}}') // ?
+            ->add('{{p.entityName}}', '{{p.entityName}}', array('read_only' => true))
 {% else %}
             ->add('{{p.name}}')
 {% endif %}
 {% endfor %}
-            ->add('_type', 'text', array('data' => '{{fullClassName}}', 'mapped' => false))
+            ->add('_type', 'text', array('data' => '{{namespace}}\{{class}}', 'mapped' => false))
             ;
     }
 
