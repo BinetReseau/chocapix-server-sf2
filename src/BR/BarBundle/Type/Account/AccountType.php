@@ -12,7 +12,7 @@ class AccountType extends AbstractType
             ->add('id')
             ->add('money')
             ->add('bar')
-            ->add('userId', 'user_id', array('property_path' => 'user'))
+            ->add('user_id', 'user_id', array('property_path' => 'user'))
             ->add('user', 'user', array('read_only' => true))
             ->add('_type', 'text', array('data' => 'Account\Account', 'mapped' => false))
             ;
