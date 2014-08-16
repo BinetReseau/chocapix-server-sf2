@@ -2,14 +2,12 @@
 namespace BR\BarBundle\Entity\Stock;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
 use BR\BarBundle\Command\Types\Annotations\GenerateType;
 
 use BR\BarBundle\Entity\Operation\StockOperation;
 
 /**
  * @ORM\Entity
- * @JMS\ExclusionPolicy("none")
  * @GenerateType("item", gen_type=true, gen_typeid=true)
  */
 class StockItem
@@ -20,20 +18,10 @@ class StockItem
      */
     private $id;
 
-     // * @JMS\Exclude
     /**
      * @ORM\ManyToOne(targetEntity="\BR\BarBundle\Entity\Bar\Bar")
      */
     private $bar;
-    // /**
-    //  * @JMS\SerializedName("bar")
-    //  * @JMS\VirtualProperty
-    //  */
-    // public function getBarId()
-    // {
-    //     return $this->bar->getId();
-    // }
-
 
     /** @ORM\Column(type="string", length=255) */
     private $name;
@@ -62,6 +50,10 @@ class StockItem
     public function __construct($bar) {
         $this->bar = $bar;
         $this->deleted = false;
+        $this->qty = 0;
+        $this->unit = "";
+        $this->tax = 0;
+        $this->keywords = "";
     }
 
 

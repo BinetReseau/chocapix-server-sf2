@@ -34,27 +34,7 @@ class FoodController extends FOSRestController {
 				->setParameter('bar', $bar)
 				->getQuery()->getResult();
 
-		return $foods;
-	}
-
-	/**
-	 * @Get("/{bar}/food/search/{q}")
-	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
-     * @View()
-     */
-	public function searchFoodsAction(Bar $bar, $q) {
-		$repository = $this->getDoctrine()
-				->getRepository('BRBarBundle:Stock\StockItem');
-
-		$foods = $repository->createQueryBuilder('f')
-				->where('f.name LIKE :q')
-				->orWhere('f.keywords LIKE :q2')
-				->orderBy('f.name', 'ASC')
-				->setParameter('q', '%'.$q.'%')
-				->setParameter('q2', '%'.$q.'%')
-				->getQuery()->getResult();
-
-		return $foods;
+    	return $this->createForm('collection', $foods, array('type' => 'item'));
 	}
 
 	/**
@@ -93,7 +73,7 @@ class FoodController extends FOSRestController {
 
 		$em->flush();
 
-		return $item;
+		return $this->createForm('item', $item);
 	}
 
 	/**
@@ -103,17 +83,30 @@ class FoodController extends FOSRestController {
      * @View()
      */
 	public function getFoodAction(Bar $bar, StockItem $item) {
-		// return $item;
-    	// $form = $this->createForm('bar_id', $item->getBar());
-    	$form = $this->createForm('item', $item);
-
-        return $form;
+		return $this->createForm('item', $item);
 	}
 
-	 // * @RequestParam(name="name")
-	 // * @RequestParam(name="unit")
-	 // * @RequestParam(name="price", requirements="[0-9.]+", strict=true)
-	 // * @RequestParam(name="tax", requirements="[0-9.]+", strict=true)
+
+	/**
+	 * @Post("/{bar}/food")
+	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+	 * @View()
+	 */
+	public function createStockItemAction(Request $request, $bar) {
+		$item = new StockItem($bar);
+    	$form = $this->createForm('item', $item);
+
+	    $form->submit($request->request->all(), false);
+	    if ($form->isValid()) {
+		    $em = $this->getDoctrine()->getManager();
+		    $em->persist($item);
+		    $em->flush();
+			return $this->createForm('item', $item);
+	    } else {
+	    	return $form;
+	    }
+	}
+
 	/**
 	 * @Post("/{bar}/food/{item}")
 	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
@@ -144,7 +137,7 @@ class FoodController extends FOSRestController {
 		$item->setDeleted(true);
 		$em->persist($item);
 		$em->flush();
-		return $item;
+		return $this->createForm('item', $item);
 	}
 
 	/**
@@ -159,6 +152,6 @@ class FoodController extends FOSRestController {
 		$item->setDeleted(false);
 		$em->persist($item);
 		$em->flush();
-		return $item;
+		return $this->createForm('item', $item);
 	}
 }

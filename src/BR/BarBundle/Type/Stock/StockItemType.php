@@ -18,7 +18,7 @@ class StockItemType extends AbstractType
             ->add('keywords')
             ->add('deleted')
             ->add('bar_id', 'bar_id', array('property_path' => 'bar'))
-            ->add('bar', 'bar', array('read_only' => true))
+            // ->add('bar', 'bar', array('read_only' => true))
             ->add('_type', 'text', array('data' => 'Stock\StockItem', 'mapped' => false))
             ;
     }
