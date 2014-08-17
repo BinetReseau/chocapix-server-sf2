@@ -11,7 +11,8 @@ class AccountType extends AbstractType
         $builder
             ->add('id')
             ->add('money')
-            ->add('bar')
+            ->add('bar_id', 'bar_id', array('property_path' => 'bar'))
+            // ->add('bar', 'bar', array('read_only' => true))
             ->add('user_id', 'user_id', array('property_path' => 'user'))
             // ->add('user', 'user', array('read_only' => true))
             ->add('_type', 'text', array('data' => 'Account\Account', 'mapped' => false))

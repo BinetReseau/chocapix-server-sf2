@@ -52,7 +52,7 @@
             "dataType": "Decimal",
             "isNullable": false
         }, {
-            "name": "bar",
+            "name": "barId",
             "dataType": "Int32",
             "isNullable": true
         }, {
@@ -61,6 +61,12 @@
             "isNullable": true
         }],
         "navigationProperties": [{
+            "name": "bar",
+            "entityTypeName": "Bar:#BR.BarBundle.Entity.Bar",
+            "isScalar": true,
+            "associationName": "ASSOCIATION_Account_Bar",
+            "foreignKeyNames": ["barId"]
+        }, {
             "name": "user",
             "entityTypeName": "User:#BR.BarBundle.Entity.Auth",
             "isScalar": true,
