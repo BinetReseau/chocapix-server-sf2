@@ -42,9 +42,7 @@ class StockItem
     /** @ORM\Column(type="text") */
     private $keywords;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    /** @ORM\Column(type="boolean") */
     private $deleted;
 
     public function __construct($bar) {

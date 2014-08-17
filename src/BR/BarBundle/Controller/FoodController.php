@@ -1,157 +1,118 @@
 <?php
 namespace BR\BarBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
 
 use FOS\RestBundle\Controller\Annotations\View;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\Controller\Annotations\Post;
+use FOS\RestBundle\Controller\Annotations\Put;
 use FOS\RestBundle\Controller\Annotations\Delete;
-use FOS\RestBundle\Controller\Annotations\RequestParam;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 
 use BR\BarBundle\Entity\Bar\Bar;
 use BR\BarBundle\Entity\Stock\StockItem;
-use BR\BarBundle\Entity\Transaction\Transaction;
-use BR\BarBundle\Entity\Transaction\ApproTransaction;
 
 class FoodController extends FOSRestController {
-
-	/**
-	 * @Get("/{bar}/food")
-	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+    /**
+     * @Get("/{bar}/food")
+     * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+     *
      * @View()
      */
-	public function getFoodsAction(Bar $bar) {
-		$repository = $this->getDoctrine()
-				->getRepository('BRBarBundle:Stock\StockItem');
+    public function getFoodsAction(Bar $bar) {
+        $repository = $this->getDoctrine()
+                ->getRepository('BRBarBundle:Stock\StockItem');
 
-		$foods = $repository->createQueryBuilder('f')
-		        ->where('f.bar = :bar')
-				->orderBy('f.name', 'ASC')
-				->setParameter('bar', $bar)
-				->getQuery()->getResult();
+        $foods = $repository->createQueryBuilder('f')
+                ->where('f.bar = :bar')
+                ->orderBy('f.name', 'ASC')
+                ->setParameter('bar', $bar)
+                ->getQuery()->getResult();
 
-    	return $this->createForm('collection', $foods, array('type' => 'item'));
-	}
+        return $this->createForm('collection', $foods, array('type' => 'item'));
+    }
 
-	/**
-	 * @Post("/{bar}/food/add")
-	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
-	 * @RequestParam(name="name")
-	 * @RequestParam(name="unit")
-	 * @RequestParam(name="price", requirements="[0-9.]+", strict=true)
-	 * @RequestParam(name="tax", requirements="[0-9.]+", strict=true)
-	 * @RequestParam(name="qty")
-	 * @RequestParam(name="keywords")
-	 * @View()
-	 */
-	public function addStockItemAction(Bar $bar, $name, $unit, $price, $tax, $qty = 0, $keywords = '') {
-		$em = $this->getDoctrine()->getManager();
-
-		$item = new StockItem($bar);
-		$item->setName($name);
-		$item->setUnit($unit);
-		$item->setPrice($price);
-		$item->setTax($tax);
-		$item->setKeywords($keywords);
-		$item->setQty(0);
-
-		$em->persist($item);
-
-		if ($qty > 0) {
-			$appro = new ApproTransaction($bar, $this->getUser());
-			$item->operation($appro, $qty);
-
-			if(!$appro->checkIntegrity())
-				throw new \Exception('Invalid Transaction');
-
-			$em->persist($appro);
-		}
-
-		$em->flush();
-
-		return $this->createForm('item', $item);
-	}
-
-	/**
-	 * @Get("/{bar}/food/{id}")
-	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
-	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
+    /**
+     * @Post("/{bar}/food")
+     * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+     *
      * @View()
      */
-	public function getFoodAction(Bar $bar, StockItem $item) {
-		return $this->createForm('item', $item);
-	}
+    public function createStockItemAction(Request $request, $bar) {
+        $item = new StockItem($bar);
+        $form = $this->createForm('item', $item);
+
+        $form->submit($request->request->all(), false);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($item);
+            $em->flush();
+            return $this->createForm('item', $item);
+        } else {
+            return $form;
+        }
+    }
+
+    /**
+     * @Get("/{bar}/food/{id}")
+     * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+     * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "id"})
+     *
+     * @View()
+     */
+    public function getFoodAction(Bar $bar, StockItem $item) {
+        return $this->createForm('item', $item);
+    }
 
 
-	/**
-	 * @Post("/{bar}/food")
-	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
-	 * @View()
-	 */
-	public function createStockItemAction(Request $request, $bar) {
-		$item = new StockItem($bar);
-    	$form = $this->createForm('item', $item);
+    /**
+     * @Put("/{bar}/food/{id}")
+     * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+     * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "id"})
+     *
+     * @View()
+     */
+    public function updateStockItemAction(Request $request, $bar, StockItem $item) {
+        $form = $this->createForm('item', $item);
 
-	    $form->submit($request->request->all(), false);
-	    if ($form->isValid()) {
-		    $em = $this->getDoctrine()->getManager();
-		    $em->persist($item);
-		    $em->flush();
-			return $this->createForm('item', $item);
-	    } else {
-	    	return $form;
-	    }
-	}
+        $form->submit($request->request->all(), false);
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($item);
+            $em->flush();
+        }
+        return $form;
+    }
 
-	/**
-	 * @Post("/{bar}/food/{item}")
-	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
-	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
-	 * @View()
-	 */
-	public function updateStockItemAction(Request $request, $bar, StockItem $item) {
-    	$form = $this->createForm('item', $item);
+    /**
+     * @Delete("/{bar}/food/{id}")
+     * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+     * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "id"})
+     *
+     * @View()
+     */
+    public function deleteStockItemAction($bar, StockItem $item) {
+        $em = $this->getDoctrine()->getManager();
+        $item->setDeleted(true);
+        $em->persist($item);
+        $em->flush();
+        return $this->createForm('item', $item);
+    }
 
-	    $form->submit($request->request->all(), false);
-	    if ($form->isValid()) {
-		    $em = $this->getDoctrine()->getManager();
-		    $em->persist($item);
-		    $em->flush();
-	    }
-    	return $form;
-	}
-
-	/**
-	 * @Delete("/{bar}/food/{item}")
-	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
-	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
-	 *
-	 * @View()
-	 */
-	public function deleteStockItemAction($bar, StockItem $item) {
-		$em = $this->getDoctrine()->getManager();
-		$item->setDeleted(true);
-		$em->persist($item);
-		$em->flush();
-		return $this->createForm('item', $item);
-	}
-
-	/**
-	 * @Post("/{bar}/food/undelete/{item}")
-	 * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
-	 * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "item"})
-	 *
-	 * @View()
-	 */
-	public function undeleteStockItemAction($bar, StockItem $item) {
-		$em = $this->getDoctrine()->getManager();
-		$item->setDeleted(false);
-		$em->persist($item);
-		$em->flush();
-		return $this->createForm('item', $item);
-	}
+    /**
+     * @Post("/{bar}/food/{id}/undelete")
+     * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
+     * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "id"})
+     *
+     * @View()
+     */
+    public function undeleteStockItemAction($bar, StockItem $item) {
+        $em = $this->getDoctrine()->getManager();
+        $item->setDeleted(false);
+        $em->persist($item);
+        $em->flush();
+        return $this->createForm('item', $item);
+    }
 }
