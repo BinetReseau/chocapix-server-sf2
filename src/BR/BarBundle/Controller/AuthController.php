@@ -1,8 +1,6 @@
 <?php
 namespace BR\BarBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use FOS\RestBundle\Controller\FOSRestController;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -55,7 +53,7 @@ class AuthController extends FOSRestController {
 			);
 
 		$jwt = $this->get('lexik_jwt_authentication.jwt_encoder')->encode($payload);
-
+		$user = $this->get('br_bar.form_serializer')->serialize($this->createForm('user', $user), 'json');
 		return array('token' => $jwt, 'url_safe_token' => urlencode($jwt), 'user' => $user);
 	}
 
@@ -63,11 +61,11 @@ class AuthController extends FOSRestController {
 	/**
 	 * @Get("/nobar/auth/me")
 	 *
-     * @View(serializerEnableMaxDepthChecks=true)
+     * @View()
      *
      * @Security("has_role('ROLE_USER')")
      */
 	public function getMyUserAction() {
-		return $this->getUser();
+		return $this->createForm('user', $this->getUser());
 	}
 }
