@@ -40,7 +40,7 @@ class FoodController extends FOSRestController {
      *
      * @View()
      */
-    public function createStockItemAction(Request $request, $bar) {
+    public function createFoodAction(Request $request, $bar) {
         $item = new StockItem($bar);
         $form = $this->createForm('item', $item);
 
@@ -74,7 +74,7 @@ class FoodController extends FOSRestController {
      *
      * @View()
      */
-    public function updateStockItemAction(Request $request, $bar, StockItem $item) {
+    public function updateFoodAction(Request $request, $bar, StockItem $item) {
         $form = $this->createForm('item', $item);
 
         $form->submit($request->request->all(), false);
@@ -87,13 +87,13 @@ class FoodController extends FOSRestController {
     }
 
     /**
-     * @Delete("/{bar}/food/{id}")
+     * @Put("/{bar}/food/{id}/markDeleted")
      * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
      * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "id"})
      *
      * @View()
      */
-    public function deleteStockItemAction($bar, StockItem $item) {
+    public function deleteFoodAction($bar, StockItem $item) {
         $em = $this->getDoctrine()->getManager();
         $item->setDeleted(true);
         $em->persist($item);
@@ -102,13 +102,13 @@ class FoodController extends FOSRestController {
     }
 
     /**
-     * @Post("/{bar}/food/{id}/undelete")
+     * @Put("/{bar}/food/{id}/unMarkDeleted")
      * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
      * @ParamConverter("item", class="BRBarBundle:Stock\StockItem", options={"id" = "id"})
      *
      * @View()
      */
-    public function undeleteStockItemAction($bar, StockItem $item) {
+    public function undeleteFoodAction($bar, StockItem $item) {
         $em = $this->getDoctrine()->getManager();
         $item->setDeleted(false);
         $em->persist($item);
