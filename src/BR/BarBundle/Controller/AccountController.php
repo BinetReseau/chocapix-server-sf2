@@ -50,18 +50,4 @@ class AccountController extends FOSRestController {
     public function getAccountAction(Bar $bar, Account $account) {
         return $this->createForm('account', $account);
     }
-
-//
-//  /**
-//   * @Get("/{bar}/account/by-user/{user}")
-//   * @ParamConverter("bar", class="BRBarBundle:Bar\Bar", options={"id" = "bar"})
-//   * @ParamConverter("user", class="BRBarBundle:Auth\User", options={"id" = "user"})
-//   *
-//     * @View()
-//     */
-//  public function getAccountByUserAction(Bar $bar, User $user) {
-//      return $this->getDoctrine()->getRepository('BR\BarBundle\Entity\Account\Account')
-//                ->findFromUserAndBar($user, $bar);
-//  }
-
 }
