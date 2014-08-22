@@ -26,22 +26,18 @@ services:
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: bar_id }
-
     br_bar.type.user_id:
         class: BR\BarBundle\Type\Auth\UserIdType
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: user_id }
-
     br_bar.type.account_id:
         class: BR\BarBundle\Type\Account\AccountIdType
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: account_id }
-
     br_bar.type.item_id:
         class: BR\BarBundle\Type\Stock\StockItemIdType
         arguments: ["@doctrine.orm.entity_manager"]
         tags:
             - { name: form.type, alias: item_id }
-
