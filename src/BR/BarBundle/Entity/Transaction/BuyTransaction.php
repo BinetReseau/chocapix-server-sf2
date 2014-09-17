@@ -2,7 +2,7 @@
 namespace BR\BarBundle\Entity\Transaction;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as JMS;
+use BR\BarBundle\Command\Types\Annotations\GenerateType;
 
 use BR\BarBundle\Entity\Operation\AccountOperation;
 use BR\BarBundle\Entity\Operation\StockOperation;
@@ -10,6 +10,7 @@ use BR\BarBundle\Entity\Operation\StockOperation;
 /**
  * @ORM\Entity
  * @ORM\Table(name="tr_Buy")
+ * @GenerateType("buy_transaction")
  */
 class BuyTransaction extends Transaction
 {
@@ -32,5 +33,18 @@ class BuyTransaction extends Transaction
     	}
     	else
     		return false;
+    }
+
+    public function getItem() {
+        foreach ($this->operations as $op) {
+            if ($op instanceof StockOperation)
+                return $op->getItem();
+        }
+    }
+    public function getQty() {
+        foreach ($this->operations as $op) {
+            if ($op instanceof StockOperation)
+                return $op->getDeltaqty();
+        }
     }
 }

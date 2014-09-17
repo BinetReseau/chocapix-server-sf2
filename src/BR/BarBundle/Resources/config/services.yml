@@ -23,3 +23,9 @@ services:
         class: BR\BarBundle\Tools\FormSerializer
         arguments:
             serializer: "@jms_serializer.serializer"
+
+    br_bar.type.buy_transaction:
+        class: BR\BarBundle\Type\Transaction\BuyTransactionType
+        arguments: ["@doctrine.orm.entity_manager"]
+        tags:
+            - { name: form.type, alias: buy_transaction }

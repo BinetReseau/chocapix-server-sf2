@@ -1,7 +1,6 @@
 <?php
 namespace BR\BarBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use FOS\RestBundle\Controller\FOSRestController;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
@@ -66,7 +65,8 @@ class TransactionController extends FOSRestController {
      * @View(serializerEnableMaxDepthChecks=true)
      */
 	public function getTransactionAction(Bar $bar, Transaction $transaction) {
-		return $transaction;
+		// return $transaction;
+		return $this->createForm('buy_transaction', $transaction);
 	}
 
 
